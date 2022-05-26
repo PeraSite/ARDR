@@ -1,0 +1,3 @@
+[submodule "Assets/Plugins/UnityAtoms"]
+	path = Assets/Plugins/UnityAtoms
+	url = https://github.com/PeraSite/unity-atoms.git
