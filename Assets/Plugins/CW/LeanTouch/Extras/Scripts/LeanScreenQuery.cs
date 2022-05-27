@@ -155,7 +155,7 @@ namespace Lean.Common
 				}
 
 				// Discard if tag doesn't match
-				if (result != null && string.IsNullOrEmpty(RequiredTag) == false && component.tag != RequiredTag)
+				if (result != null && string.IsNullOrEmpty(RequiredTag) == false && !component.CompareTag(RequiredTag))
 				{
 					return false;
 				}

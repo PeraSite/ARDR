@@ -309,10 +309,10 @@
 
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Version.hlsl"
-            #if VERSION_GREATER_EQUAL(11, 0)
-            // This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
-            #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
-            #endif
+            // #if VERSION_GREATER_EQUAL(11, 0)
+            // // This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
+            // #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+            // #endif
 
             #pragma vertex ShadowPassVertex
             #pragma fragment ShadowPassFragment
