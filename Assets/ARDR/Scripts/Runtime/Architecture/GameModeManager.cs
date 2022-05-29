@@ -1,17 +1,21 @@
 ﻿using System.Collections;
+using PeraCore.Runtime;
 using PixelCrushers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ARDR {
-	public class GameModeManager : MonoBehaviour {
+	public class GameModeManager : MonoSingleton<GameModeManager> {
 		public MainMenuGameMode mainMenuMode;
 		public PlayGameMode playMode;
 
 		private bool _isSwitching;
-		private IGameMode _currentMode;
+		private GameModeBase _currentMode;
 
-		protected void Awake() {
+		protected override bool KeepAlive => false;
+
+		protected override void Awake() {
+			base.Awake();
 #if UNITY_EDITOR
 			switch (SceneManager.GetActiveScene().buildIndex) {
 				//메인메뉴 씬
@@ -28,7 +32,8 @@ namespace ARDR {
 #endif
 		}
 
-		private void OnEnable() {
+		protected override void OnEnable() {
+			base.OnEnable();
 			Application.wantsToQuit -= OnWantsToQuit;
 			Application.wantsToQuit += OnWantsToQuit;
 		}
@@ -42,14 +47,15 @@ namespace ARDR {
 			return true;
 		}
 
-		public void HandleStartRequested(IGameMode mode) {
+		public void HandleStartRequested(GameModeBase mode) {
 			StartCoroutine(SwitchModeCoroutine(mode));
 		}
 
-		private IEnumerator SwitchModeCoroutine(IGameMode mode) {
+		private IEnumerator SwitchModeCoroutine(GameModeBase mode) {
 			yield return new WaitUntil(() => !_isSwitching);
 
 			if (_currentMode == mode) yield break;
+			// DebugUtil.Log($"Start switching to {mode.GetType().GetNiceName()}");
 
 			_isSwitching = true;
 			yield return SaveSystem.sceneTransitionManager.LeaveScene();
@@ -63,6 +69,7 @@ namespace ARDR {
 			yield return SaveSystem.sceneTransitionManager.EnterScene();
 
 			_isSwitching = false;
+			// Debug.Log("End Switching");
 		}
 	}
 }

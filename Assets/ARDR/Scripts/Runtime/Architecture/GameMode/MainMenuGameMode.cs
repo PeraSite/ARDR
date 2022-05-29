@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using PixelCrushers;
-using UnityEngine;
 
 namespace ARDR {
-	public class MainMenuGameMode : ScriptableObject, IGameMode {
+	public class MainMenuGameMode : GameModeBase {
 		[SceneSelector]
 		public string mainMenuScene;
 
-		public IEnumerator OnStart() {
+		public override IEnumerator OnStart() {
 			yield return SaveSystem.LoadAdditiveSceneAsync(mainMenuScene);
 		}
 
-		public IEnumerator OnEditorStart() {
+		public override IEnumerator OnEditorStart() {
 			yield return null;
 		}
 
-		public IEnumerator OnEnd() {
+		public override IEnumerator OnEnd() {
 			yield return null;
 		}
 	}

@@ -44,6 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5d32360fbb44ceea3752fb74f8b69fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   mainMenuMode: {fileID: 11400000, guid: 0a8d16b31ddfef4428b9cd23b7989bd8, type: 2}
   playMode: {fileID: 11400000, guid: 55b58bcf403185440a7978d7233060b6, type: 2}
 --- !u!1 &4730023254366437400
