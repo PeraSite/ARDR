@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using PeraCore.Runtime;
 using PixelCrushers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,7 +50,6 @@ namespace ARDR {
 			yield return new WaitUntil(() => !_isSwitching);
 
 			if (_currentMode == mode) yield break;
-			// DebugUtil.Log($"Start switching to {mode.GetType().GetNiceName()}");
 
 			_isSwitching = true;
 			yield return SaveSystem.sceneTransitionManager.LeaveScene();
@@ -65,7 +63,6 @@ namespace ARDR {
 			yield return SaveSystem.sceneTransitionManager.EnterScene();
 
 			_isSwitching = false;
-			// Debug.Log("End Switching");
 		}
 	}
 }

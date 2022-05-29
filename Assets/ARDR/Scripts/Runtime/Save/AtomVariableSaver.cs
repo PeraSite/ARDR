@@ -3,7 +3,6 @@ using System.Linq;
 using PixelCrushers;
 using Sirenix.Utilities;
 using UnityAtoms;
-using UnityEngine;
 
 namespace ARDR {
 	public class AtomVariableSaver : Saver {
@@ -14,10 +13,7 @@ namespace ARDR {
 				GetAtomID,
 				v => v.BaseValue
 			);
-			Debug.Log("Saved:");
-			varDict.ForEach(pair => { Debug.Log($"{pair.Key}:{pair.Value}"); });
 			var recordData = SaveSystem.Serialize(varDict);
-			Debug.Log("Result:" + recordData);
 			return recordData;
 		}
 

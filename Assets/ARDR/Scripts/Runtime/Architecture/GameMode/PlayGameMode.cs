@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using ARDR;
 using PixelCrushers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +13,10 @@ namespace ARDR {
 		public string startScene;
 
 		public int activeSlotID;
+
+		public int editorSlotID = 999;
+
+		private static bool _doesSceneLoaded = false;
 
 		public IEnumerator OnStart() {
 			if (_state != GameModeState.ENDED) yield break;
@@ -36,21 +38,33 @@ namespace ARDR {
 
 		public IEnumerator OnEditorStart() {
 			App.isEditor = true;
-			yield return new WaitForEndOfFrame();
-			SaveSystem.ResetGameState();
+			yield return new WaitUntil(() => _doesSceneLoaded);
+			if (SaveSystem.storer.HasDataInSlot(editorSlotID)) {
+				var data = SaveSystem.storer.RetrieveSavedGameData(editorSlotID);
+				SaveSystem.ApplySavedGameData(data);
+			} else {
+				SaveSystem.ResetGameState();
+			}
 			_state = GameModeState.STARTED;
 			yield return null;
 		}
 
 		public IEnumerator OnEnd() {
 			_state = GameModeState.ENDING;
-
-			//에디터에서 바로 실제 레벨로 시작했다면 저장 안함
-			if (!App.isEditor) {
-				SaveSystem.SaveToSlotImmediate(activeSlotID);
-			}
+			SaveSystem.SaveToSlotImmediate(App.isEditor ? editorSlotID : activeSlotID);
 			_state = GameModeState.ENDED;
 			yield return null;
+		}
+
+
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+		private static void OnAfterSceneLoad() {
+			_doesSceneLoaded = true;
+		}
+
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+		private static void ResetVariable() {
+			_doesSceneLoaded = false;
 		}
 	}
 }
