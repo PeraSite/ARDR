@@ -34,6 +34,6 @@ namespace ARDR {
 			}
 		}
 
-		private string GetAtomID(AtomBaseVariable v) => v.Id.IsNullOrWhitespace() ? v.name : v.Id;
+		private static string GetAtomID(AtomBaseVariable v) => v.Id.IsNullOrWhitespace() ? v.name : v.Id;
 	}
 }
