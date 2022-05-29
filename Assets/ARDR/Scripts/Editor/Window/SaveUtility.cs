@@ -28,20 +28,22 @@ public class SaveUtility : OdinEditorWindow {
 		SaveSystem.SaveToSlot(slot);
 	}
 
-	[EnableIf("@UnityEngine.Application.isPlaying")]
 	[Button]
 	public void DeleteSlot(int slot) {
-		SaveSystem.DeleteSavedGameInSlot(slot);
+		PlayerPrefs.DeleteKey(GetPlayerPrefsKey(slot));
+		PlayerPrefs.Save();
 	}
 
 	[Button]
 	public void PrintSave(int slot) {
-		Debug.Log(PlayerPrefs.GetString($"Save{slot}"));
+		Debug.Log(PlayerPrefs.GetString(GetPlayerPrefsKey(slot)));
 	}
+
+	private string GetPlayerPrefsKey(int slotNumber) => "Save" + slotNumber;
 
 	[Button]
 	public SerializedSavedGameData InspectSave(int slot) {
-		var rawSavedData = PlayerPrefs.GetString("Save" + slot);
+		var rawSavedData = PlayerPrefs.GetString(GetPlayerPrefsKey(slot));
 		var bytes = Encoding.UTF8.GetBytes(rawSavedData);
 		var data = SerializationUtility.DeserializeValue<SavedGameData>(bytes, DataFormat.JSON);
 		if (data == null) return null;
