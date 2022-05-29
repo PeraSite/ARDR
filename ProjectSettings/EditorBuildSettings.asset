@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/ARDR/Scenes/MainMenu.unity
+    guid: 08eaafd20c8151149bc300c6743f45a0
+  - enabled: 1
+    path: Assets/ARDR/Scenes/Play.unity
+    guid: f643fbc0b19bddc478f7e90339b6137b
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: b99c5ba2df1e7734a868268898b83ea2,
       type: 2}

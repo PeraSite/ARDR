@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-
-public interface ITouchListener {
-	public void OnTouch();
+﻿namespace ARDR {
+	public interface ITouchListener {
+		public void OnTouch();
+	}
 }
