@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ARDR {
 	public class Chunk {
 		public const int cellPerChunk = 8;
-		public const int cellSize = 5;
+		public const float cellSize = 2.5F;
 
 		public Grid<CellObject> cellGrid;
 
@@ -26,18 +26,26 @@ namespace ARDR {
 
 		public void SetEnabled(bool isEnabled) {
 			_isEnabled = isEnabled;
-			if (IsEnabled && cellGrid == null) InitCell(); //If set enabled, but not initialized cells
-
-			if (!IsEnabled && cellGrid != null) { //If set disabled, but already initialized
-				cellGrid.GridArray.Cast<CellObject>().Where(obj => obj.IsPlaced())
-					.ForEach(obj => {
-						var placedObject = obj.GetPlacedObject();
-						obj.SetPlacedObject(null);
-						placedObject.DestroySelf();
-					});
-				cellGrid.Destroy();
-				cellGrid = null;
+			if (IsEnabled && cellGrid == null) {
+				//켜졌는데 안만들어져있으면 만들기
+				InitCell();
 			}
+
+			if (!IsEnabled && cellGrid != null) {
+				//꺼졌는데 만들어져있다면 삭제
+				DestroyCell();
+			}
+		}
+
+		private void DestroyCell() {
+			cellGrid.GridArray.Cast<CellObject>().Where(obj => obj.IsPlaced())
+				.ForEach(obj => {
+					var placedObject = obj.GetPlacedObject();
+					obj.SetPlacedObject(null);
+					placedObject.DestroySelf();
+				});
+			cellGrid.Destroy();
+			cellGrid = null;
 		}
 
 		public void InitCell() {

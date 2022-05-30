@@ -22,10 +22,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: chunkGrid
-      Entry: 7
-      Data: 0|ARDR.Grid`1[[ARDR.Chunk, Assembly-CSharp]], Assembly-CSharp
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
   gridSize: {x: 10, y: 10}
   defaultEnableChunk:

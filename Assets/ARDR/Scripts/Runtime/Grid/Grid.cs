@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -16,7 +17,7 @@ namespace ARDR {
 		private Func<Grid<TGridObject>, int, int, TGridObject> gridObjectConstructor;
 
 		private Color? debugColor;
-		private TextMesh[,] debugTextArray;
+		private TextMeshPro[,] debugTextArray;
 
 		public Grid(int width, int height, float cellSize, Vector3 originPosition,
 			Func<Grid<TGridObject>, int, int, TGridObject> createGridObject, Color? debugColor = null) {
@@ -38,13 +39,12 @@ namespace ARDR {
 			}
 
 			if (debugColor.GetValue(out var color)) {
-				debugTextArray = new TextMesh[width, height];
+				debugTextArray = new TextMeshPro[width, height];
 
 				for (var x = 0; x < GridArray.GetLength(0); x++) {
 					for (var z = 0; z < GridArray.GetLength(1); z++) {
 						debugTextArray[x, z] = UtilsClass.CreateWorldText(GridArray[x, z]?.ToString(), null,
-							GetWorldPosition(x, z) + new Vector3(cellSize, 0, cellSize) * .5f, 15, color,
-							TextAnchor.MiddleCenter, TextAlignment.Center);
+							GetWorldPosition(x, z) + new Vector3(cellSize, 1, cellSize) * .5f, 7, color);
 						Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), color, 100f);
 						Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), color, 100f);
 					}
