@@ -7,20 +7,20 @@ namespace ARDR {
 		public const int cellPerChunk = 8;
 		public const int cellSize = 5;
 
+		public Grid<CellObject> cellGrid;
+
 		public bool IsEnabled {
 			get => _isEnabled;
 			set => SetEnabled(value);
 		}
 
-		public Vector2Int pos;
-
+		private Vector2Int chunkPosition;
+		private GridGenerator _gridController;
 		private bool _isEnabled;
-		public Grid<CellObject> cellGrid;
-		private GridController parent;
 
-		public Chunk(GridController parent, int x, int y, bool isEnabled = true) {
-			this.parent = parent;
-			pos = new Vector2Int(x, y);
+		public Chunk(GridGenerator parent, int x, int y, bool isEnabled = true) {
+			_gridController = parent;
+			chunkPosition = new Vector2Int(x, y);
 			SetEnabled(isEnabled);
 		}
 
@@ -35,6 +35,7 @@ namespace ARDR {
 						obj.SetPlacedObject(null);
 						placedObject.DestroySelf();
 					});
+				cellGrid.Destroy();
 				cellGrid = null;
 			}
 		}
@@ -42,7 +43,7 @@ namespace ARDR {
 		public void InitCell() {
 			cellGrid = new Grid<CellObject>(
 				cellPerChunk, cellPerChunk, cellSize,
-				parent.chunkGrid.GetWorldPosition(pos.x, pos.y),
+				_gridController.chunkGrid.GetWorldPosition(chunkPosition),
 				(g, x, z) => new CellObject(this, x, z),
 				Color.red
 			);
@@ -77,23 +78,23 @@ namespace ARDR {
 
 		public Vector2Int ToCellPos(Vector2Int chunkLocalPos) {
 			return new Vector2Int(
-				pos.x * cellPerChunk + chunkLocalPos.x,
-				pos.y * cellPerChunk + chunkLocalPos.y
+				chunkPosition.x * cellPerChunk + chunkLocalPos.x,
+				chunkPosition.y * cellPerChunk + chunkLocalPos.y
 			);
 		}
 
 		public void RemovePlacedObject(PlacedObject<PlaceableObjectData> obj) {
 			foreach (var localChunkPos in obj.GetGridPositionList()) {
 				var cellPos = ToCellPos(localChunkPos);
-				var targetChunk = parent.GetChunk(cellPos);
-				var targetLocalChunkPos = parent.GetLocalChunkPos(cellPos);
+				var targetChunk = _gridController.GetChunk(cellPos);
+				var targetLocalChunkPos = _gridController.GetLocalChunkPos(cellPos);
 
 				targetChunk[targetLocalChunkPos].ClearPlacedObject();
 			}
 		}
 
 		public override string ToString() {
-			return pos.ToString();
+			return chunkPosition.ToString();
 		}
 
 #endregion

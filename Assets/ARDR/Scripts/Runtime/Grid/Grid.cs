@@ -1,15 +1,22 @@
 ﻿using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ARDR {
 	public class Grid<TGridObject> {
-		public int width { get; private set; }
-		public int height { get; private set; }
-		public float cellSize { get; private set; }
-		public Vector3 originWorldPosition { get; private set; }
-		public Func<Grid<TGridObject>, int, int, TGridObject> gridObjectConstructor { get; private set; }
-		public TGridObject[,] GridArray { get; private set; }
-		public Color? debugColor { get; private set; }
+		public int width;
+		public int height;
+		public float cellSize;
+
+		[HideInInspector]
+		public TGridObject[,] GridArray;
+
+		public Vector3 originWorldPosition;
+
+		private Func<Grid<TGridObject>, int, int, TGridObject> gridObjectConstructor;
+
+		private Color? debugColor;
+		private TextMesh[,] debugTextArray;
 
 		public Grid(int width, int height, float cellSize, Vector3 originPosition,
 			Func<Grid<TGridObject>, int, int, TGridObject> createGridObject, Color? debugColor = null) {
@@ -31,7 +38,7 @@ namespace ARDR {
 			}
 
 			if (debugColor.GetValue(out var color)) {
-				var debugTextArray = new TextMesh[width, height];
+				debugTextArray = new TextMesh[width, height];
 
 				for (var x = 0; x < GridArray.GetLength(0); x++) {
 					for (var z = 0; z < GridArray.GetLength(1); z++) {
@@ -49,6 +56,12 @@ namespace ARDR {
 					var gridObject = GridArray[eventArgs.x, eventArgs.z];
 					debugTextArray[eventArgs.x, eventArgs.z].text = gridObject?.ToString();
 				};
+			}
+		}
+
+		public void Destroy() {
+			foreach (var textMesh in debugTextArray) {
+				Object.Destroy(textMesh.gameObject);
 			}
 		}
 

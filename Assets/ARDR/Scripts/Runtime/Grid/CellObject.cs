@@ -3,7 +3,7 @@
 namespace ARDR {
 	public class CellObject {
 		private readonly Chunk chunk;
-		public Vector2Int localChunkPos;
+		private Vector2Int localChunkPos;
 		private IPlacedObject placedObject;
 
 		public CellObject(Chunk chunk, int x, int y) : this(chunk, new Vector2Int(x, y)) { }
