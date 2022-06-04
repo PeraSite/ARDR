@@ -14,7 +14,7 @@ namespace ARDR {
 
 		public int activeSlotID;
 
-		public int editorSlotID = 999;
+		public static int editorSlotID = 999;
 
 		private static bool _doesSceneLoaded;
 
@@ -37,12 +37,6 @@ namespace ARDR {
 		public override IEnumerator OnEditorStart() {
 			App.isEditor = true;
 			yield return new WaitUntil(() => _doesSceneLoaded);
-			if (SaveSystem.storer.HasDataInSlot(editorSlotID)) {
-				var data = SaveSystem.storer.RetrieveSavedGameData(editorSlotID);
-				SaveSystem.ApplySavedGameData(data);
-			} else {
-				SaveSystem.ResetGameState();
-			}
 			_state = GameModeState.STARTED;
 			yield return null;
 		}
@@ -54,9 +48,16 @@ namespace ARDR {
 			yield return null;
 		}
 
-
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 		private static void OnAfterSceneLoad() {
+			if (App.isEditor) {
+				if (SaveSystem.storer.HasDataInSlot(editorSlotID)) {
+					var data = SaveSystem.storer.RetrieveSavedGameData(editorSlotID);
+					SaveSystem.ApplySavedGameData(data);
+				} else {
+					SaveSystem.ResetGameState();
+				}
+			}
 			_doesSceneLoaded = true;
 		}
 
