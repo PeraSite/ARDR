@@ -1,57 +1,60 @@
 using Lean.Touch;
-using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UnityAtoms;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
-	public class EditGridController : MonoSingleton<EditGridController> {
+	public class EditGridController : MonoBehaviour {
+		[Header("변수")]
 		public GridData GridData;
-		public bool isEditing;
-		public PlaceableObjectData currentData;
-		public Direction currentDirection;
+
+		public BoolVariable IsEditing;
+		public DirectionVariable CurrentDirection;
+
+		private PlaceableObjectData _currentData;
 
 		private PlacedObject<PlaceableObjectData> _editingObject;
 
 		public void OnLongTouch(LeanFinger finger) {
-			if (isEditing) return;
+			if (IsEditing.Value) return;
 			if (Physics.Raycast(finger.GetRay(), out var info)) {
-				Debug.Log("longtouch raycast:" + info.collider?.name + "," + info.collider.tag);
-				if (info.collider.CompareTag("Placeable")) {
-					if (!info.transform.TryGetComponent<PlacedObject<PlaceableObjectData>>(out var obj)) return;
-					_editingObject = obj;
-					var cellPos = GridData.GetCellPos(obj.transform.position);
-					_editingObject.gameObject.SetActive(false);
-					SetEditMode(obj.ObjectData, cellPos);
-				}
+				if (!info.collider.CompareTag("Placeable")) return;
+				if (!info.transform.TryGetComponent<PlacedObject<PlaceableObjectData>>(out var placedObject)) return;
+
+				_editingObject = placedObject;
+				var cellPos = GridData.GetCellPos(placedObject.transform.position);
+				_editingObject.gameObject.SetActive(false);
+				SetEditMode(placedObject.ObjectData, cellPos);
 			}
 		}
 
 		[Button]
 		public void SetEditMode(PlaceableObjectData data) {
-			isEditing = true;
-			currentData = data;
-			currentDirection = Direction.Down;
-			BuildingGhost.Instance.InitGhost(currentData);
+			IsEditing.Value = true;
+			_currentData = data;
+			CurrentDirection.Value = Direction.Down;
+			BuildingGhost.Instance.InitGhost(_currentData);
 		}
 
 		[Button]
 		public void SetEditMode(PlaceableObjectData data, Vector2Int cellPos) {
-			isEditing = true;
-			currentData = data;
-			currentDirection = Direction.Down;
-			BuildingGhost.Instance.InitGhost(currentData, cellPos);
+			IsEditing.Value = true;
+			_currentData = data;
+			CurrentDirection.Value = Direction.Down;
+			BuildingGhost.Instance.InitGhost(_currentData, cellPos);
 		}
 
 		[Button]
 		public void UpdateNextDirection() {
-			currentDirection = currentDirection.GetNextDir();
-			BuildingGhost.Instance.RotateObject(currentDirection);
+			CurrentDirection.Value = CurrentDirection.Value.GetNextDir();
+			BuildingGhost.Instance.RotateObject(CurrentDirection.Value);
 		}
 
 		public void CommitUpdate() {
 			var lastCellPos = BuildingGhost.Instance.lastCellPos;
-			if (!GridData.CanPlaceAt(currentData, lastCellPos, currentDirection)) {
+			if (!GridData.CanPlaceAt(_currentData, lastCellPos, CurrentDirection.Value)) {
 				Debug.Log("이 곳에는 설치할 수 없습니다!");
 				return;
 			}
@@ -61,16 +64,16 @@ namespace ARDR {
 				chunk.RemovePlacedObject(_editingObject);
 			}
 
-			var placed = GridData.PlaceObjectAtSafe(currentData, lastCellPos, currentDirection);
+			var placed = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value);
 			if (!isEditingObject) { //If first place
 				placed.OnInit();
 			}
-			isEditing = false;
+			IsEditing.Value = false;
 			BuildingGhost.Instance.DestroyVisual();
 		}
 
 		public void CancelEdit() {
-			isEditing = false;
+			IsEditing.Value = false;
 			BuildingGhost.Instance.DestroyVisual();
 			if (!_editingObject.SafeIsUnityNull()) {
 				_editingObject.gameObject.SetActive(true);

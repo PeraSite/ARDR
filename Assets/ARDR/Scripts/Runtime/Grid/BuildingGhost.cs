@@ -1,5 +1,6 @@
 ﻿using PeraCore.Runtime;
 using Sirenix.Utilities;
+using UnityAtoms;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace ARDR {
 		public RectTransform overlayObject;
 		public float floatingAmount = 1f;
 
-		private static Direction currentDirection => EditGridController.Instance.currentDirection;
+		public BoolVariable IsEditingObject;
+		public DirectionVariable CurrentDirection;
 
 		private Camera _cam;
 		private PlaceableObjectData _currentData;
@@ -26,22 +28,17 @@ namespace ARDR {
 		}
 
 		private void Update() {
-			if (!EditGridController.Instance.isEditing) return;
+			if (!IsEditingObject.Value) return;
 			var center = GetCenterWorldPosition();
 			overlayObject.anchoredPosition = WorldToCanvasPosition(canvas, _cam, center);
-		}
 
-		public void LateUpdate() {
-			if (!EditGridController.Instance.isEditing) return;
 			var targetPosition = transform.position;
-
-			var dir = currentDirection;
+			var dir = CurrentDirection.Value;
 
 			var worldPosition = GetMouseWorldPosition();
 			if (IsDragging.Value && GridData.GetSnappedPosition(_currentData, worldPosition, dir)
 				    .GetValue(out var snappedPosition)) {
 				targetPosition = snappedPosition;
-				Debug.Log($"worldposition: {worldPosition} -> {snappedPosition}");
 				lastCellPos = GridData.GetCellPos(worldPosition);
 			}
 			targetPosition.y = floatingAmount;
@@ -50,12 +47,14 @@ namespace ARDR {
 
 		public Vector3 GetCenterWorldPosition() {
 			var pos = transform.position;
-			var (centerX, centerY) = _currentData.GetCenterOffset(currentDirection);
+			var (centerX, centerY) = _currentData.GetCenterOffset(CurrentDirection.Value);
 			pos += new Vector3(centerX, 0, centerY);
 			return pos;
 		}
 
 		public PlacedObject<PlaceableObjectData> InitGhost(PlaceableObjectData data) {
+			_currentData = data;
+
 			if (!_ghostObject.SafeIsUnityNull()) { //If already there is visual, destroy old ghost
 				Destroy(_ghostObject.gameObject);
 			}
@@ -67,9 +66,8 @@ namespace ARDR {
 			objectTransform.localEulerAngles = Vector3.zero;
 			SetLayerRecursive(_ghostObject, 2);
 			_ghostObject.GetComponentsInChildren<MeshRenderer>().ForEach(mr => { mr.material = ghostMaterial; });
-			_currentData = data;
 			canvas.gameObject.SetActive(true);
-			RotateObject(currentDirection);
+			RotateObject(CurrentDirection.Value);
 			return _ghostObject.GetComponent<PlacedObject<PlaceableObjectData>>();
 		}
 

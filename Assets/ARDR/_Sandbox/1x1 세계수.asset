@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7b11564da364bcf92ce23c0a332d147, type: 3}
-  m_Name: "\uC138\uACC4\uC218"
+  m_Name: "1x1 \uC138\uACC4\uC218"
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -30,5 +30,5 @@ MonoBehaviour:
     - Name: Description
       Entry: 1
       Data: "\uC138\uACC4\uC218\uC785\uB2C8\uB2E4"
-  model: {fileID: 6696140129005214363, guid: 620e6c7ed8d183341827c524fcf4ff06, type: 3}
+  model: {fileID: 1133774476641589138, guid: 76057c7954c7a124c811e48a9f3ec6af, type: 3}
   gridSize: {x: 1, y: 1}
