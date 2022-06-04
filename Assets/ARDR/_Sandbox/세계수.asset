@@ -31,4 +31,4 @@ MonoBehaviour:
       Entry: 1
       Data: "\uC138\uACC4\uC218\uC785\uB2C8\uB2E4"
   model: {fileID: 6696140129005214363, guid: 620e6c7ed8d183341827c524fcf4ff06, type: 3}
-  gridSize: {x: 2, y: 2}
+  gridSize: {x: 1, y: 1}

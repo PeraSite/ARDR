@@ -633,7 +633,7 @@ MonoBehaviour:
   lastCellPos: {x: 15, y: 15}
   canvas: {fileID: 1116637027}
   overlayObject: {fileID: 23336261}
-  floatingAmount: 1
+  floatingAmount: 0
 --- !u!1 &114032153
 GameObject:
   m_ObjectHideFlags: 0
@@ -2333,7 +2333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1518355544
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3153,6 +3153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tapThreshold: 0.2
+  oldThreshold: 0.5
   swipeThreshold: 100
   referenceDpi: 200
   guiLayers:
