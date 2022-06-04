@@ -1,30 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace ARDR {
-	public class GridGenerator : SerializedScriptableObject {
-		public Vector2Int gridSize = new(10, 10);
+	public class GridData : SerializedScriptableObject {
 		public Grid<Chunk> chunkGrid;
-
-		public List<Vector2Int> defaultEnableChunk = new();
-
-		[Button]
-		public void GenerateGrid() {
-			chunkGrid = new Grid<Chunk>(
-				gridSize.x,
-				gridSize.y,
-				Chunk.cellPerChunk * Chunk.cellSize,
-				new Vector3(0, 0, 0),
-				CreateGridObject,
-				Color.blue);
-			chunkGrid.Init();
-		}
-
-		private Chunk CreateGridObject(Grid<Chunk> g, int x, int z) {
-			return new Chunk(this, x, z, defaultEnableChunk.Contains(new Vector2Int(x, z)));
-		}
 
 		[Button]
 		public void SetEnableChunk(Vector2Int chunkPos, bool isEnabled) {

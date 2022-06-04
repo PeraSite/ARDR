@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ARDR {
 	public class Chunk {
-		public const int cellPerChunk = 8;
+		public const int cellPerChunk = 7;
 		public const float cellSize = 2.5F;
 
 		public Grid<CellObject> cellGrid;
@@ -15,10 +15,10 @@ namespace ARDR {
 		}
 
 		private Vector2Int chunkPosition;
-		private GridGenerator _gridController;
+		private GridData _gridController;
 		private bool _isEnabled;
 
-		public Chunk(GridGenerator parent, int x, int y, bool isEnabled = true) {
+		public Chunk(GridData parent, int x, int y, bool isEnabled = true) {
 			_gridController = parent;
 			chunkPosition = new Vector2Int(x, y);
 			SetEnabled(isEnabled);
