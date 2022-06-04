@@ -1,7 +1,8 @@
+using CW.Common;
+using Lean.Common;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using Lean.Common;
-using CW.Common;
 
 namespace Lean.Touch
 {
@@ -103,7 +104,6 @@ namespace Lean.Touch
 #if UNITY_EDITOR
 namespace Lean.Touch.Editor
 {
-	using UnityEditor;
 	using TARGET = LeanFingerOld;
 
 	[CanEditMultipleObjects]

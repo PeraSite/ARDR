@@ -32,8 +32,7 @@ namespace ARDR {
 #endif
 		}
 
-		protected override void OnEnable() {
-			base.OnEnable();
+		protected void OnEnable() {
 			Application.wantsToQuit -= OnWantsToQuit;
 			Application.wantsToQuit += OnWantsToQuit;
 		}

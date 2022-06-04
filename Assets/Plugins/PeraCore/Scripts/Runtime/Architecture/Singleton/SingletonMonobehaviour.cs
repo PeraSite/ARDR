@@ -1,5 +1,5 @@
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
+using UnityEditor;
 using UnityEngine;
 
 namespace PeraCore.Runtime {
@@ -32,6 +32,10 @@ namespace PeraCore.Runtime {
 
 			if (KeepAlive)
 				DontDestroyOnLoad(gameObject);
+
+#if UNITY_EDITOR
+			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
 		}
 
 		protected virtual void OnDestroy() {
@@ -39,16 +43,10 @@ namespace PeraCore.Runtime {
 			_destroyed = true;
 		}
 
-		protected virtual void OnEnable() {
 #if UNITY_EDITOR
-			UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-#endif
-		}
-
-#if UNITY_EDITOR
-		static void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange stateChange) {
-			if (stateChange == UnityEditor.PlayModeStateChange.EnteredEditMode) {
-				UnityEditor.EditorApplication.playModeStateChanged -=
+		static void OnPlayModeStateChanged(PlayModeStateChange stateChange) {
+			if (stateChange == PlayModeStateChange.EnteredEditMode) {
+				EditorApplication.playModeStateChanged -=
 					OnPlayModeStateChanged;
 				_destroyed = false;
 			}

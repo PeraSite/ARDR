@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 6344173096325343025}
   m_Layer: 0
   m_Name: "\uC138\uACC4\uC218_2\uB2E8\uACC4"
-  m_TagString: Untagged
+  m_TagString: Placeable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,8 +246,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.5011034, z: 1}
-  m_Center: {x: 0, y: 0.7505517, z: 0}
+  m_Size: {x: 7.0700445, y: 6.87069, z: 7.5347238}
+  m_Center: {x: 3.0350223, y: 2.9353445, z: 3.2673619}
 --- !u!114 &6696140129005214352
 MonoBehaviour:
   m_ObjectHideFlags: 0

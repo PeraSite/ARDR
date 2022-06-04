@@ -2,10 +2,11 @@
 // If you're developing on a platform or device like this, you can uncomment this to enable manual override of the ID.
 //#define LEAN_ALLOW_RECLAIM
 
-using UnityEngine;
-using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using CW.Common;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Lean.Touch
 {
@@ -34,6 +35,8 @@ namespace Lean.Touch
 		private const int DEFAULT_GUI_LAYERS = 1 << 5;
 
 		private const float DEFAULT_TAP_THRESHOLD = 0.2f;
+
+		private const float DEFAULT_OLD_THRESHOLD = 0.5f;
 
 		private const float DEFAULT_SWIPE_THRESHOLD = 100.0f;
 
@@ -81,6 +84,8 @@ namespace Lean.Touch
 
 		/// <summary>This allows you to set how many seconds are required between a finger down/up for a tap to be registered.</summary>
 		public float TapThreshold { set { tapThreshold = value; } get { return tapThreshold; } } [SerializeField] private float tapThreshold = DEFAULT_TAP_THRESHOLD;
+
+		public float OldThreshold { set { oldThreshold = value; } get { return oldThreshold; } } [SerializeField] private float oldThreshold = DEFAULT_OLD_THRESHOLD;
 
 		public static float CurrentTapThreshold
 		{
@@ -583,7 +588,7 @@ namespace Lean.Touch
 					finger.Age += deltaTime;
 
 					// Too old?
-					if (finger.Age > tapThreshold && finger.Old == false)
+					if (finger.Age > oldThreshold && finger.Old == false)
 					{
 						finger.Old = true;
 
@@ -843,13 +848,28 @@ namespace Lean.Touch
 
 			return -1;
 		}
+
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+		private static void ResetStatic() {
+			Instances.Clear();
+			Fingers.Clear();
+			InactiveFingers.Clear();
+			OnFingerDown = delegate {  };
+			OnFingerUpdate = delegate {  };
+			OnFingerUp = delegate {  };
+			OnFingerOld = delegate {  };
+			OnFingerTap = delegate {  };
+			OnFingerSwipe = delegate {  };
+			OnGesture = delegate {  };
+			OnFingerExpired = delegate {  };
+			OnFingerInactive = delegate {  };
+		}
 	}
 }
 
 #if UNITY_EDITOR
 namespace Lean.Touch.Editor
 {
-	using UnityEditor;
 	using TARGET = LeanTouch;
 
 	[CustomEditor(typeof(TARGET))]

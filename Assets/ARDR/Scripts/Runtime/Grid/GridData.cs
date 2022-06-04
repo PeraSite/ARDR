@@ -64,7 +64,7 @@ namespace ARDR {
 		}
 
 		public Vector2Int GetLocalChunkPos(Vector2Int cellPos) =>
-			new Vector2Int(cellPos.x % Chunk.cellPerChunk, cellPos.y % Chunk.cellPerChunk);
+			new(cellPos.x % Chunk.cellPerChunk, cellPos.y % Chunk.cellPerChunk);
 
 		public Chunk GetChunk(Vector2Int cellPos) =>
 			chunkGrid.GetGridObject(
