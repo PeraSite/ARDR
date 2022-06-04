@@ -9,6 +9,7 @@ namespace ARDR {
 			T placeableObjectData) where T : PlaceableObjectData {
 			var placedObjectTransform = Object.Instantiate(placeableObjectData.model, worldPosition,
 				Quaternion.Euler(0, direction.GetRotationAngle(), 0));
+			placedObjectTransform.SetTagRecursive("Placeable");
 
 			if (placedObjectTransform.TryGetComponent<IPlacedObject>(out var placedObject)) {
 				placedObject.Setup(chunk, placeableObjectData, origin, direction);

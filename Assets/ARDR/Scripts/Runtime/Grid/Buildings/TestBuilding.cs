@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
 using TMPro;
 
 namespace ARDR {
@@ -10,13 +10,11 @@ namespace ARDR {
 			text.text = score.ToString();
 		}
 
+		[Button]
 		public void AddScore() {
 			score++;
 			text.text = score.ToString();
 		}
-
-		public override string Id { get; }
-		public override Type Type { get; }
 
 		public override string RecordData() {
 			return score.ToString();

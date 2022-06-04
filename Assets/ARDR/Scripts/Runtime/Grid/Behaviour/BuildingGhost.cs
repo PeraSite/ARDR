@@ -6,18 +6,23 @@ using UnityEngine;
 
 namespace ARDR {
 	public class BuildingGhost : MonoSingleton<BuildingGhost> {
-		public GridData GridData;
-		public Transform parent;
-		public BoolVariable IsDragging;
-		public Material ghostMaterial;
-		public Vector2Int lastCellPos;
+		[Header("오브젝트")]
 		public RectTransform canvas;
 		public RectTransform overlayObject;
-		public float floatingAmount = 1f;
+		public GridData GridData;
+		public Transform parent;
+		public Material ghostMaterial;
 
+		[Header("변수")]
 		public BoolVariable IsEditingObject;
 		public DirectionVariable CurrentDirection;
+		public BoolVariable IsDragging;
 
+		[Header("설정")]
+		public float floatingAmount = 1f;
+
+		[HideInInspector]
+		public Vector2Int lastCellPos;
 		private Camera _cam;
 		private PlaceableObjectData _currentData;
 		private GameObject _ghostObject;
@@ -30,12 +35,12 @@ namespace ARDR {
 		private void Update() {
 			if (!IsEditingObject.Value) return;
 			var center = GetCenterWorldPosition();
-			overlayObject.anchoredPosition = WorldToCanvasPosition(canvas, _cam, center);
+			overlayObject.anchoredPosition = UnityUtil.WorldToCanvasPosition(canvas, _cam, center);
 
 			var targetPosition = transform.position;
 			var dir = CurrentDirection.Value;
 
-			var worldPosition = GetMouseWorldPosition();
+			var worldPosition = UnityUtil.GetMouseWorldPosition(_cam);
 			if (IsDragging.Value && GridData.GetSnappedPosition(_currentData, worldPosition, dir)
 				    .GetValue(out var snappedPosition)) {
 				targetPosition = snappedPosition;
@@ -64,7 +69,7 @@ namespace ARDR {
 			objectTransform.parent = parent;
 			objectTransform.localPosition = Vector3.zero;
 			objectTransform.localEulerAngles = Vector3.zero;
-			SetLayerRecursive(_ghostObject, 2);
+			_ghostObject.SetLayerRecursive(2);
 			_ghostObject.GetComponentsInChildren<MeshRenderer>().ForEach(mr => { mr.material = ghostMaterial; });
 			canvas.gameObject.SetActive(true);
 			RotateObject(CurrentDirection.Value);
@@ -93,33 +98,6 @@ namespace ARDR {
 			parent.gameObject.SetActive(false);
 			canvas.gameObject.SetActive(false);
 			Destroy(_ghostObject.gameObject);
-		}
-
-		private void SetLayerRecursive(GameObject targetGameObject, int layer) {
-			targetGameObject.layer = layer;
-			foreach (Transform child in targetGameObject.transform) {
-				SetLayerRecursive(child.gameObject, layer);
-			}
-		}
-
-		public static Vector2 WorldToCanvasPosition(RectTransform canvas, Camera camera, Vector3 position) {
-			Vector2 temp = camera.WorldToViewportPoint(position);
-
-			var sizeDelta = canvas.sizeDelta;
-			temp.x *= sizeDelta.x;
-			temp.y *= sizeDelta.y;
-
-			temp.x -= sizeDelta.x * canvas.pivot.x;
-			temp.y -= canvas.sizeDelta.y * canvas.pivot.y;
-
-			return temp;
-		}
-
-		public Vector3 GetMouseWorldPosition() {
-			var ray = _cam.ScreenPointToRay(Input.mousePosition);
-			return Physics.Raycast(ray, out var raycastHit, 999f)
-				? raycastHit.point
-				: Vector3.zero;
 		}
 	}
 }

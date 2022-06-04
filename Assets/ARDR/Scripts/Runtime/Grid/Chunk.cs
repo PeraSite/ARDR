@@ -91,7 +91,7 @@ namespace ARDR {
 			);
 		}
 
-		public void RemovePlacedObject(PlacedObject<PlaceableObjectData> obj) {
+		public void RemovePlacedObject(IPlacedObject obj) {
 			foreach (var localChunkPos in obj.GetGridPositionList()) {
 				var cellPos = ToCellPos(localChunkPos);
 				var targetChunk = _gridController.GetChunk(cellPos);

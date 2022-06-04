@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace ARDR {
-	public class GridController : SerializedMonoBehaviour {
+	public class GridSystem : SerializedMonoBehaviour {
 		public GridData Grid;
 
 		public Vector3 OriginPosition;

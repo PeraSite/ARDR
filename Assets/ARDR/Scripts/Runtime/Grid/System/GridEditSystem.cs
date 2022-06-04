@@ -6,7 +6,7 @@ using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
-	public class EditGridController : MonoBehaviour {
+	public class GridEditSystem : MonoBehaviour {
 		[Header("변수")]
 		public GridData GridData;
 
@@ -14,19 +14,26 @@ namespace ARDR {
 		public DirectionVariable CurrentDirection;
 
 		private PlaceableObjectData _currentData;
-
-		private PlacedObject<PlaceableObjectData> _editingObject;
+		private IPlacedObject _editingObject;
+		private Transform _editingObjectTransform;
+		private string _editingObjectState;
 
 		public void OnLongTouch(LeanFinger finger) {
-			if (IsEditing.Value) return;
 			if (Physics.Raycast(finger.GetRay(), out var info)) {
 				if (!info.collider.CompareTag("Placeable")) return;
-				if (!info.transform.TryGetComponent<PlacedObject<PlaceableObjectData>>(out var placedObject)) return;
+				var targetTransform = info.transform;
+				if (!targetTransform.TryGetComponent<IPlacedObject>(out var placedObject)) {
+					return;
+				}
 
+				placedObject.OnEditStart();
+				placedObject.IsEditing = true;
+				_editingObjectTransform = targetTransform;
 				_editingObject = placedObject;
-				var cellPos = GridData.GetCellPos(placedObject.transform.position);
-				_editingObject.gameObject.SetActive(false);
-				SetEditMode(placedObject.ObjectData, cellPos);
+				_editingObjectState = placedObject.RecordData();
+				var cellPos = GridData.GetCellPos(targetTransform.position);
+				targetTransform.gameObject.SetActive(false);
+				SetEditMode(placedObject.BaseData, cellPos);
 			}
 		}
 
@@ -58,25 +65,34 @@ namespace ARDR {
 				Debug.Log("이 곳에는 설치할 수 없습니다!");
 				return;
 			}
-			var isEditingObject = !_editingObject.SafeIsUnityNull();
+			var isEditingObject = _editingObject != null;
 			if (isEditingObject) { //Destroy old object
 				var chunk = _editingObject.Chunk;
 				chunk.RemovePlacedObject(_editingObject);
 			}
 
-			var placed = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value);
+			var placedObject = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value);
 			if (!isEditingObject) { //If first place
-				placed.OnInit();
+				placedObject.OnInit();
+			} else {
+				placedObject.ApplyData(_editingObjectState);
+				placedObject.OnEditEnd();
+				placedObject.IsEditing = false;
 			}
-			IsEditing.Value = false;
+
 			BuildingGhost.Instance.DestroyVisual();
+			IsEditing.Value = false;
+			_editingObject = null;
+			_editingObjectState = "";
+			_editingObjectTransform = null;
+			_currentData = null;
 		}
 
 		public void CancelEdit() {
 			IsEditing.Value = false;
 			BuildingGhost.Instance.DestroyVisual();
-			if (!_editingObject.SafeIsUnityNull()) {
-				_editingObject.gameObject.SetActive(true);
+			if (!_editingObjectTransform.SafeIsUnityNull()) {
+				_editingObjectTransform.gameObject.SetActive(true);
 			}
 		}
 	}
