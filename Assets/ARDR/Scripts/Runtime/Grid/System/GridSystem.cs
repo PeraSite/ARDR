@@ -12,6 +12,8 @@ namespace ARDR {
 
 		public List<Vector2Int> defaultEnableChunk = new();
 
+		public Dictionary<Vector2Int, List<Vector2Int>> DefaultDisabledCell = new();
+
 		[Button]
 		public void GenerateGrid() {
 			Grid.chunkGrid = new Grid<Chunk>(
@@ -24,8 +26,19 @@ namespace ARDR {
 			Grid.chunkGrid.Init();
 		}
 
-		private Chunk CreateGridObject(Grid<Chunk> g, int x, int z) {
-			return new Chunk(Grid, x, z, defaultEnableChunk.Contains(new Vector2Int(x, z)));
+		private Chunk CreateGridObject(Grid<Chunk> g, int chunkX, int chunkZ) {
+			return new Chunk(Grid,
+				chunkX,
+				chunkZ,
+				defaultEnableChunk.Contains(new Vector2Int(chunkX, chunkZ)),
+				(cellX, cellZ) => {
+					if (DefaultDisabledCell.TryGetValue(new Vector2Int(chunkX, chunkZ), out var disabledCells)) {
+						if (disabledCells.Contains(new Vector2Int(cellX, cellZ))) {
+							return false;
+						}
+					}
+					return true;
+				});
 		}
 
 		private void Start() {

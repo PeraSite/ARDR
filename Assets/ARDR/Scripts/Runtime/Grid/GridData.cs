@@ -17,10 +17,11 @@ namespace ARDR {
 			var gridPositionList = objectData.GetGridPositionList(originCellPos, dir);
 			foreach (var subCellPos in gridPositionList) {
 				var chunk = GetChunk(subCellPos);
-				if (!chunk.IsEnabled)
-					return false;
+				if (!chunk.IsEnabled) return false;
 				var localChunkPos = GetLocalChunkPos(subCellPos);
-				if (chunk[localChunkPos].IsPlaced()) canPlace = false;
+				var cell = chunk[localChunkPos];
+				if (cell.IsPlaced()) canPlace = false;
+				if (!cell.IsEnabled) canPlace = false;
 			}
 			return canPlace;
 		}

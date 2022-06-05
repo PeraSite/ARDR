@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Sirenix.Utilities;
 using UnityEngine;
 
@@ -15,12 +16,15 @@ namespace ARDR {
 		}
 
 		private Vector2Int chunkPosition;
-		private GridData _gridController;
+		private GridData _gridData;
 		private bool _isEnabled;
+		private Func<int, int, bool> _cellInitializer;
 
-		public Chunk(GridData parent, int x, int y, bool isEnabled = true) {
-			_gridController = parent;
+		public Chunk(GridData parent, int x, int y, bool isEnabled,
+			Func<int, int, bool> cellInitializer) {
+			_gridData = parent;
 			chunkPosition = new Vector2Int(x, y);
+			_cellInitializer = cellInitializer;
 			SetEnabled(isEnabled);
 		}
 
@@ -38,12 +42,8 @@ namespace ARDR {
 		}
 
 		private void DestroyCell() {
-			cellGrid.GridArray.Cast<CellObject>().Where(obj => obj.IsPlaced())
-				.ForEach(obj => {
-					var placedObject = obj.GetPlacedObject();
-					obj.SetPlacedObject(null);
-					placedObject.DestroySelf();
-				});
+			cellGrid.GridArray.Cast<CellObject>().Where(cell => cell.IsPlaced())
+				.ForEach(cell => cell.ClearPlacedObject());
 			cellGrid.Destroy();
 			cellGrid = null;
 		}
@@ -51,8 +51,9 @@ namespace ARDR {
 		public void InitCell() {
 			cellGrid = new Grid<CellObject>(
 				cellPerChunk, cellPerChunk, cellSize,
-				_gridController.chunkGrid.GetWorldPosition(chunkPosition),
-				(g, x, z) => new CellObject(this, x, z),
+				_gridData.chunkGrid.GetWorldPosition(chunkPosition),
+				(g, x, z) =>
+					new CellObject(this, x, z, _cellInitializer(x, z)),
 				Color.red
 			);
 			cellGrid.Init();
@@ -94,8 +95,8 @@ namespace ARDR {
 		public void RemovePlacedObject(IPlacedObject obj) {
 			foreach (var localChunkPos in obj.GetGridPositionList()) {
 				var cellPos = ToCellPos(localChunkPos);
-				var targetChunk = _gridController.GetChunk(cellPos);
-				var targetLocalChunkPos = _gridController.GetLocalChunkPos(cellPos);
+				var targetChunk = _gridData.GetChunk(cellPos);
+				var targetLocalChunkPos = _gridData.GetLocalChunkPos(cellPos);
 
 				targetChunk[targetLocalChunkPos].ClearPlacedObject();
 			}

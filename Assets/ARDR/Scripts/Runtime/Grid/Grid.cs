@@ -9,7 +9,6 @@ namespace ARDR {
 		public int height;
 		public float cellSize;
 
-		[HideInInspector]
 		public TGridObject[,] GridArray;
 
 		public Vector3 originWorldPosition;
@@ -44,7 +43,7 @@ namespace ARDR {
 				for (var x = 0; x < GridArray.GetLength(0); x++) {
 					for (var z = 0; z < GridArray.GetLength(1); z++) {
 						debugTextArray[x, z] = UtilsClass.CreateWorldText(GridArray[x, z]?.ToString(), null,
-							GetWorldPosition(x, z) + new Vector3(cellSize, 1, cellSize) * .5f, 7, color);
+							GetWorldPosition(x, z) + new Vector3(cellSize, 1.5f, cellSize) * .5f, 5, color);
 						Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), color, 100f);
 						Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), color, 100f);
 					}
