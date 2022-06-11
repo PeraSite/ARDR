@@ -92,5 +92,10 @@ namespace ARDR {
 			var localChunkPos = GetLocalChunkPos(cellPos);
 			return chunk.GetWorldPosition(localChunkPos);
 		}
+
+
+		public Vector3? GetWorldPosition(int cellX, int cellZ) {
+			return GetWorldPosition(new Vector2Int(cellX, cellZ));
+		}
 	}
 }

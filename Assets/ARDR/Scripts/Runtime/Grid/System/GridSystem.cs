@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ARDR {
 	public class GridSystem : SerializedMonoBehaviour {
-		public GridData Grid;
+		public GridData GridData;
 
 		public Vector3 OriginPosition;
 
@@ -14,20 +14,48 @@ namespace ARDR {
 
 		public Dictionary<Vector2Int, List<Vector2Int>> DefaultDisabledCell = new();
 
-		[Button]
+		private void Start() {
+			GenerateGrid();
+		}
+
+		private void OnDisable() {
+			GridData.chunkGrid = null;
+		}
+
 		public void GenerateGrid() {
-			Grid.chunkGrid = new Grid<Chunk>(
+			GridData.chunkGrid = new Grid<Chunk>(
 				gridSize.x,
 				gridSize.y,
 				Chunk.cellPerChunk * Chunk.cellSize,
 				OriginPosition,
 				CreateGridObject,
 				Color.blue);
-			Grid.chunkGrid.Init();
+			GridData.chunkGrid.Init();
+			FindSceneGridObject();
+		}
+
+		[Button]
+		public void FindSceneGridObject() {
+			var gridObjectList = FindObjectsOfType<GridObjectBase>();
+			foreach (var gridObject in gridObjectList) {
+				var cellPos = GridData.GetCellPos(gridObject.transform.position);
+				var chunk = GridData.GetChunk(cellPos);
+				var localCellPos = GridData.GetLocalChunkPos(cellPos);
+
+				gridObject.Chunk = chunk;
+				gridObject.Position = localCellPos;
+				gridObject.Direction = Direction.Down;
+				chunk.cellGrid.GetGridObject(localCellPos).PlacedObject = gridObject;
+			}
+		}
+
+		[Button]
+		public void UnlockChunk(int chunkX, int chunkZ) {
+			GridData.SetEnableChunk(new Vector2Int(chunkX, chunkZ), true);
 		}
 
 		private Chunk CreateGridObject(Grid<Chunk> g, int chunkX, int chunkZ) {
-			return new Chunk(Grid,
+			return new Chunk(GridData,
 				chunkX,
 				chunkZ,
 				defaultEnableChunk.Contains(new Vector2Int(chunkX, chunkZ)),
@@ -41,12 +69,14 @@ namespace ARDR {
 				});
 		}
 
-		private void Start() {
-			GenerateGrid();
+#if UNITY_EDITOR
+		private void OnDrawGizmos() {
+			if (GridData.chunkGrid == null) return;
+			GridData.chunkGrid.DrawGizmo(Color.red);
+			foreach (var chunk in GridData.chunkGrid.GridArray) {
+				chunk.cellGrid?.DrawGizmo(Color.blue);
+			}
 		}
-
-		private void OnDisable() {
-			Grid.chunkGrid = null;
-		}
+#endif
 	}
 }

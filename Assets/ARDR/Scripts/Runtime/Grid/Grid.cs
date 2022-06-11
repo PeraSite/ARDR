@@ -1,7 +1,8 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
-using Object = UnityEngine.Object;
+#if UNITY_EDITOR
+using PeraCore.Editor;
+#endif
 
 namespace ARDR {
 	public class Grid<TGridObject> {
@@ -15,9 +16,6 @@ namespace ARDR {
 
 		private Func<Grid<TGridObject>, int, int, TGridObject> gridObjectConstructor;
 
-		private Color? debugColor;
-		private TextMeshPro[,] debugTextArray;
-
 		public Grid(int width, int height, float cellSize, Vector3 originPosition,
 			Func<Grid<TGridObject>, int, int, TGridObject> createGridObject, Color? debugColor = null) {
 			this.width = width;
@@ -27,7 +25,6 @@ namespace ARDR {
 			gridObjectConstructor = createGridObject;
 
 			GridArray = new TGridObject[width, height];
-			this.debugColor = debugColor;
 		}
 
 		public void Init() {
@@ -36,33 +33,26 @@ namespace ARDR {
 					GridArray[x, z] = gridObjectConstructor(this, x, z);
 				}
 			}
+		}
 
-			if (debugColor.GetValue(out var color)) {
-				debugTextArray = new TextMeshPro[width, height];
-
-				for (var x = 0; x < GridArray.GetLength(0); x++) {
-					for (var z = 0; z < GridArray.GetLength(1); z++) {
-						debugTextArray[x, z] = UtilsClass.CreateWorldText(GridArray[x, z]?.ToString(), null,
-							GetWorldPosition(x, z) + new Vector3(cellSize, 1.5f, cellSize) * .5f, 5, color);
-						Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), color, 100f);
-						Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), color, 100f);
-					}
+#if UNITY_EDITOR
+		public void DrawGizmo(Color color) {
+			Gizmos.color = color;
+			for (var x = 0; x < GridArray.GetLength(0); x++) {
+				for (var z = 0; z < GridArray.GetLength(1); z++) {
+					var worldPosition = GetWorldPosition(x, z);
+					worldPosition += new Vector3(cellSize, 0, cellSize) * 0.5f;
+					var text = GridArray[x, z].ToString();
+					if (text == "") text = $"({x}, {z})";
+					GizmoUtils.DrawString(text, worldPosition, color);
+					Gizmos.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1));
+					Gizmos.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z));
 				}
-				Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), color, 100f);
-				Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), color, 100f);
-
-				OnGridObjectChanged += (sender, eventArgs) => {
-					var gridObject = GridArray[eventArgs.x, eventArgs.z];
-					debugTextArray[eventArgs.x, eventArgs.z].text = gridObject?.ToString();
-				};
 			}
+			Gizmos.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height));
+			Gizmos.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height));
 		}
-
-		public void Destroy() {
-			foreach (var textMesh in debugTextArray) {
-				Object.Destroy(textMesh.gameObject);
-			}
-		}
+#endif
 
 		public Vector3 GetWorldPosition(int x, int z) => new Vector3(x, 0, z) * cellSize + originWorldPosition;
 

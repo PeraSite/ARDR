@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using Sirenix.Utilities;
+using UnityEngine;
 
 namespace ARDR {
-	public class CellObject {
+	public class Cell {
 		public bool IsEnabled;
-		public IPlacedObject PlacedObject;
+		public IGridObject PlacedObject;
 
 		private readonly Chunk _chunk;
 		private readonly Vector2Int _localChunkPos;
 
-		public CellObject(Chunk chunk, int x, int y, bool isEnabled) : this(chunk, new Vector2Int(x, y), isEnabled) { }
+		public Cell(Chunk chunk, int x, int y, bool isEnabled) : this(chunk, new Vector2Int(x, y), isEnabled) { }
 
-		public CellObject(Chunk chunk, Vector2Int localChunkPos, bool isEnabled) {
+		public Cell(Chunk chunk, Vector2Int localChunkPos, bool isEnabled) {
 			_chunk = chunk;
 			_localChunkPos = localChunkPos;
 			PlacedObject = null;
@@ -18,7 +19,7 @@ namespace ARDR {
 		}
 
 		public override string ToString() {
-			return _localChunkPos.x + ", " + _localChunkPos.y + "\n" + $"<size=4>{IsEnabled}</size>" + "\n" + PlacedObject;
+			return _localChunkPos.x + ", " + _localChunkPos.y + "\n" + PlacedObject?.GetType()?.GetNiceName();
 		}
 
 		public void SetPlacedObject(IPlacedObject _placedObject) {

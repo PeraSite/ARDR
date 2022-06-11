@@ -8,7 +8,7 @@ namespace ARDR {
 		public const int cellPerChunk = 7;
 		public const float cellSize = 2.5F;
 
-		public Grid<CellObject> cellGrid;
+		public Grid<Cell> cellGrid;
 
 		public bool IsEnabled {
 			get => _isEnabled;
@@ -42,18 +42,17 @@ namespace ARDR {
 		}
 
 		private void DestroyCell() {
-			cellGrid.GridArray.Cast<CellObject>().Where(cell => cell.IsPlaced())
+			cellGrid.GridArray.Cast<Cell>().Where(cell => cell.IsPlaced())
 				.ForEach(cell => cell.ClearPlacedObject());
-			cellGrid.Destroy();
 			cellGrid = null;
 		}
 
 		public void InitCell() {
-			cellGrid = new Grid<CellObject>(
+			cellGrid = new Grid<Cell>(
 				cellPerChunk, cellPerChunk, cellSize,
 				_gridData.chunkGrid.GetWorldPosition(chunkPosition),
 				(g, x, z) =>
-					new CellObject(this, x, z, _cellInitializer(x, z)),
+					new Cell(this, x, z, _cellInitializer(x, z)),
 				Color.red
 			);
 			cellGrid.Init();
@@ -61,12 +60,12 @@ namespace ARDR {
 
 #region Util functions
 
-		public CellObject this[int x, int z] {
+		public Cell this[int x, int z] {
 			get => cellGrid.GetGridObject(x, z);
 			set => cellGrid.SetGridObject(new Vector2Int(x, z), value);
 		}
 
-		public CellObject this[Vector2Int localPos] {
+		public Cell this[Vector2Int localPos] {
 			get => cellGrid.GetGridObject(localPos);
 			set => cellGrid.SetGridObject(localPos, value);
 		}
@@ -103,7 +102,7 @@ namespace ARDR {
 		}
 
 		public override string ToString() {
-			return chunkPosition.ToString();
+			return _gridData == null ? "" : chunkPosition.ToString();
 		}
 
 #endregion

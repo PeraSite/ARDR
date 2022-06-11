@@ -14,7 +14,7 @@ namespace ARDR {
 		public TDataType Data => (TDataType) BaseData;
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
-		public Vector2Int Origin { get; set; }
+		public Vector2Int Position { get; set; }
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
 		public Direction Direction { get; set; }
@@ -26,7 +26,7 @@ namespace ARDR {
 			Direction _direction) {
 			Chunk = chunk;
 			BaseData = placeableObjectData;
-			Origin = _origin;
+			Position = _origin;
 			Direction = _direction;
 		}
 

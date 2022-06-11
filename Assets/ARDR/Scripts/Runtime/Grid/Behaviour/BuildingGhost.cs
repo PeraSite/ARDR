@@ -57,7 +57,7 @@ namespace ARDR {
 			return pos;
 		}
 
-		public PlacedObject<PlaceableObjectData> InitGhost(PlaceableObjectData data) {
+		public IPlacedObject InitGhost(PlaceableObjectData data) {
 			_currentData = data;
 
 			if (!_ghostObject.SafeIsUnityNull()) { //If already there is visual, destroy old ghost
@@ -73,10 +73,10 @@ namespace ARDR {
 			_ghostObject.GetComponentsInChildren<MeshRenderer>().ForEach(mr => { mr.material = ghostMaterial; });
 			canvas.gameObject.SetActive(true);
 			RotateObject(CurrentDirection.Value);
-			return _ghostObject.GetComponent<PlacedObject<PlaceableObjectData>>();
+			return _ghostObject.GetComponent<IPlacedObject>();
 		}
 
-		public PlacedObject<PlaceableObjectData> InitGhost(PlaceableObjectData data, Vector2Int cellPos) {
+		public IPlacedObject InitGhost(PlaceableObjectData data, Vector2Int cellPos) {
 			if (GridData.GetWorldPosition(cellPos).GetValue(out var worldPos)) {
 				lastCellPos = cellPos;
 				transform.position = worldPos;
