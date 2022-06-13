@@ -23,6 +23,8 @@ namespace ARDR {
 			var varDict = SaveSystem.Deserialize<Dictionary<string, object>>(data);
 			foreach (var variable in Variables) {
 				var id = GetAtomID(variable);
+				if (!varDict.ContainsKey(id)) continue;
+
 				variable.BaseValue = varDict[id];
 				variable.NotifyChanged();
 			}

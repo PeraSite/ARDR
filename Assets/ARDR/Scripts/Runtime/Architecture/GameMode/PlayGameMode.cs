@@ -14,7 +14,7 @@ namespace ARDR {
 
 		public int activeSlotID;
 
-		public static int editorSlotID = 999;
+		public const int editorSlotID = 999;
 
 		private static bool _doesSceneLoaded;
 

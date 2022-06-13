@@ -35,8 +35,9 @@ namespace ARDR {
 			Direction = _direction;
 		}
 
-		public virtual void OnInteract() { }
 		public virtual void OnInit() { }
+		public virtual void OnRemove() {}
+
 		public void DestroySelf() => Destroy(gameObject);
 
 		public virtual void OnEditStart() { }

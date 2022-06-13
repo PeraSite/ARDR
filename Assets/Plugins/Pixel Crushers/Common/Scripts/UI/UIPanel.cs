@@ -31,19 +31,10 @@ namespace PixelCrushers
         [Tooltip("Reselect previous selectable when disabling this panel.")]
         public bool selectPreviousOnDisable = true;
 
-        [Tooltip("When opening, set this animator trigger.")]
-        public string showAnimationTrigger = "Show";
-
-        [Tooltip("When closing, set this animator trigger.")]
-        public string hideAnimationTrigger = "Hide";
-
         public enum StartState { GameObjectState, Open, Closed }
 
         [Tooltip("Normally the panel considers itself open at start if the GameObject starts active (GameObjectState). To explicitly specify whether the panel should start open or closed, select Open or Closed from the dropdown.")]
         public StartState startState = StartState.GameObjectState;
-
-        [Tooltip("Do not set panel state to Open until Show animation has finished.")]
-        public bool waitForShowAnimationToSetOpen = false;
 
         [Tooltip("Deactivate panel GameObject when panel is closed.")]
         [SerializeField]
@@ -102,25 +93,18 @@ namespace PixelCrushers
             set { m_panelState = value; }
         }
 
-        // Kept for backward compatibility:
-        public virtual bool waitForShowAnimation
-        {
-            get { return waitForShowAnimationToSetOpen; }
-            set { waitForShowAnimationToSetOpen = value; }
-        }
-
         public bool isOpen
         {
             get { return panelState == PanelState.Opening || panelState == PanelState.Open || (panelState == PanelState.Uninitialized && gameObject.activeInHierarchy); }
         }
 
-        private UIAnimatorMonitor m_animatorMonitor = null;
-        public UIAnimatorMonitor animatorMonitor
-        {
-            get
-            {
-                if (m_animatorMonitor == null) m_animatorMonitor = new UIAnimatorMonitor(gameObject);
-                return m_animatorMonitor;
+        private void OnValidate() {
+            if(AlphaCanvasGroup.SafeIsUnityNull()) {
+                if(TryGetComponent<CanvasGroup>(out var canvasGroup)) {
+                    AlphaCanvasGroup = canvasGroup;
+                } else {
+                    AlphaCanvasGroup =gameObject.AddComponent<CanvasGroup>();
+                }
             }
         }
 

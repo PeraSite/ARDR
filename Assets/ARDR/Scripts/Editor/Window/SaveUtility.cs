@@ -67,6 +67,7 @@ public class SaveUtility : OdinEditorWindow {
 	}
 
 	private static SerializedSavedGameData MakeSerialized(SavedGameData data) {
+		if (data == null) return null;
 		return new SerializedSavedGameData {
 			original = data,
 			version = data.version,

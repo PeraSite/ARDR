@@ -60,7 +60,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784e518ad5854d92b359229a1dbe12c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Money: {fileID: 11400000, guid: 37a2143cd8d94ba488a78d98aced8bc8, type: 2}
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: <Chunk>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <BaseData>k__BackingField
+      Entry: 6
+      Data: 
+  <Position>k__BackingField: {x: 0, y: 0}
+  <Direction>k__BackingField: 0
+  MoneyPerSecond: {fileID: 11400000, guid: ea72791d648374c408adfd4e88aaced1, type: 2}
 --- !u!1001 &3983134150281711551
 PrefabInstance:
   m_ObjectHideFlags: 0

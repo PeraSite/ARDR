@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using PeraCore.Runtime;
-using Sirenix.Utilities;
+﻿using PeraCore.Runtime;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -8,6 +6,8 @@ namespace ARDR {
 	public class MoneyPlantSystem : MonoSingleton<MoneyPlantSystem> {
 		[Header("변수")]
 		public IntVariable Money;
+
+		public IntVariable MoneyPerSecond;
 
 		[Header("설정")]
 		public float TickTime;
@@ -23,9 +23,7 @@ namespace ARDR {
 		}
 
 		private void OnTick() {
-			FindObjectsOfType<MoneyPlant>()
-				.Where(plant => !plant.Data.SafeIsUnityNull())
-				.ForEach(plant => Money.Add(plant.Data.MoneyAmount));
+			Money.Add(MoneyPerSecond.Value);
 		}
 	}
 }

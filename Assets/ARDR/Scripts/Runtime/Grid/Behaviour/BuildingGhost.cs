@@ -32,6 +32,10 @@ namespace ARDR {
 			_cam = Camera.main;
 		}
 
+		private void OnDisable() {
+			IsEditingObject.Value = false;
+		}
+
 		private void Update() {
 			if (!IsEditingObject.Value) return;
 			var center = GetCenterWorldPosition();
