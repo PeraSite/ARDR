@@ -1,22 +1,27 @@
 ﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace ARDR {
-	public abstract class PlacedObject<TDataType> : MonoBehaviour, IPlacedObject
+	public abstract class PlacedObject<TDataType> : SerializedMonoBehaviour, IPlacedObject
 		where TDataType : PlaceableObjectData {
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
+		[field: OdinSerialize]
 		public Chunk Chunk { get; set; }
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
+		[field: OdinSerialize]
 		public PlaceableObjectData BaseData { get; set; }
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
 		public TDataType Data => (TDataType) BaseData;
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
+		[field: SerializeField]
 		public Vector2Int Position { get; set; }
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
+		[field: SerializeField]
 		public Direction Direction { get; set; }
 
 		public bool IsInitialized => Chunk != null;

@@ -11,6 +11,10 @@ using UnityEngine;
 using SerializationUtility = Sirenix.Serialization.SerializationUtility;
 
 public class SaveUtility : OdinEditorWindow {
+	private static readonly DeserializationContext context = new() {
+		StringReferenceResolver = new ScriptableObjectStringReferenceResolver()
+	};
+
 	[MenuItem("Tools/Save Utility")]
 	private static void ShowWindow() {
 		GetWindow<SaveUtility>().Show();
@@ -45,7 +49,7 @@ public class SaveUtility : OdinEditorWindow {
 	public SerializedSavedGameData InspectSave(int slot) {
 		var rawSavedData = PlayerPrefs.GetString(GetPlayerPrefsKey(slot));
 		var bytes = Encoding.UTF8.GetBytes(rawSavedData);
-		var data = SerializationUtility.DeserializeValue<SavedGameData>(bytes, DataFormat.JSON);
+		var data = SerializationUtility.DeserializeValue<SavedGameData>(bytes, DataFormat.JSON, context);
 		if (data == null) return null;
 		var serializedData = MakeSerialized(data);
 		return serializedData;
@@ -71,7 +75,7 @@ public class SaveUtility : OdinEditorWindow {
 				key = pair.Value.key,
 				sceneIndex = pair.Value.sceneIndex,
 				data = SerializationUtility.DeserializeValueWeak(Encoding.UTF8.GetBytes(pair.Value.data),
-					DataFormat.JSON)
+					DataFormat.JSON, context)
 			}).ToList()
 		};
 	}
@@ -96,5 +100,31 @@ public class SaveUtility : OdinEditorWindow {
 
 			public object data;
 		}
+	}
+}
+
+public class ScriptableObjectStringReferenceResolver : IExternalStringReferenceResolver {
+	public IExternalStringReferenceResolver NextResolver { get; set; }
+
+	public bool CanReference(object value, out string id) {
+		if (value is ScriptableObject so) {
+			id = so.name;
+			return true;
+		}
+
+		id = null;
+		return false;
+	}
+
+	public bool TryResolveReference(string id, out object value) {
+		value = null;
+		foreach (var guid in AssetDatabase.FindAssets("t:scriptableobject", new[] {"Assets/ARDR/Data"})) {
+			var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+			var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
+			if (asset.name == id) {
+				value = asset;
+			}
+		}
+		return value != null;
 	}
 }

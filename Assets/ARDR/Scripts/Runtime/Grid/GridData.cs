@@ -51,6 +51,8 @@ namespace ARDR {
 				chunk[localChunkPos].SetPlacedObject(placedObject);
 			}
 
+			originChunk.Objects.Add(new Chunk.PlacedObjectInfo
+				{Data = objectData, PlacedObject = placedObject, Position = originLocalChunkPos, Direction = dir});
 			return placedObject;
 		}
 

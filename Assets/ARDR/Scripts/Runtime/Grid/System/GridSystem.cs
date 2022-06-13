@@ -1,27 +1,36 @@
 ﻿using System.Collections.Generic;
+using PeraCore.Runtime;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace ARDR {
-	public class GridSystem : SerializedMonoBehaviour {
-		public GridData GridData;
+	public class GridSystem : MonoSingleton<GridSystem> {
+		[OdinSerialize]
+		private GridData GridData;
 
-		public Vector3 OriginPosition;
+		[OdinSerialize]
+		private Vector3 OriginPosition;
 
-		public Vector2Int gridSize = new(10, 10);
+		[OdinSerialize]
+		private Vector2Int gridSize = new(10, 10);
 
-		public List<Vector2Int> defaultEnableChunk = new();
+		[OdinSerialize]
+		private List<Vector2Int> defaultEnableChunk = new();
 
-		public Dictionary<Vector2Int, List<Vector2Int>> DefaultDisabledCell = new();
+		[OdinSerialize]
+		private Dictionary<Vector2Int, List<Vector2Int>> DefaultDisabledCell = new();
 
-		private void Start() {
+		protected override void Awake() {
+			base.Awake();
 			GenerateGrid();
 		}
 
-		private void OnDisable() {
-			GridData.chunkGrid = null;
+		private void Start() {
+			FindSceneGridObject();
 		}
 
+		[Button]
 		public void GenerateGrid() {
 			GridData.chunkGrid = new Grid<Chunk>(
 				gridSize.x,
@@ -31,21 +40,20 @@ namespace ARDR {
 				CreateGridObject,
 				Color.blue);
 			GridData.chunkGrid.Init();
-			FindSceneGridObject();
 		}
 
 		[Button]
 		public void FindSceneGridObject() {
 			var gridObjectList = FindObjectsOfType<GridObjectBase>();
 			foreach (var gridObject in gridObjectList) {
-				var cellPos = GridData.GetCellPos(gridObject.transform.position);
+				var cellPos = GridData.GetCellPos(gridObject.transform.position + new Vector3(1.25f, 0f, 1.25f));
 				var chunk = GridData.GetChunk(cellPos);
 				var localCellPos = GridData.GetLocalChunkPos(cellPos);
 
 				gridObject.Chunk = chunk;
 				gridObject.Position = localCellPos;
 				gridObject.Direction = Direction.Down;
-				chunk.cellGrid.GetGridObject(localCellPos).PlacedObject = gridObject;
+				chunk.cellGrid.GetGridObject(localCellPos).GridObject = gridObject;
 			}
 		}
 

@@ -1,25 +1,21 @@
-﻿using UnityAtoms.BaseAtoms;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ARDR {
 	public class MoneyPlant : PlacedObject<MoneyPlantData> {
-		public IntVariable Money;
 
-		private float _timer;
+		public float _liveTime;
 
 		private void Update() {
-			if (!IsInitialized) return;
-			if (IsEditing) return;
-
-			_timer += Time.deltaTime;
-			if (_timer >= Data.GiveDelay) {
-				Tick();
-				_timer = 0f;
-			}
+			_liveTime += Time.deltaTime;
 		}
 
-		private void Tick() {
-			Money.Add(Data.MoneyAmount);
+		public override void ApplyData(string value) {
+			if (value == null) return;
+			_liveTime = float.Parse(value);
+		}
+
+		public override string RecordData() {
+			return _liveTime.ToString("F");
 		}
 	}
 }

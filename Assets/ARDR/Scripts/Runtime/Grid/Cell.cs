@@ -4,37 +4,37 @@ using UnityEngine;
 namespace ARDR {
 	public class Cell {
 		public bool IsEnabled;
-		public IGridObject PlacedObject;
+		public IGridObject GridObject;
+		public readonly Vector2Int LocalChunkPos;
 
 		private readonly Chunk _chunk;
-		private readonly Vector2Int _localChunkPos;
 
 		public Cell(Chunk chunk, int x, int y, bool isEnabled) : this(chunk, new Vector2Int(x, y), isEnabled) { }
 
 		public Cell(Chunk chunk, Vector2Int localChunkPos, bool isEnabled) {
 			_chunk = chunk;
-			_localChunkPos = localChunkPos;
-			PlacedObject = null;
+			LocalChunkPos = localChunkPos;
+			GridObject = null;
 			IsEnabled = isEnabled;
 		}
 
 		public override string ToString() {
-			return _localChunkPos.x + ", " + _localChunkPos.y + "\n" + PlacedObject?.GetType()?.GetNiceName();
+			return LocalChunkPos.x + ", " + LocalChunkPos.y + "\n" + GridObject?.GetType()?.GetNiceName();
 		}
 
 		public void SetPlacedObject(IPlacedObject _placedObject) {
-			PlacedObject = _placedObject;
-			_chunk.cellGrid.TriggerGridObjectChanged(_localChunkPos);
+			GridObject = _placedObject;
+			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos);
 		}
 
 		public void ClearPlacedObject() {
-			PlacedObject?.DestroySelf();
-			PlacedObject = null;
-			_chunk.cellGrid.TriggerGridObjectChanged(_localChunkPos);
+			GridObject?.DestroySelf();
+			GridObject = null;
+			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos);
 		}
 
 		public bool IsPlaced() {
-			return PlacedObject != null;
+			return GridObject != null;
 		}
 	}
 }

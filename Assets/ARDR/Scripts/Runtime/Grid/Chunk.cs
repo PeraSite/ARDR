@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -15,16 +16,19 @@ namespace ARDR {
 			set => SetEnabled(value);
 		}
 
-		private Vector2Int chunkPosition;
-		private GridData _gridData;
-		private bool _isEnabled;
-		private Func<int, int, bool> _cellInitializer;
+		public Vector2Int Position;
+		public readonly List<PlacedObjectInfo> Objects;
 
-		public Chunk(GridData parent, int x, int y, bool isEnabled,
-			Func<int, int, bool> cellInitializer) {
+		private readonly GridData _gridData;
+		private bool _isEnabled;
+		private readonly Func<int, int, bool> _cellInitializer;
+
+		public Chunk(GridData parent, int x, int y, bool isEnabled = true,
+			Func<int, int, bool> cellInitializer = null) {
 			_gridData = parent;
-			chunkPosition = new Vector2Int(x, y);
-			_cellInitializer = cellInitializer;
+			Position = new Vector2Int(x, y);
+			_cellInitializer = cellInitializer ?? ((_, _) => true);
+			Objects = new List<PlacedObjectInfo>();
 			SetEnabled(isEnabled);
 		}
 
@@ -45,18 +49,75 @@ namespace ARDR {
 			cellGrid.GridArray.Cast<Cell>().Where(cell => cell.IsPlaced())
 				.ForEach(cell => cell.ClearPlacedObject());
 			cellGrid = null;
+			Objects.Clear();
 		}
 
 		public void InitCell() {
 			cellGrid = new Grid<Cell>(
 				cellPerChunk, cellPerChunk, cellSize,
-				_gridData.chunkGrid.GetWorldPosition(chunkPosition),
+				_gridData.chunkGrid.GetWorldPosition(Position),
 				(g, x, z) =>
 					new Cell(this, x, z, _cellInitializer(x, z)),
 				Color.red
 			);
 			cellGrid.Init();
 		}
+
+#region Serialization
+
+		public struct PlacedObjectInfo {
+			public PlaceableObjectData Data;
+			public IPlacedObject PlacedObject;
+			public Vector2Int Position;
+			public Direction Direction;
+		}
+
+		public struct PlacedObjectState {
+			public PlaceableObjectData type;
+			public int x;
+			public int y;
+			public Direction dir;
+			public string state;
+		}
+
+		public struct ChunkState {
+			public int x;
+			public int y;
+			public List<PlacedObjectState> objects;
+		}
+
+		public ChunkState RecordData() {
+			return new ChunkState {
+				x = Position.x,
+				y = Position.y,
+				objects = Objects.Select(info => new PlacedObjectState {
+					type = info.Data,
+					x = info.Position.x,
+					y = info.Position.y,
+					dir = info.Direction,
+					state = info.PlacedObject.RecordData()
+				}).ToList()
+			};
+		}
+
+		public void ApplyData(ChunkState chunkState) {
+			var savedObjects = chunkState.objects ?? new List<PlacedObjectState>();
+			savedObjects.ForEach(state => {
+				var objectData = state.type;
+
+				var cell = this[state.x, state.y];
+				if (!cell.IsPlaced()) //없던 오브젝트라면 아예 새로 생성
+				{
+					_gridData.PlaceObjectAtSafe(objectData, ToCellPos(cell.LocalChunkPos), state.dir);
+				}
+				var gridObject = cell.GridObject;
+				if (gridObject is IPlacedObject placedObject) {
+					placedObject.ApplyData(state.state);
+				}
+			});
+		}
+
+#endregion
 
 #region Util functions
 
@@ -86,8 +147,8 @@ namespace ARDR {
 
 		public Vector2Int ToCellPos(Vector2Int chunkLocalPos) {
 			return new Vector2Int(
-				chunkPosition.x * cellPerChunk + chunkLocalPos.x,
-				chunkPosition.y * cellPerChunk + chunkLocalPos.y
+				Position.x * cellPerChunk + chunkLocalPos.x,
+				Position.y * cellPerChunk + chunkLocalPos.y
 			);
 		}
 
@@ -97,12 +158,17 @@ namespace ARDR {
 				var targetChunk = _gridData.GetChunk(cellPos);
 				var targetLocalChunkPos = _gridData.GetLocalChunkPos(cellPos);
 
+				var targetIndex =
+					targetChunk.Objects.FindIndex(placedObject => placedObject.Position == obj.Position);
+				if (targetIndex >= 0)
+					Objects.RemoveAt(targetIndex);
+
 				targetChunk[targetLocalChunkPos].ClearPlacedObject();
 			}
 		}
 
 		public override string ToString() {
-			return _gridData == null ? "" : chunkPosition.ToString();
+			return _gridData == null ? "" : Position.ToString();
 		}
 
 #endregion

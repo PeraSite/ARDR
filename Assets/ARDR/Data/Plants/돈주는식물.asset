@@ -15,7 +15,8 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 3aa47323a02cfb14c95d8e8b5a458796, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -25,11 +26,11 @@ MonoBehaviour:
       Entry: 1
       Data: "\uB3C8\uC8FC\uB294\uC2DD\uBB3C"
     - Name: Object
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: Description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uB3C8\uC744 \uC8FC\uB294 \uC2DD\uBB3C\uC774\uB2E4."
   model: {fileID: 1133774476641589138, guid: f9e23eb959e3ae244a6b4715e6380272, type: 3}
   gridSize: {x: 1, y: 1}
   MoneyAmount: 10

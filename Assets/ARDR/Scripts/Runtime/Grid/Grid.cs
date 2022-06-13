@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 #if UNITY_EDITOR
 using PeraCore.Editor;
@@ -10,6 +11,7 @@ namespace ARDR {
 		public int height;
 		public float cellSize;
 
+		[TableMatrix(DrawElementMethod = "DrawElement")]
 		public TGridObject[,] GridArray;
 
 		public Vector3 originWorldPosition;
@@ -51,6 +53,11 @@ namespace ARDR {
 			}
 			Gizmos.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height));
 			Gizmos.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height));
+		}
+
+		private static TGridObject DrawElement(Rect rect, TGridObject value) {
+			GUI.Label(rect, value.ToString());
+			return value;
 		}
 #endif
 
