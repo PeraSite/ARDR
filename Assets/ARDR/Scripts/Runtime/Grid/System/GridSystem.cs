@@ -30,6 +30,11 @@ namespace ARDR {
 			FindSceneGridObject();
 		}
 
+		protected override void OnDestroy() {
+			base.OnDestroy();
+			GridData.chunkGrid = null;
+		}
+
 		[Button]
 		public void GenerateGrid() {
 			GridData.chunkGrid = new Grid<Chunk>(
@@ -40,13 +45,13 @@ namespace ARDR {
 				CreateGridObject,
 				Color.blue);
 			GridData.chunkGrid.Init();
+			FindSceneGridObject();
 		}
 
-		[Button]
-		public void FindSceneGridObject() {
+		private void FindSceneGridObject() {
 			var gridObjectList = FindObjectsOfType<GridObjectBase>();
 			foreach (var gridObject in gridObjectList) {
-				var cellPos = GridData.GetCellPos(gridObject.transform.position + new Vector3(1.25f, 0f, 1.25f));
+				var cellPos = GridData.GetCellPos(gridObject.transform.position);
 				var chunk = GridData.GetChunk(cellPos);
 				var localCellPos = GridData.GetLocalChunkPos(cellPos);
 

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace PixelCrushers
 {
@@ -96,8 +96,8 @@ namespace PixelCrushers
             return SaveSystem.Serialize(m_data);
         }
 
-        public override void ApplyData(string s)
-        {
+        public override void ApplyData(string s) {
+            if (s == null) return;
             var data = SaveSystem.Deserialize<DestructibleData>(s, m_data);
             if (data == null) return;
             m_data = data;
