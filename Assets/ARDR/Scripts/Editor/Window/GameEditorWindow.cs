@@ -20,7 +20,7 @@ public class GameEditorWindow : OdinMenuEditorWindow {
 		};
 
 		void AddAssets(string menuName, string pathName, Type type) {
-			tree.AddAllAssetsAtPath(menuName, RESOURCE_PATH + pathName, type, true, true);
+			tree.AddAllAssetsAtPath(menuName, RESOURCE_PATH + pathName, type, true);
 		}
 
 		AddAssets("식물", "Plants", typeof(PlaceableObjectData));

@@ -1,0 +1,20 @@
+{
+    "name": "Sheet2SO.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c02700ebf5646a045965c26e95e0ae6e",
+        "GUID:380cda8a42522de4b820cbc8c9961ec7",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

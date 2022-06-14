@@ -3,7 +3,7 @@ using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
-	public class MoneyPlant : PlacedObject<MoneyPlantData> {
+	public class MoneyPlant : PlacedObject<PlantData> {
 		public IntVariable MoneyPerSecond;
 
 		public override void OnInit() {

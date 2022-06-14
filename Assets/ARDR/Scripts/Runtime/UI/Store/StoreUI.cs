@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ARDR {
 	public class StoreUI : MonoBehaviour {
 		[Header("오브젝트")]
-		public Dictionary<PlantType, RectTransform> Headers = new();
+		public Dictionary<ThemeType, RectTransform> Headers = new();
 
 		[Header("설정")]
 		public ScriptableObjectCache SOCache;
@@ -16,6 +16,6 @@ namespace ARDR {
 		public void ShowAll() { }
 
 		[ButtonGroup]
-		public void Show(PlantType type) { }
+		public void Show(ThemeType type) { }
 	}
 }

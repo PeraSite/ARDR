@@ -7,17 +7,17 @@ namespace ARDR {
 		[VerticalGroup("General Settings/Name/Description")]
 		[BoxGroup("General Settings", order: -999f)]
 		[LabelWidth(60), Required, OdinSerialize]
-		public string Name { get; private set; }
+		public string Name { get; set; }
 
 		[HorizontalGroup("General Settings/Name", 100)]
 		[BoxGroup("General Settings")]
 		[HideLabel, InlineProperty, PreviewField(100, ObjectFieldAlignment.Right), OdinSerialize, AssetsOnly]
-		public T Object { get; private set; }
+		public T Display { get; set; }
 
 		[BoxGroup("General Settings")]
 		[VerticalGroup("General Settings/Name/Description")]
 		[Title("Description")]
 		[HideLabel, MultiLineProperty, OdinSerialize]
-		public string Description { get; private set; }
+		public string Description { get; set; }
 	}
 }
