@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
 namespace ARDR {
@@ -41,11 +42,13 @@ namespace ARDR {
 		나무
 	}
 
+	[Flags]
 	public enum ThemeType {
-		숲,
-		늪,
-		사막,
-		정글,
-		타이가
+		숲 = 1 << 0,
+		늪 = 1 << 1,
+		사막 = 1 << 2,
+		정글 = 1 << 3,
+		타이가 = 1 << 4,
+		전체 = 숲 | 늪 | 사막 | 정글 | 타이가,
 	}
 }

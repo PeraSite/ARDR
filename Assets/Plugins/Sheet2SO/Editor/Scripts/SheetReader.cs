@@ -60,8 +60,12 @@ public class SheetReader : CustomScriptableObject {
 					}
 					var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
 					serializer.DeserializeWeak(row, asset);
+					EditorUtility.SetDirty(asset);
 				}
 			}
+			AssetDatabase.SaveAssets();
+			AssetDatabase.Refresh();
+			Debug.Log("Done!");
 		}
 	}
 }

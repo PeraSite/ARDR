@@ -15,18 +15,19 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 358ffa34dcec6d5419550625c2f3fae6, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
     - Name: Name
-      Entry: 6
-      Data: 
-    - Name: Object
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uD574\uBC14\uB77C\uAE30"
+    - Name: Display
+      Entry: 10
+      Data: 0
     - Name: Description
       Entry: 6
       Data: 
@@ -49,7 +50,67 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 0
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 16
+    - Name: $v
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -57,11 +118,11 @@ MonoBehaviour:
       Entry: 8
       Data: 
   model: {fileID: 0}
-  gridSize: {x: 0, y: 0}
-  Price: 0
-  MoneyAmount: 0
+  gridSize: {x: 1, y: 1}
+  Price: 100000
+  MoneyAmount: 1200
   Type: 0
-  Theme: 0
-  RequireLevel: 0
-  NutritionUsage: 0
-  MoistureUsage: 0
+  Theme: 31
+  RequireLevel: 5
+  NutritionUsage: 2
+  MoistureUsage: 2
