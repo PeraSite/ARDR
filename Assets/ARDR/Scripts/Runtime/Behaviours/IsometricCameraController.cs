@@ -1,5 +1,6 @@
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ARDR {
 	public class IsometricCameraController : MonoBehaviour {
@@ -22,6 +23,9 @@ namespace ARDR {
 
 		private void Update() {
 			if (IsDragging.Value) return;
+
+			var isHoveringUI = EventSystem.current.IsPointerOverGameObject(PointerInputModule.kMouseLeftId);
+			if (isHoveringUI) return;
 
 			if (Input.GetMouseButtonDown(0)) {
 				_touchStart = GetWorldPosition(groundZ);

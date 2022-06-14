@@ -12,8 +12,9 @@ namespace ARDR {
 			if (Text.SafeIsUnityNull()) Text = GetComponent<TextMeshProUGUI>();
 		}
 
-		private void Awake() {
+		private void OnEnable() {
 			Variable.Changed.Register(OnChanged);
+			OnChanged(Variable.Value);
 		}
 
 		private void OnDisable() {
