@@ -5,6 +5,7 @@ using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ARDR {
 	public class StoreUI : SerializedMonoBehaviour {
@@ -13,7 +14,9 @@ namespace ARDR {
 
 		public StoreElement ElementPrefab;
 
-		public RectTransform Parent;
+		public RectTransform ContentRect;
+
+		public ScrollRect ScrollRect;
 
 		[Header("설정")]
 		public ScriptableObjectCache SOCache;
@@ -29,7 +32,7 @@ namespace ARDR {
 			SOCache.Find<PlantData>()
 				.OrderBy(plant => plant.Price)
 				.ForEach(data => {
-					var instantiated = Instantiate(ElementPrefab, Parent);
+					var instantiated = Instantiate(ElementPrefab, ContentRect);
 					instantiated.Init(data, PlantTypeSprites[data.Type]);
 					instantiated.name = data.Name;
 					_showingElements.Add(instantiated);
@@ -44,8 +47,10 @@ namespace ARDR {
 			Show(ThemeType.전체, false);
 		}
 
-		[Button]
-		public void Show(ThemeType type, bool animate = true) {
+		private void Show(ThemeType type, bool animate = true) {
+			ContentRect.anchoredPosition = Vector2.zero;
+			ScrollRect.velocity = Vector2.zero;
+
 			_showingElements.ForEach(element => element.gameObject.SetActive(type.HasFlag(element.Theme)));
 			Headers.ForEach(pair => {
 				var (theme, header) = pair;
