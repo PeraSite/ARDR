@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,11 +28,11 @@ namespace ARDR {
 			Icon.sprite = Data.Display;
 			Name.text = Data.Name;
 			RequireLevel.text = $"세계수 레벨 {Data.RequireLevel} 필요";
-			Price.text = $"{Data.Price}원";
+			Price.text = $"{TMPIcons.Money} {Data.Price}";
 			Theme = Data.Theme;
 			Type.sprite = plantType;
 			ThemeText.text = Data.Theme.ToString();
-			MoneyAmount.text = Data.MoneyAmount.ToString();
+			MoneyAmount.text = $"{TMPIcons.Money} {Data.MoneyAmount.ToString()}";
 		}
 	}
 }
