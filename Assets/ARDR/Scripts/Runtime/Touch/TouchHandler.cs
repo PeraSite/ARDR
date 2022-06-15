@@ -17,11 +17,13 @@ namespace ARDR {
 		}
 
 		private void OnFingerOld(LeanFinger finger) {
+			if (finger.IsOverGui) return;
 			var result = ScreenQuery.Query<ITouchListener>(gameObject, finger.ScreenPosition);
 			result?.OnLongTouch();
 		}
 
 		private void OnFingerTap(LeanFinger finger) {
+			if (finger.IsOverGui) return;
 			var result = ScreenQuery.Query<ITouchListener>(gameObject, finger.ScreenPosition);
 			result?.OnTouch();
 		}

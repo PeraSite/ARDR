@@ -74,7 +74,14 @@ namespace ARDR {
 			objectTransform.localPosition = Vector3.zero;
 			objectTransform.localEulerAngles = Vector3.zero;
 			_ghostObject.SetLayerRecursive(2);
-			_ghostObject.GetComponentsInChildren<MeshRenderer>().ForEach(mr => { mr.material = ghostMaterial; });
+			_ghostObject.GetComponentsInChildren<MeshRenderer>().ForEach(mr => {
+				var length = mr.materials.Length;
+				var materialArr = new Material[mr.materials.Length];
+				for (var i = 0; i < length; i++) {
+					materialArr[i] = ghostMaterial;
+				}
+				mr.materials = materialArr;
+			});
 			canvas.gameObject.SetActive(true);
 			RotateObject(CurrentDirection.Value);
 			return _ghostObject.GetComponent<IPlacedObject>();

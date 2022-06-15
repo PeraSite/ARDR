@@ -23,6 +23,7 @@ namespace ARDR {
 		}
 
 		public void OnLongTouch() {
+			Debug.Log("longtouch");
 			GridEditSystem.Instance.SetExistObjectEditMode(this);
 		}
 	}
