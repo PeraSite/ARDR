@@ -1368,7 +1368,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8659403641993053370}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4351035457114424497, guid: aa302da418ae3584eb589f217c91137e,
+          type: 3}
+        m_TargetAssemblyTypeName: ARDR.Popup, Assembly-CSharp
+        m_MethodName: Test
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8659403641993053370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1750,6 +1763,7 @@ MonoBehaviour:
   Type: {fileID: 6190331009739379868}
   ThemeText: {fileID: 6296759527268988417}
   MoneyAmount: {fileID: 7370202737665519999}
+  Button: {fileID: 8659403641993053373}
   Theme: 0
 --- !u!114 &1703377632394357377
 MonoBehaviour:
@@ -1764,7 +1778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+  m_Color: {r: 0.8745098, g: 0.8745098, b: 0.8745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -20,6 +20,7 @@ namespace ARDR {
 
 		public TextMeshProUGUI MoneyAmount;
 
+		public Button Button;
 
 		[Header("설정")]
 		public ThemeType Theme;

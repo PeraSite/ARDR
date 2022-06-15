@@ -18,6 +18,8 @@ namespace ARDR {
 
 		public ScrollRect ScrollRect;
 
+		public PlantBuyPopup PlantBuyPopup;
+
 		[Header("설정")]
 		public ScriptableObjectCache SOCache;
 
@@ -29,12 +31,15 @@ namespace ARDR {
 			_showingElements.ForEach(element => Destroy(element.gameObject));
 			_showingElements.Clear();
 
+			PlantBuyPopup.Init();
+
 			SOCache.Find<PlantData>()
 				.OrderBy(plant => plant.Price)
 				.ForEach(data => {
 					var instantiated = Instantiate(ElementPrefab, ContentRect);
 					instantiated.Init(data, PlantTypeSprites[data.Type]);
 					instantiated.name = data.Name;
+					instantiated.Button.onClick.AddListener(() => OnBuyButtonPressed(data, PlantTypeSprites[data.Type]));
 					_showingElements.Add(instantiated);
 				});
 
@@ -56,6 +61,10 @@ namespace ARDR {
 				var (theme, header) = pair;
 				header.ToggleHeader(theme == type, animate);
 			});
+		}
+
+		private void OnBuyButtonPressed(PlantData plantData, Sprite typeSprite) {
+			PlantBuyPopup.Show(plantData, typeSprite);
 		}
 	}
 }

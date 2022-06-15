@@ -1,4 +1,6 @@
+using System;
 using Lean.Touch;
+using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityAtoms;
@@ -6,7 +8,7 @@ using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
-	public class GridEditSystem : MonoBehaviour {
+	public class GridEditSystem : MonoSingleton<GridEditSystem> {
 		[Header("변수")]
 		public GridData GridData;
 
@@ -17,6 +19,9 @@ namespace ARDR {
 		private IPlacedObject _editingObject;
 		private Transform _editingObjectTransform;
 		private string _editingObjectState;
+
+		private Action<IPlacedObject> OnPlaced;
+		private Action OnCancelled;
 
 		public void OnLongTouch(LeanFinger finger) {
 			if (Physics.Raycast(finger.GetRay(), out var info)) {
@@ -38,11 +43,20 @@ namespace ARDR {
 		}
 
 		[Button]
-		public void SetEditMode(PlaceableObjectData data) {
+		public void SetEditMode(PlaceableObjectData data, Action<IPlacedObject> onPlaced = null,
+			Action onCancelled = null) {
 			IsEditing.Value = true;
 			_currentData = data;
 			CurrentDirection.Value = Direction.Down;
+			OnPlaced = onPlaced;
+			OnCancelled = onCancelled;
+			Debug.Log(BuildingGhost.Instance);
 			BuildingGhost.Instance.InitGhost(_currentData);
+		}
+
+		[Button]
+		public void Test() {
+			Debug.Log(BuildingGhost.Instance);
 		}
 
 		[Button]
@@ -72,6 +86,7 @@ namespace ARDR {
 			}
 
 			var placedObject = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value);
+
 			if (!isEditingObject) { //If first place
 				placedObject.OnInit();
 			} else {
@@ -79,6 +94,7 @@ namespace ARDR {
 				placedObject.OnEditEnd();
 				placedObject.IsEditing = false;
 			}
+			OnPlaced?.Invoke(placedObject);
 
 			BuildingGhost.Instance.DestroyVisual();
 			IsEditing.Value = false;
@@ -86,10 +102,15 @@ namespace ARDR {
 			_editingObjectState = "";
 			_editingObjectTransform = null;
 			_currentData = null;
+			OnPlaced = null;
+			OnCancelled = null;
 		}
 
 		public void CancelEdit() {
+			OnCancelled?.Invoke();
 			IsEditing.Value = false;
+			OnPlaced = null;
+			OnCancelled = null;
 			BuildingGhost.Instance.DestroyVisual();
 			if (!_editingObjectTransform.SafeIsUnityNull()) {
 				_editingObjectTransform.gameObject.SetActive(true);
