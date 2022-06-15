@@ -19,6 +19,9 @@ namespace ARDR {
 		[BoxGroup("Grid Info")]
 		public Direction Direction { get; set; }
 
+		[BoxGroup("Grid Info")]
+		public Transform Transform { get; }
+
 		public void OnInteract() { }
 
 		public void DestroySelf() { }

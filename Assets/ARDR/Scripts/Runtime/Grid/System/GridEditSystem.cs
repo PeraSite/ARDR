@@ -1,5 +1,4 @@
 using System;
-using Lean.Touch;
 using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -17,29 +16,19 @@ namespace ARDR {
 
 		private PlaceableObjectData _currentData;
 		private IPlacedObject _editingObject;
-		private Transform _editingObjectTransform;
 		private string _editingObjectState;
 
 		private Action<IPlacedObject> OnPlaced;
 		private Action OnCancelled;
 
-		public void OnLongTouch(LeanFinger finger) {
-			if (Physics.Raycast(finger.GetRay(), out var info)) {
-				if (!info.collider.CompareTag("Placeable")) return;
-				var targetTransform = info.transform;
-				if (!targetTransform.TryGetComponent<IPlacedObject>(out var placedObject)) {
-					return;
-				}
-
-				placedObject.OnEditStart();
-				placedObject.IsEditing = true;
-				_editingObjectTransform = targetTransform;
-				_editingObject = placedObject;
-				_editingObjectState = placedObject.RecordData();
-				var cellPos = GridData.GetCellPos(targetTransform.position);
-				targetTransform.gameObject.SetActive(false);
-				SetEditMode(placedObject.BaseData, cellPos);
-			}
+		public void SetExistObjectEditMode(IPlacedObject placedObject) {
+			placedObject.OnEditStart();
+			placedObject.IsEditing = true;
+			_editingObject = placedObject;
+			_editingObjectState = placedObject.RecordData();
+			var cellPos = GridData.GetCellPos(placedObject.Transform.position);
+			placedObject.Transform.gameObject.SetActive(false);
+			SetEditMode(placedObject.BaseData, cellPos);
 		}
 
 		[Button]
@@ -100,7 +89,6 @@ namespace ARDR {
 			IsEditing.Value = false;
 			_editingObject = null;
 			_editingObjectState = "";
-			_editingObjectTransform = null;
 			_currentData = null;
 			OnPlaced = null;
 			OnCancelled = null;
@@ -112,8 +100,8 @@ namespace ARDR {
 			OnPlaced = null;
 			OnCancelled = null;
 			BuildingGhost.Instance.DestroyVisual();
-			if (!_editingObjectTransform.SafeIsUnityNull()) {
-				_editingObjectTransform.gameObject.SetActive(true);
+			if (!_editingObject.Transform.SafeIsUnityNull()) {
+				_editingObject.Transform.gameObject.SetActive(true);
 			}
 		}
 	}

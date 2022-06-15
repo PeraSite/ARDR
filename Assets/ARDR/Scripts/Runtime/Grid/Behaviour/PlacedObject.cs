@@ -24,6 +24,8 @@ namespace ARDR {
 		[field: SerializeField]
 		public Direction Direction { get; set; }
 
+		public Transform Transform => transform;
+
 		public bool IsInitialized => Chunk != null;
 		public bool IsEditing { get; set; }
 
