@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using PixelCrushers;
 using UnityAtoms.BaseAtoms;
@@ -12,21 +11,17 @@ namespace ARDR {
 
 		public BoolVariable IsFading;
 
-		public override IEnumerator LeaveScene() => UniTask.ToCoroutine(ShowFade);
-
-		public override IEnumerator EnterScene() => UniTask.ToCoroutine(HideFade);
-
-		private async UniTask ShowFade() {
+		public override IEnumerator LeaveScene() {
 			IsFading.SetValue(true);
 			Fade.gameObject.SetActive(true);
 			Fade.alpha = 0f;
-			await Fade.DOFade(1f, AnimationTime);
+			yield return Fade.DOFade(1f, AnimationTime).WaitForCompletion();
 			IsFading.SetValue(false);
 		}
 
-		private async UniTask HideFade() {
+		public override IEnumerator EnterScene() {
 			IsFading.SetValue(true);
-			await Fade.DOFade(0f, AnimationTime);
+			yield return Fade.DOFade(0f, AnimationTime).WaitForCompletion();
 			Fade.gameObject.SetActive(false);
 			IsFading.SetValue(false);
 		}

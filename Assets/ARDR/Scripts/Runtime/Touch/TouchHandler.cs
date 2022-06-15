@@ -3,7 +3,9 @@ using Lean.Touch;
 using UnityEngine;
 
 namespace ARDR {
-	public class TouchRaycaster : MonoBehaviour {
+	public class TouchHandler : MonoBehaviour {
+		public LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
+
 		private void OnEnable() {
 			LeanTouch.OnFingerTap += OnFingerTap;
 			LeanTouch.OnFingerOld += OnFingerOld;
@@ -23,7 +25,5 @@ namespace ARDR {
 			var result = ScreenQuery.Query<ITouchListener>(gameObject, finger.ScreenPosition);
 			result?.OnTouch();
 		}
-
-		public LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
 	}
 }

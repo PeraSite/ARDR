@@ -1,57 +1,61 @@
+using Lean.Common;
+using Lean.Touch;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace ARDR {
 	public class IsometricCameraController : MonoBehaviour {
 		[Header("변수")]
-		public BoolVariable IsDragging;
+		public BoolVariable IsDraggingObject;
 
-		[Header("설정")]
-		public float groundZ;
+		public float lerpSpeed = 20f;
 
-		public float lerpSpeed;
-
-		private Vector3 _touchStart;
-		private float _startZ;
+		private LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
 		private Camera _cam;
+		private Vector3 _touchStart;
 
 		private void Awake() {
-			_startZ = transform.position.z;
-			_cam = Camera.main;
+			_cam = GetComponent<Camera>();
 		}
 
-		private void Update() {
-			if (IsDragging.Value) return;
-
-			var isHoveringUI = EventSystem.current.IsPointerOverGameObject(PointerInputModule.kMouseLeftId);
-			if (isHoveringUI) {
-				_touchStart = Vector3.zero;
-				return;
-			}
-
-			if (Input.GetMouseButtonDown(0)) {
-				_touchStart = GetWorldPosition(groundZ);
-			}
-			if (Input.GetMouseButton(0)) {
-				if (_touchStart == Vector3.zero)
-					return;
-				var direction = _touchStart - GetWorldPosition(groundZ);
-				var targetPosition = _cam.transform.position + direction;
-				targetPosition.z = _startZ;
-				_cam.transform.position = Vector3.Lerp(
-					_cam.transform.position,
-					targetPosition,
-					Time.deltaTime * lerpSpeed
-				);
-			}
+		private void OnEnable() {
+			LeanTouch.OnFingerDown += OnFingerDown;
+			LeanTouch.OnFingerUpdate += OnFingerUpdate;
+			LeanTouch.OnFingerUp += OnFingerUp;
 		}
 
-		private Vector3 GetWorldPosition(float z) {
-			var mousePos = _cam.ScreenPointToRay(Input.mousePosition);
-			var ground = new Plane(Vector3.forward, new Vector3(0, 0, z));
-			ground.Raycast(mousePos, out var distance);
-			return mousePos.GetPoint(distance);
+		private void OnDisable() {
+			LeanTouch.OnFingerDown -= OnFingerDown;
+			LeanTouch.OnFingerUpdate -= OnFingerUpdate;
+			LeanTouch.OnFingerUp -= OnFingerUp;
+		}
+
+		private void OnFingerDown(LeanFinger finger) {
+			if (IsDraggingObject.Value) return;
+			if (finger.IsOverGui) return;
+			_touchStart = GetWorldPosition(finger);
+		}
+
+		private void OnFingerUpdate(LeanFinger finger) {
+			if (_touchStart == Vector3.zero) return;
+			var direction = _touchStart - GetWorldPosition(finger);
+			var targetPosition = _cam.transform.position + direction;
+			_cam.transform.position = Vector3.Lerp(
+				_cam.transform.position,
+				targetPosition,
+				Time.deltaTime * lerpSpeed
+			);
+		}
+
+		private void OnFingerUp(LeanFinger finger) {
+			_touchStart = Vector3.zero;
+		}
+
+		private Vector3 GetWorldPosition(LeanFinger finger) {
+			var ground = new Plane(Vector3.up, new Vector3(0, 0, 0));
+			var ray = finger.GetRay();
+			ground.Raycast(ray, out var distance);
+			return ray.GetPoint(distance);
 		}
 	}
 }

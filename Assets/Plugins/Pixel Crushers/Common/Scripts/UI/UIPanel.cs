@@ -209,7 +209,7 @@ namespace PixelCrushers
             // animatorMonitor.SetTrigger(showAnimationTrigger, OnVisible, waitForShowAnimation);
 
             if (!AlphaCanvasGroup.SafeIsUnityNull()) {
-                AlphaCanvasGroup.DOKill();
+                AlphaCanvasGroup.DOKill(true);
                 AlphaCanvasGroup.alpha = 0f;
                 AlphaCanvasGroup.DOFade(1f, FadeAnimationTime).OnComplete(OnVisible);
             } else {
@@ -231,7 +231,7 @@ namespace PixelCrushers
             // animatorMonitor.SetTrigger(hideAnimationTrigger, OnHidden, true);
 
             if (!AlphaCanvasGroup.SafeIsUnityNull()) {
-                AlphaCanvasGroup.DOKill();
+                AlphaCanvasGroup.DOKill(true);
                 AlphaCanvasGroup.alpha = 1f;
                 AlphaCanvasGroup.DOFade(0f, FadeAnimationTime).OnComplete(OnHidden);
             } else {

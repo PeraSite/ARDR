@@ -33,11 +33,6 @@ namespace PeraCore.Runtime {
 			}
 		}
 
-		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-		private static void ResetInstance() {
-			_instance = null;
-		}
-
 		[Button]
 		private void UpdateCache() {
 			var guids = AssetDatabase.FindAssets("t:scriptableobject", ScanPath);

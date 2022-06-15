@@ -62,7 +62,6 @@ namespace ARDR {
 		}
 
 		public IPlacedObject InitGhost(PlaceableObjectData data) {
-			Debug.Log("Init ghost");
 			_currentData = data;
 
 			if (!_ghostObject.SafeIsUnityNull()) { //If already there is visual, destroy old ghost
