@@ -6,7 +6,7 @@ using Sirenix.Utilities;
 using UnityEngine;
 
 namespace ARDR {
-	public class StoreUI : MonoBehaviour {
+	public class StoreUI : SerializedMonoBehaviour {
 		[Header("오브젝트")]
 		public Dictionary<ThemeType, RectTransform> Headers = new();
 
@@ -16,6 +16,8 @@ namespace ARDR {
 
 		[Header("설정")]
 		public ScriptableObjectCache SOCache;
+
+		public Dictionary<PlantType, Sprite> PlantTypeSprites = new();
 
 		private readonly List<StoreElement> _showingElements = new();
 
@@ -27,7 +29,7 @@ namespace ARDR {
 				.OrderBy(plant => plant.Price)
 				.ForEach(data => {
 					var instantiated = Instantiate(ElementPrefab, Parent);
-					instantiated.Init(data);
+					instantiated.Init(data, PlantTypeSprites[data.Type]);
 					instantiated.name = data.Name;
 					_showingElements.Add(instantiated);
 				});

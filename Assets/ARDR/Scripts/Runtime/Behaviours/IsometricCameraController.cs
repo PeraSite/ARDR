@@ -25,12 +25,17 @@ namespace ARDR {
 			if (IsDragging.Value) return;
 
 			var isHoveringUI = EventSystem.current.IsPointerOverGameObject(PointerInputModule.kMouseLeftId);
-			if (isHoveringUI) return;
+			if (isHoveringUI) {
+				_touchStart = Vector3.zero;
+				return;
+			}
 
 			if (Input.GetMouseButtonDown(0)) {
 				_touchStart = GetWorldPosition(groundZ);
 			}
 			if (Input.GetMouseButton(0)) {
+				if (_touchStart == Vector3.zero)
+					return;
 				var direction = _touchStart - GetWorldPosition(groundZ);
 				var targetPosition = _cam.transform.position + direction;
 				targetPosition.z = _startZ;
