@@ -263,7 +263,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8608320354849514719}
   - component: {fileID: 2511374606602881639}
-  - component: {fileID: 6586117784816783700}
   m_Layer: 0
   m_Name: Savers
   m_TagString: Untagged
@@ -306,23 +305,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 37a2143cd8d94ba488a78d98aced8bc8, type: 2}
   - {fileID: 11400000, guid: 1d68565038ee473ead9e91fcf1f4c3ae, type: 2}
   - {fileID: 11400000, guid: ea72791d648374c408adfd4e88aaced1, type: 2}
---- !u!114 &6586117784816783700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5395244421841542224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca14302c3d8c40c887ce8e8a9aa14f90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_key: GridDataSaver
-  m_appendSaverTypeToKey: 0
-  m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
-  Data: {fileID: 11400000, guid: 211f6210a6ea0d14c8432ff345784443, type: 2}
 --- !u!1 &5623443111807157106
 GameObject:
   m_ObjectHideFlags: 0
