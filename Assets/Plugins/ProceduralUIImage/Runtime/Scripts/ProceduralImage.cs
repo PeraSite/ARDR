@@ -30,7 +30,7 @@ namespace UnityEngine.UI.ProceduralImage
                 materialInstance = value;
             }
         }
-        [SerializeField] private float falloffDistance = 1;
+        [SerializeField] private float falloffDistance = 0;
 
         public float BorderWidth
         {
