@@ -117,7 +117,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  model: {fileID: 0}
+  model: {fileID: 1133774476641589138, guid: f9e23eb959e3ae244a6b4715e6380272, type: 3}
   gridSize: {x: 1, y: 1}
   Price: 50000
   MoneyAmount: 4000

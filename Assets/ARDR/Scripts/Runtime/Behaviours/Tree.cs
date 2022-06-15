@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace ARDR {
-	public class Tree : MonoBehaviour, ITouchListener {
+	public class Tree : GridSceneObject, ITouchListener {
 		[Header("변수")]
 		public IntVariable Money;
 

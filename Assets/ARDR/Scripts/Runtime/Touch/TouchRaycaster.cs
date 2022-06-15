@@ -4,15 +4,26 @@ using UnityEngine;
 
 namespace ARDR {
 	public class TouchRaycaster : MonoBehaviour {
-		public LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
-
-		public void SelectScreenPosition(LeanFinger finger) {
-			SelectScreenPosition(finger, finger.StartScreenPosition);
+		private void OnEnable() {
+			LeanTouch.OnFingerTap += OnFingerTap;
+			LeanTouch.OnFingerOld += OnFingerOld;
 		}
 
-		public void SelectScreenPosition(LeanFinger finger, Vector2 screenPosition) {
-			var result = ScreenQuery.Query<ITouchListener>(gameObject, screenPosition);
+		private void OnDisable() {
+			LeanTouch.OnFingerTap -= OnFingerTap;
+			LeanTouch.OnFingerOld -= OnFingerOld;
+		}
+
+		private void OnFingerOld(LeanFinger finger) {
+			var result = ScreenQuery.Query<ITouchListener>(gameObject, finger.ScreenPosition);
+			result?.OnLongTouch();
+		}
+
+		private void OnFingerTap(LeanFinger finger) {
+			var result = ScreenQuery.Query<ITouchListener>(gameObject, finger.ScreenPosition);
 			result?.OnTouch();
 		}
+
+		public LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
 	}
 }

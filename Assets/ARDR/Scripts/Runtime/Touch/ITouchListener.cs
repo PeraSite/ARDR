@@ -1,5 +1,7 @@
 ﻿namespace ARDR {
 	public interface ITouchListener {
-		public void OnTouch();
+		public virtual void OnTouch() { }
+
+		public virtual void OnLongTouch() { }
 	}
 }
