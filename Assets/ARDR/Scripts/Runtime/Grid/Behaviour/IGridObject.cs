@@ -22,8 +22,6 @@ namespace ARDR {
 		[BoxGroup("Grid Info")]
 		public Transform Transform { get; }
 
-		public void OnInteract() { }
-
 		public void DestroySelf() { }
 
 		public List<Vector2Int> GetGridPositionList() => BaseData.GetGridPositionList(Position, Direction);

@@ -21,6 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  SOCache: {fileID: 11400000, guid: 75fbaee97dee67446abe2161ca96b85f, type: 2}
   Icons:
   - {fileID: 21300000, guid: 3a25d4db44c86a7409654d6398d4ae51, type: 3}
   - {fileID: 21300000, guid: 56e42ebff74b4214caaf4d77e6b9a4b8, type: 3}

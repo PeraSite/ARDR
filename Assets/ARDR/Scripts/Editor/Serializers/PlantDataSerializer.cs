@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using ARDR;
+using PeraCore.Runtime;
 using Sheet2SO.Editor;
 using UnityEngine;
 
 public class PlantDataSerializer : SheetSerializer<PlantData> {
+	public ScriptableObjectCache SOCache;
 	public List<Sprite> Icons = new();
 
 	public override string GetName(List<string> row) => row[1];
@@ -21,9 +23,7 @@ public class PlantDataSerializer : SheetSerializer<PlantData> {
 		plant.Price = int.Parse(row[2]);
 		
 		//식물의 종류
-		if (Enum.TryParse<PlantType>(row[3], out var plantType)) {
-			plant.Type = plantType;
-		}
+		plant.Type = SOCache.Find<PlantType>().First(plantType => plantType.Name == row[3]);
 
 		//식물의 크기
 		var gridSizeData = row[4].Split("x").Select(int.Parse).ToList();

@@ -121,7 +121,7 @@ MonoBehaviour:
   gridSize: {x: 2, y: 2}
   Price: 2000000
   MoneyAmount: 250000
-  Type: 1
+  Type: {fileID: 11400000, guid: 176fdaed2cf84e14b9a750bf1d15621a, type: 2}
   Theme: 1
   RequireLevel: 17
   NutritionUsage: 2

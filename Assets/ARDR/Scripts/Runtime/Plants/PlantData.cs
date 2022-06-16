@@ -37,11 +37,6 @@ namespace ARDR {
 		public int MoistureUsage;
 	}
 
-	public enum PlantType {
-		꽃,
-		나무
-	}
-
 	[Flags]
 	public enum ThemeType {
 		숲 = 1 << 0,

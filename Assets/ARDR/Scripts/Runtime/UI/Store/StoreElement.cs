@@ -25,13 +25,13 @@ namespace ARDR {
 		[Header("설정")]
 		public ThemeType Theme;
 
-		public void Init(PlantData Data, Sprite plantType) {
+		public void Init(PlantData Data) {
 			Icon.sprite = Data.Display;
 			Name.text = Data.Name;
 			RequireLevel.text = $"세계수 레벨 {Data.RequireLevel} 필요";
 			Price.text = $"{TMPIcons.Money} {Data.Price}";
 			Theme = Data.Theme;
-			Type.sprite = plantType;
+			Type.sprite = Data.Type.Display;
 			ThemeText.text = Data.Theme.ToString();
 			MoneyAmount.text = $"{TMPIcons.Money} {Data.MoneyAmount.ToString()}";
 		}

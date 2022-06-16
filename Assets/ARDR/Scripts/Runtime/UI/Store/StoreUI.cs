@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using PeraCore.Runtime;
-using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ARDR {
-	public class StoreUI : SerializedMonoBehaviour {
+	public class StoreUI : BaseCategoryPopup<StoreHeader> {
 		[Header("오브젝트")]
-		public Dictionary<ThemeType, StoreHeader> Headers = new();
-
 		public StoreElement ElementPrefab;
 
 		public RectTransform ContentRect;
@@ -23,48 +19,36 @@ namespace ARDR {
 		[Header("설정")]
 		public ScriptableObjectCache SOCache;
 
-		public Dictionary<PlantType, Sprite> PlantTypeSprites = new();
-
 		private readonly List<StoreElement> _showingElements = new();
 
-		private void Start() {
+		protected override void Start() {
+			base.Start();
 			_showingElements.ForEach(element => Destroy(element.gameObject));
 			_showingElements.Clear();
 
 			PlantBuyPopup.Init();
-
 			SOCache.Find<PlantData>()
 				.OrderBy(plant => plant.Price)
-				.ForEach(data => {
+				.ForEach(plant => {
 					var instantiated = Instantiate(ElementPrefab, ContentRect);
-					instantiated.Init(data, PlantTypeSprites[data.Type]);
-					instantiated.name = data.Name;
-					instantiated.Button.onClick.AddListener(() => OnBuyButtonPressed(data, PlantTypeSprites[data.Type]));
+					instantiated.Init(plant);
+					instantiated.name = plant.Name;
+					instantiated.Button.onClick.AddListener(() => OnBuyButtonPressed(plant));
 					_showingElements.Add(instantiated);
 				});
-
-			Headers.ForEach(pair => {
-				pair.Value.Button.onClick.AddListener(() => {
-					Show(pair.Value.Theme);
-				});
-			});
-
-			Show(ThemeType.전체, false);
 		}
 
-		private void Show(ThemeType type, bool animate = true) {
+		protected override void OnHeaderChanged(StoreHeader newHeader) {
+			base.OnHeaderChanged(newHeader);
 			ContentRect.anchoredPosition = Vector2.zero;
 			ScrollRect.velocity = Vector2.zero;
 
-			_showingElements.ForEach(element => element.gameObject.SetActive(type.HasFlag(element.Theme)));
-			Headers.ForEach(pair => {
-				var (theme, header) = pair;
-				header.ToggleHeader(theme == type, animate);
-			});
+			_showingElements.ForEach(
+				element => element.gameObject.SetActive(newHeader.ThemeType.HasFlag(element.Theme)));
 		}
 
-		private void OnBuyButtonPressed(PlantData plantData, Sprite typeSprite) {
-			PlantBuyPopup.Show(plantData, typeSprite);
+		private void OnBuyButtonPressed(PlantData plantData) {
+			PlantBuyPopup.Show(plantData);
 		}
 	}
 }

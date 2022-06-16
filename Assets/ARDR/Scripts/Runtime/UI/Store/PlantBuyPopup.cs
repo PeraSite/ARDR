@@ -1,5 +1,4 @@
-﻿using System;
-using PixelCrushers.Wrappers;
+﻿using PixelCrushers.Wrappers;
 using TMPro;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -41,13 +40,13 @@ namespace ARDR {
 			BuyButton.onClick.AddListener(OnBuy);
 		}
 
-		public void Show(PlantData data, Sprite typeSprite) {
+		public void Show(PlantData data) {
 			_data = data;
 			Icon.sprite = data.Display;
 			Name.text = data.Name;
 			RequireLevel.text = $"세계수 레벨 {data.RequireLevel} 필요";
 			Price.text = $"{TMPIcons.Money} {data.Price}";
-			Type.sprite = typeSprite;
+			Type.sprite = data.Type.Display;
 			ThemeText.text = data.Theme.ToString();
 			MoneyAmount.text = $"{TMPIcons.Money} {data.MoneyAmount.ToString()}";
 
