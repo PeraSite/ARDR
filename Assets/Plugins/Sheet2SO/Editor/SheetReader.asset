@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 4c759154e35ece441956a1343db92d03, type: 2}
+    - {fileID: 11400000, guid: b2542de1f45767d4b8714a1ddd55ddc5, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -42,7 +43,7 @@ MonoBehaviour:
       Data: 2|System.Collections.Generic.List`1[[Worksheet, Sheet2SO.Editor]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 3|Worksheet, Sheet2SO.Editor
@@ -58,6 +59,24 @@ MonoBehaviour:
     - Name: Serializer
       Entry: 10
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|Worksheet, Sheet2SO.Editor
+    - Name: Name
+      Entry: 1
+      Data: "\uC138\uACC4\uC218"
+    - Name: PathName
+      Entry: 1
+      Data: WorldTree
+    - Name: SkipRow
+      Entry: 3
+      Data: 1
+    - Name: Serializer
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

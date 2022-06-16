@@ -202,14 +202,14 @@ namespace PixelCrushers
 
         public virtual void Open()
         {
-            if (panelState == PanelState.Open || panelState == PanelState.Opening) return;
+            if (panelState is PanelState.Open or PanelState.Opening) return;
             panelState = PanelState.Opening;
             gameObject.SetActive(true);
             onOpen.Invoke();
             // animatorMonitor.SetTrigger(showAnimationTrigger, OnVisible, waitForShowAnimation);
 
             if (!AlphaCanvasGroup.SafeIsUnityNull()) {
-                AlphaCanvasGroup.DOKill(true);
+                AlphaCanvasGroup.DOKill();
                 AlphaCanvasGroup.alpha = 0f;
                 AlphaCanvasGroup.DOFade(1f, FadeAnimationTime).OnComplete(OnVisible);
             } else {
@@ -225,13 +225,13 @@ namespace PixelCrushers
         {
             PopFromPanelStack();
             if (gameObject.activeInHierarchy) CancelInvoke();
-            if (panelState == PanelState.Closed || panelState == PanelState.Closing) return;
+            if (panelState is PanelState.Closed or PanelState.Closing) return;
             panelState = PanelState.Closing;
             onClose.Invoke();
             // animatorMonitor.SetTrigger(hideAnimationTrigger, OnHidden, true);
 
             if (!AlphaCanvasGroup.SafeIsUnityNull()) {
-                AlphaCanvasGroup.DOKill(true);
+                AlphaCanvasGroup.DOKill();
                 AlphaCanvasGroup.alpha = 1f;
                 AlphaCanvasGroup.DOFade(0f, FadeAnimationTime).OnComplete(OnHidden);
             } else {
