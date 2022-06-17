@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ARDR {
@@ -15,6 +16,17 @@ namespace ARDR {
 				Direction.Up => Direction.Right,
 				Direction.Right => Direction.Down,
 				_ => Direction.Left
+			};
+		}
+
+		public static Direction GetDirection(float rotation) {
+
+			return (Mathf.Repeat(rotation-45, 360)) switch {
+				>= 0 and < 90 => Direction.Left,
+				>= 90 and < 180 => Direction.Down,
+				>= 180 and < 270 => Direction.Right,
+				>= 270 and < 360 => Direction.Up,
+				_ => throw new ArgumentOutOfRangeException(nameof(rotation), rotation, null)
 			};
 		}
 

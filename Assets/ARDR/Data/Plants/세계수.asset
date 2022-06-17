@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Name
       Entry: 1
-      Data: "2x2 \uC138\uACC4\uC218"
+      Data: "\uC138\uACC4\uC218"
     - Name: Display
       Entry: 6
       Data: 
@@ -31,4 +31,4 @@ MonoBehaviour:
       Entry: 1
       Data: "\uC138\uACC4\uC218\uC785\uB2C8\uB2E4"
   model: {fileID: 1133774476641589138, guid: 897e94d4c08bb4945b57c4dc5b81216f, type: 3}
-  gridSize: {x: 2, y: 2}
+  gridSize: {x: 3, y: 3}

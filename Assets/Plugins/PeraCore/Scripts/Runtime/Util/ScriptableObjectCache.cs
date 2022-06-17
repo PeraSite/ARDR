@@ -7,7 +7,7 @@ using UnityEditor;
 #endif
 
 namespace PeraCore.Runtime {
-	public class ScriptableObjectCache : SerializedScriptableObject {
+	public class ScriptableObjectCache : SingletonScriptableObject<ScriptableObjectCache> {
 		public List<ScriptableObject> Objects = new();
 		public string[] ScanPath = { };
 

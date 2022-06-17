@@ -37,7 +37,7 @@ namespace ARDR {
 		}
 
 		[Button]
-		public void GenerateGrid() {
+		private void GenerateGrid() {
 			GridData.chunkGrid = new Grid<Chunk>(
 				gridSize.x,
 				gridSize.y,
@@ -46,9 +46,9 @@ namespace ARDR {
 				CreateGridObject,
 				Color.blue);
 			GridData.chunkGrid.Init();
-			FindSceneGridObject();
 		}
 
+		[Button]
 		private void FindSceneGridObject() {
 			var gridObjectList = FindObjectsOfType<GridObjectBase>();
 			foreach (var gridObject in gridObjectList) {

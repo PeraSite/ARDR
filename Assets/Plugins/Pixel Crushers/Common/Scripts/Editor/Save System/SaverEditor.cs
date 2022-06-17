@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
-using UnityEngine;
 using UnityEditor;
 
 namespace PixelCrushers
 {
 
+    [CanEditMultipleObjects]
     [CustomEditor(typeof(Saver), true)]
     public class SaverEditor : Editor
     {

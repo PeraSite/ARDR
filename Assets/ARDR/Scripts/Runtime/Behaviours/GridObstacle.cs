@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace ARDR {
 	public class GridObstacle : GridObjectBase, ITouchListener {
@@ -9,12 +10,15 @@ namespace ARDR {
 		public override Direction Direction { get; set; }
 
 		public void OnTouch() {
-			// Destroy(gameObject);
-			Debug.Log("tap!" + gameObject.name);
+			ObstacleRemovePopup.Instance.Open(this);
 		}
 
-		public void OnLongTouch() {
-			Debug.Log("long touched!" + gameObject.name);
+#if UNITY_EDITOR
+		[Button]
+		private void MatchRotation() {
+			var rotation = transform.rotation.eulerAngles.y;
+			Direction = DirectionUtil.GetDirection(rotation);
 		}
+#endif
 	}
 }

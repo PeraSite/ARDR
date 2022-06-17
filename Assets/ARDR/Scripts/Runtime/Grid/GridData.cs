@@ -1,9 +1,10 @@
 ﻿using System;
+using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace ARDR {
-	public class GridData : SerializedScriptableObject {
+	public class GridData : SingletonScriptableObject<GridData> {
 		public Grid<Chunk> chunkGrid;
 
 		[Button]
