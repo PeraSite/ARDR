@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using UnityEngine;
 
 namespace PeraCore.Runtime {
 	public abstract class MonoSingleton<T> : SerializedMonoBehaviour where T : SerializedMonoBehaviour {
@@ -23,8 +22,10 @@ namespace PeraCore.Runtime {
 		protected virtual void Awake() {
 			_instance = this as T;
 			SingletonManager.list.Add(() => { _destroyed = true; });
-			if (KeepAlive)
+			if (KeepAlive) {
+				transform.SetParent(null);
 				DontDestroyOnLoad(gameObject);
+			}
 		}
 
 		protected virtual void OnDestroy() {

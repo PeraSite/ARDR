@@ -43,11 +43,6 @@ namespace ARDR {
 		}
 
 		[Button]
-		public void Test() {
-			Debug.Log(BuildingGhost.Instance);
-		}
-
-		[Button]
 		public void SetEditMode(PlaceableObjectData data, Vector2Int cellPos) {
 			IsEditing.Value = true;
 			_currentData = data;
@@ -102,6 +97,8 @@ namespace ARDR {
 			if (!_editingObject.Transform.SafeIsUnityNull()) {
 				_editingObject.Transform.gameObject.SetActive(true);
 			}
+			_editingObject = null;
+			_editingObjectState = "";
 		}
 	}
 }

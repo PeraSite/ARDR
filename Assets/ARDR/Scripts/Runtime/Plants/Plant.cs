@@ -26,7 +26,7 @@ namespace ARDR {
 		}
 
 		public void OnTouch() {
-			Debug.Log($"수분:{State.Moisture}, 양분:{State.Nutrition}");
+			PlantInfoPopup.Instance.Show(this);
 		}
 
 		public void OnLongTouch() {
@@ -35,8 +35,8 @@ namespace ARDR {
 		}
 
 		public void OnStateTick() {
-			State.Moisture -= Data.MoistureUsage;
-			State.Nutrition -= Data.NutritionUsage;
+			State.Moisture = Mathf.Clamp(State.Moisture - Data.MoistureUsage, 0, 100);
+			State.Nutrition = Mathf.Clamp(State.Nutrition - Data.NutritionUsage, 0, 100);
 		}
 
 #region Serialziation

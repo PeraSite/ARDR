@@ -1,7 +1,7 @@
 ﻿namespace ARDR {
 	public static class TMPIcons {
-		public static string Money = "<sprite name=돈>";
-		public static string Nutrition = "<sprite name=돈>";
-		public static string Moisture = "<sprite name=돈>";
+		public const string Money = "<sprite name=돈>";
+		public const string Nutrition = "<sprite name=양분>";
+		public const string Moisture = "<sprite name=수분>";
 	}
 }
