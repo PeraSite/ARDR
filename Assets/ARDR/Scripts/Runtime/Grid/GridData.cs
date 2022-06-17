@@ -6,6 +6,7 @@ using UnityEngine;
 namespace ARDR {
 	public class GridData : SingletonScriptableObject<GridData> {
 		public Grid<Chunk> chunkGrid;
+		public Vector3 OriginPosition;
 
 		public event Action onAnyGridUpdate;
 
@@ -14,6 +15,10 @@ namespace ARDR {
 		[Button]
 		public void SetEnableChunk(Vector2Int chunkPos, bool isEnabled) {
 			chunkGrid.GetGridObject(chunkPos).IsEnabled = isEnabled;
+		}
+
+		public bool IsEnabled(Vector2Int chunkPos) {
+			return chunkGrid.GetGridObject(chunkPos).IsEnabled;
 		}
 
 		[Button]

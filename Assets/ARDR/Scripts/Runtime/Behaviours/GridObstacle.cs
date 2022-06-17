@@ -13,6 +13,11 @@ namespace ARDR {
 			ObstacleRemovePopup.Instance.Open(this);
 		}
 
+		public override void OnDiscovered() {
+			Debug.Log(name + " has been discovered!");
+
+		}
+
 #if UNITY_EDITOR
 		[Button]
 		private void MatchRotation() {

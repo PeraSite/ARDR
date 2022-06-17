@@ -13,6 +13,10 @@ public abstract class GridObjectBase : MonoBehaviour, IGridObject {
 
 	public Transform Transform => transform;
 
+	public virtual void OnDiscovered() {
+
+	}
+
 #if UNITY_EDITOR
 	[Button]
 	private void SnapPosition() {

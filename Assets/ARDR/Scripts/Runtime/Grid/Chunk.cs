@@ -19,6 +19,7 @@ namespace ARDR {
 
 		public Vector2Int Position;
 		public readonly List<PlacedObjectInfo> Objects;
+		public readonly List<GridObjectBase> HiddenObjects;
 
 		private bool _isEnabled;
 		private readonly Func<int, int, bool> _cellInitializer;
@@ -29,6 +30,7 @@ namespace ARDR {
 			Position = new Vector2Int(x, y);
 			_cellInitializer = cellInitializer ?? ((_, _) => true);
 			Objects = new List<PlacedObjectInfo>();
+			HiddenObjects = new List<GridObjectBase>();
 			SetEnabled(isEnabled);
 		}
 
@@ -37,11 +39,13 @@ namespace ARDR {
 			if (IsEnabled && cellGrid == null) {
 				//켜졌는데 안만들어져있으면 만들기
 				InitCell();
+				gridData.InvokeAnyGridUpdate();
 			}
 
 			if (!IsEnabled && cellGrid != null) {
 				//꺼졌는데 만들어져있다면 삭제
 				DestroyCell();
+				gridData.InvokeAnyGridUpdate();
 			}
 		}
 
@@ -61,6 +65,11 @@ namespace ARDR {
 				Color.red
 			);
 			cellGrid.Init();
+			HiddenObjects.ForEach(obj => {
+				obj.OnDiscovered();
+				obj.gameObject.SetActive(true);
+			});
+			HiddenObjects.Clear();
 		}
 
 #region Serialization
@@ -151,6 +160,12 @@ namespace ARDR {
 				Position.y * cellPerChunk + chunkLocalPos.y
 			);
 		}
+
+		public Vector3 GetOriginWorldPosition() =>
+			gridData.OriginPosition + new Vector3(Position.x, 0, Position.y) * cellSize * cellPerChunk;
+
+		public Vector3 GetCenterWorldPosition() =>
+			GetOriginWorldPosition() + new Vector3(.5f, 0, .5f) * cellSize * cellPerChunk;
 
 		public void RemovePlacedObject(IGridObject obj) {
 			foreach (var localChunkPos in obj.GetGridPositionList()) {
