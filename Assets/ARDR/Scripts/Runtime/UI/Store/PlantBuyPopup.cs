@@ -1,6 +1,6 @@
 ﻿using PixelCrushers.Wrappers;
 using TMPro;
-using UnityAtoms.BaseAtoms;
+using UnityAtoms;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,7 +32,7 @@ namespace ARDR {
 		public UIPanel HUD;
 
 		[Header("변수")]
-		public IntVariable Money;
+		public LongVariable Money;
 
 		private PlantData _data;
 

@@ -22,15 +22,15 @@ namespace ARDR {
 			return LocalChunkPos.x + ", " + LocalChunkPos.y + "\n" + GridObject?.GetType()?.GetNiceName();
 		}
 
-		public void SetPlacedObject(IPlacedObject _placedObject) {
+		public void SetPlacedObject(IGridObject _placedObject) {
 			GridObject = _placedObject;
-			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos);
+			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos, this);
 		}
 
 		public void ClearPlacedObject() {
 			GridObject?.DestroySelf();
 			GridObject = null;
-			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos);
+			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos, this);
 		}
 
 		public bool IsPlaced() {

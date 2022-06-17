@@ -302,9 +302,10 @@ MonoBehaviour:
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
   Variables:
-  - {fileID: 11400000, guid: 37a2143cd8d94ba488a78d98aced8bc8, type: 2}
+  - {fileID: 11400000, guid: 284cd42ac6e080146834ffc5f6dd3192, type: 2}
   - {fileID: 11400000, guid: 1d68565038ee473ead9e91fcf1f4c3ae, type: 2}
   - {fileID: 11400000, guid: ea72791d648374c408adfd4e88aaced1, type: 2}
+  - {fileID: 11400000, guid: 71fae75aaa0fc984f9297ff02c0ef835, type: 2}
 --- !u!1 &5623443111807157106
 GameObject:
   m_ObjectHideFlags: 0

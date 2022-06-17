@@ -39,7 +39,6 @@ namespace ARDR {
 			CurrentDirection.Value = Direction.Down;
 			OnPlaced = onPlaced;
 			OnCancelled = onCancelled;
-			Debug.Log(BuildingGhost.Instance);
 			BuildingGhost.Instance.InitGhost(_currentData);
 		}
 

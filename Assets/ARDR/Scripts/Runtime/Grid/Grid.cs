@@ -77,7 +77,7 @@ namespace ARDR {
 			if (x < 0 || z < 0 || x >= width || z >= height) return;
 
 			GridArray[x, z] = value;
-			TriggerGridObjectChanged(gridPos);
+			TriggerGridObjectChanged(gridPos, value);
 		}
 
 		public void SetGridObject(Vector3 worldPosition, TGridObject value) {
@@ -113,10 +113,11 @@ namespace ARDR {
 		public class OnGridObjectChangedEventArgs : EventArgs {
 			public int x;
 			public int z;
+			public TGridObject GridObject;
 		}
 
-		public void TriggerGridObjectChanged(Vector2Int gridPos) {
-			OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs {x = gridPos.x, z = gridPos.y});
+		public void TriggerGridObjectChanged(Vector2Int gridPos, TGridObject gridObject) {
+			OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs {x = gridPos.x, z = gridPos.y, GridObject = gridObject});
 		}
 
 #endregion

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -51,14 +52,22 @@ namespace ARDR {
 		private void FindSceneGridObject() {
 			var gridObjectList = FindObjectsOfType<GridObjectBase>();
 			foreach (var gridObject in gridObjectList) {
-				var cellPos = GridData.GetCellPos(gridObject.transform.position);
-				var chunk = GridData.GetChunk(cellPos);
-				var localCellPos = GridData.GetLocalChunkPos(cellPos);
+				var originCellPos = GridData.GetCellPos(gridObject.transform.position);
+				var gridPositionList = gridObject.BaseData.GetGridPositionList(originCellPos, gridObject.Direction);
 
-				gridObject.Chunk = chunk;
+				var originChunk = GridData.GetChunk(originCellPos);
+				var localCellPos = GridData.GetLocalChunkPos(originCellPos);
+
+				gridObject.Chunk = originChunk;
 				gridObject.Position = localCellPos;
 				gridObject.Direction = Direction.Down;
-				chunk.cellGrid.GetGridObject(localCellPos).GridObject = gridObject;
+
+				foreach (var subCellPos in gridPositionList) {
+					var chunk = GridData.GetChunk(subCellPos);
+					if (!chunk.IsEnabled) throw new Exception($"Can't place on disabled chunk: {chunk}");
+					var localChunkPos = GridData.GetLocalChunkPos(subCellPos);
+					chunk[localChunkPos].SetPlacedObject(gridObject);
+				}
 			}
 		}
 
