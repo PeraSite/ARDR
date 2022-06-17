@@ -24,12 +24,14 @@ namespace ARDR {
 
 		public void SetPlacedObject(IGridObject _placedObject) {
 			GridObject = _placedObject;
+			_chunk.gridData.InvokeAnyGridUpdate();
 			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos, this);
 		}
 
 		public void ClearPlacedObject() {
 			GridObject?.DestroySelf();
 			GridObject = null;
+			_chunk.gridData.InvokeAnyGridUpdate();
 			_chunk.cellGrid.TriggerGridObjectChanged(LocalChunkPos, this);
 		}
 

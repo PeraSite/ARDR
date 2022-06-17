@@ -10,7 +10,7 @@ namespace PeraCore.Runtime {
 		public static T Instance {
 			get {
 				if (_instance.SafeIsUnityNull() || _destroyed) {
-					_instance = FindObjectOfType<T>();
+					_instance = FindObjectOfType<T>(true);
 					_destroyed = false;
 				}
 				return _instance;

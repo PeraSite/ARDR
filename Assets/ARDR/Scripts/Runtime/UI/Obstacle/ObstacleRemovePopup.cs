@@ -50,7 +50,7 @@ namespace ARDR {
 			Root.Close();
 		}
 
-		public void Buy() {
+		public void Remove() {
 			var price = CalculateObstaclePrice();
 			if (Money.Value < price) {
 				Toast.Show("돈이 부족합니다!");

@@ -8,6 +8,7 @@ namespace ARDR {
 	public class BuildingGhost : MonoSingleton<BuildingGhost> {
 		[Header("오브젝트")]
 		public RectTransform canvas;
+
 		public RectTransform overlayObject;
 		public GridData GridData;
 		public Transform parent;
@@ -15,6 +16,7 @@ namespace ARDR {
 
 		[Header("변수")]
 		public BoolVariable IsEditingObject;
+
 		public DirectionVariable CurrentDirection;
 		public BoolVariable IsDragging;
 
@@ -23,6 +25,7 @@ namespace ARDR {
 
 		[HideInInspector]
 		public Vector2Int lastCellPos;
+
 		private Camera _cam;
 		private PlaceableObjectData _currentData;
 		private GameObject _ghostObject;
@@ -61,7 +64,13 @@ namespace ARDR {
 			return pos;
 		}
 
-		public IPlacedObject InitGhost(PlaceableObjectData data) {
+		public IPlacedObject InitGhost(PlaceableObjectData data, Vector2Int cellPos = default) {
+			if (cellPos != default) {
+				if (GridData.GetWorldPosition(cellPos).GetValue(out var worldPos)) {
+					lastCellPos = cellPos;
+					transform.position = worldPos;
+				}
+			}
 			_currentData = data;
 
 			if (!_ghostObject.SafeIsUnityNull()) { //If already there is visual, destroy old ghost
@@ -85,15 +94,6 @@ namespace ARDR {
 			canvas.gameObject.SetActive(true);
 			RotateObject(CurrentDirection.Value);
 			return _ghostObject.GetComponent<IPlacedObject>();
-		}
-
-		public IPlacedObject InitGhost(PlaceableObjectData data, Vector2Int cellPos) {
-			if (GridData.GetWorldPosition(cellPos).GetValue(out var worldPos)) {
-				lastCellPos = cellPos;
-				transform.position = worldPos;
-				return InitGhost(data);
-			}
-			return null;
 		}
 
 		public void RotateObject(Direction direction) {

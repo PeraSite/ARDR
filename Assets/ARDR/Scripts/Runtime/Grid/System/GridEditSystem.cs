@@ -23,6 +23,8 @@ namespace ARDR {
 		public void SetExistObjectEditMode(IPlacedObject placedObject) {
 			placedObject.OnEditStart();
 			placedObject.IsEditing = true;
+			IsEditing.Value = true;
+
 			_editingObject = placedObject;
 			_editingObjectState = placedObject.RecordData();
 			var cellPos = GridData.GetCellPos(placedObject.Transform.position);
@@ -32,21 +34,16 @@ namespace ARDR {
 
 		[Button]
 		public void SetEditMode(PlaceableObjectData data) {
-			IsEditing.Value = true;
-			_currentData = data;
-			CurrentDirection.Value = Direction.Down;
-			OnPlaced = null;
-			OnCancelled = null;
-			BuildingGhost.Instance.InitGhost(_currentData);
+			SetEditMode(data, null, null);
 		}
 
-		public void SetEditMode(PlaceableObjectData data, Action<IPlacedObject> onPlaced,
-			Action onCancelled) {
+		public void SetEditMode(PlaceableObjectData data, Action<IPlacedObject> onPlaced, Action onCancelled) {
 			IsEditing.Value = true;
 			_currentData = data;
 			CurrentDirection.Value = Direction.Down;
 			OnPlaced = onPlaced;
 			OnCancelled = onCancelled;
+			GridVisualization.Instance.Show();
 			BuildingGhost.Instance.InitGhost(_currentData);
 		}
 
@@ -55,6 +52,7 @@ namespace ARDR {
 			IsEditing.Value = true;
 			_currentData = data;
 			CurrentDirection.Value = Direction.Down;
+			GridVisualization.Instance.Show();
 			BuildingGhost.Instance.InitGhost(_currentData, cellPos);
 		}
 
@@ -94,6 +92,8 @@ namespace ARDR {
 			_currentData = null;
 			OnPlaced = null;
 			OnCancelled = null;
+
+			GridVisualization.Instance.Hide();
 		}
 
 		public void CancelEdit() {
@@ -105,6 +105,8 @@ namespace ARDR {
 			_editingObject?.Transform.gameObject.SetActive(true);
 			_editingObject = null;
 			_editingObjectState = "";
+			GridVisualization.Instance.Hide();
+
 		}
 	}
 }

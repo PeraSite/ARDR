@@ -7,6 +7,10 @@ namespace ARDR {
 	public class GridData : SingletonScriptableObject<GridData> {
 		public Grid<Chunk> chunkGrid;
 
+		public event Action onAnyGridUpdate;
+
+		public void InvokeAnyGridUpdate() => onAnyGridUpdate?.Invoke();
+
 		[Button]
 		public void SetEnableChunk(Vector2Int chunkPos, bool isEnabled) {
 			chunkGrid.GetGridObject(chunkPos).IsEnabled = isEnabled;

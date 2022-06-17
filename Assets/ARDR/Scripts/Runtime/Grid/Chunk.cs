@@ -10,6 +10,7 @@ namespace ARDR {
 		public const float cellSize = 2.5F;
 
 		public Grid<Cell> cellGrid;
+		public GridData gridData;
 
 		public bool IsEnabled {
 			get => _isEnabled;
@@ -19,13 +20,12 @@ namespace ARDR {
 		public Vector2Int Position;
 		public readonly List<PlacedObjectInfo> Objects;
 
-		private readonly GridData _gridData;
 		private bool _isEnabled;
 		private readonly Func<int, int, bool> _cellInitializer;
 
 		public Chunk(GridData parent, int x, int y, bool isEnabled = true,
 			Func<int, int, bool> cellInitializer = null) {
-			_gridData = parent;
+			gridData = parent;
 			Position = new Vector2Int(x, y);
 			_cellInitializer = cellInitializer ?? ((_, _) => true);
 			Objects = new List<PlacedObjectInfo>();
@@ -55,7 +55,7 @@ namespace ARDR {
 		public void InitCell() {
 			cellGrid = new Grid<Cell>(
 				cellPerChunk, cellPerChunk, cellSize,
-				_gridData.chunkGrid.GetWorldPosition(Position),
+				gridData.chunkGrid.GetWorldPosition(Position),
 				(g, x, z) =>
 					new Cell(this, x, z, _cellInitializer(x, z)),
 				Color.red
@@ -108,7 +108,7 @@ namespace ARDR {
 				var cell = this[state.x, state.y];
 				if (!cell.IsPlaced()) //없던 오브젝트라면 아예 새로 생성
 				{
-					_gridData.PlaceObjectAtSafe(objectData, ToCellPos(cell.LocalChunkPos), state.dir);
+					gridData.PlaceObjectAtSafe(objectData, ToCellPos(cell.LocalChunkPos), state.dir);
 				}
 				var gridObject = cell.GridObject;
 				if (gridObject is IPlacedObject placedObject) {
@@ -155,8 +155,8 @@ namespace ARDR {
 		public void RemovePlacedObject(IGridObject obj) {
 			foreach (var localChunkPos in obj.GetGridPositionList()) {
 				var cellPos = ToCellPos(localChunkPos);
-				var targetChunk = _gridData.GetChunk(cellPos);
-				var targetLocalChunkPos = _gridData.GetLocalChunkPos(cellPos);
+				var targetChunk = gridData.GetChunk(cellPos);
+				var targetLocalChunkPos = gridData.GetLocalChunkPos(cellPos);
 
 				var targetIndex =
 					targetChunk.Objects.FindIndex(placedObject => placedObject.Position == obj.Position);
@@ -168,7 +168,7 @@ namespace ARDR {
 		}
 
 		public override string ToString() {
-			return _gridData == null ? "" : Position.ToString();
+			return gridData == null ? "" : Position.ToString();
 		}
 
 #endregion
