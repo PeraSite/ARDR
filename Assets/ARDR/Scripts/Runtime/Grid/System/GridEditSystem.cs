@@ -32,8 +32,17 @@ namespace ARDR {
 		}
 
 		[Button]
-		public void SetEditMode(PlaceableObjectData data, Action<IPlacedObject> onPlaced = null,
-			Action onCancelled = null) {
+		public void SetEditMode(PlaceableObjectData data) {
+			IsEditing.Value = true;
+			_currentData = data;
+			CurrentDirection.Value = Direction.Down;
+			OnPlaced = null;
+			OnCancelled = null;
+			BuildingGhost.Instance.InitGhost(_currentData);
+		}
+
+		public void SetEditMode(PlaceableObjectData data, Action<IPlacedObject> onPlaced,
+			Action onCancelled) {
 			IsEditing.Value = true;
 			_currentData = data;
 			CurrentDirection.Value = Direction.Down;

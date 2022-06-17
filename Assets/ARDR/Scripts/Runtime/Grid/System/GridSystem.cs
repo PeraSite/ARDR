@@ -60,7 +60,6 @@ namespace ARDR {
 
 				gridObject.Chunk = originChunk;
 				gridObject.Position = localCellPos;
-				gridObject.Direction = Direction.Down;
 
 				foreach (var subCellPos in gridPositionList) {
 					var chunk = GridData.GetChunk(subCellPos);

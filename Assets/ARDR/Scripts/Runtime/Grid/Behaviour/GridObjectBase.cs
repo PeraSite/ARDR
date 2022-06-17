@@ -8,7 +8,7 @@ public abstract class GridObjectBase : MonoBehaviour, IGridObject {
 
 	public Vector2Int Position { get; set; }
 
-	public Direction Direction { get; set; }
+	public abstract Direction Direction { get; set; }
 
 	public Transform Transform => transform;
 }

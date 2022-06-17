@@ -4,18 +4,15 @@ using UnityEngine;
 
 namespace ARDR {
 	public interface IGridObject {
-		[ShowInInspector]
 		[BoxGroup("Grid Info")]
 		public Chunk Chunk { get; set; }
 
 		[FoldoutGroup("Grid Info", VisibleIf = "!IsInitialized")]
 		public PlaceableObjectData BaseData { get; set; }
 
-		[ShowInInspector]
 		[BoxGroup("Grid Info")]
 		public Vector2Int Position { get; set; }
 
-		[ShowInInspector]
 		[BoxGroup("Grid Info")]
 		public Direction Direction { get; set; }
 

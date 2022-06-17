@@ -37,8 +37,13 @@ namespace ARDR {
 			var gridPositionList = new List<Vector2Int>();
 			switch (direction) {
 				case Direction.Down:
+					for (var x = 0; x < gridSize.x; x++) {
+						for (var y = 0; y < gridSize.y; y++) {
+							gridPositionList.Add(offset - new Vector2Int(x, y));
+						}
+					}
+					break;
 				case Direction.Up:
-				default:
 					for (var x = 0; x < gridSize.x; x++) {
 						for (var y = 0; y < gridSize.y; y++) {
 							gridPositionList.Add(offset + new Vector2Int(x, y));
@@ -46,6 +51,12 @@ namespace ARDR {
 					}
 					break;
 				case Direction.Left:
+					for (var x = 0; x < gridSize.y; x++) {
+						for (var y = 0; y < gridSize.x; y++) {
+							gridPositionList.Add(offset - new Vector2Int(x, y));
+						}
+					}
+					break;
 				case Direction.Right:
 					for (var x = 0; x < gridSize.y; x++) {
 						for (var y = 0; y < gridSize.x; y++) {
