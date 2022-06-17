@@ -58,8 +58,7 @@ namespace ARDR {
 
 		private void OnBuy() {
 			if (Money.Value < _data.Price) {
-				//TODO: 토스트 시스템
-				Debug.Log("돈이 부족합니다!");
+				Toast.Show("돈이 부족합니다!");
 				return;
 			}
 
@@ -68,8 +67,8 @@ namespace ARDR {
 			HUD.Open();
 			GridEditSystem.Instance.SetEditMode(_data, (placedObject) => {
 				Money.Subtract(_data.Price);
-				Debug.Log($"{placedObject.BaseData.Name}을 설치했습니다!");
-			}, () => { Debug.Log("취소되었습니다."); });
+				Toast.Show($"{placedObject.BaseData.Name}을 설치했습니다!");
+			}, () => { });
 		}
 	}
 }

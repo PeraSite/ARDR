@@ -1,7 +1,6 @@
 using System;
 using PeraCore.Runtime;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using UnityAtoms;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -68,7 +67,7 @@ namespace ARDR {
 		public void CommitUpdate() {
 			var lastCellPos = BuildingGhost.Instance.lastCellPos;
 			if (!GridData.CanPlaceAt(_currentData, lastCellPos, CurrentDirection.Value)) {
-				Debug.Log("이 곳에는 설치할 수 없습니다!");
+				Toast.Show("이 곳에는 설치할 수 없습니다!");
 				return;
 			}
 			var isEditingObject = _editingObject != null;
@@ -103,9 +102,7 @@ namespace ARDR {
 			OnPlaced = null;
 			OnCancelled = null;
 			BuildingGhost.Instance.DestroyVisual();
-			if (!_editingObject.Transform.SafeIsUnityNull()) {
-				_editingObject.Transform.gameObject.SetActive(true);
-			}
+			_editingObject?.Transform.gameObject.SetActive(true);
 			_editingObject = null;
 			_editingObjectState = "";
 		}

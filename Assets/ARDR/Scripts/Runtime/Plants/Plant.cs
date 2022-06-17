@@ -11,7 +11,6 @@ namespace ARDR {
 
 		public override void OnInit() {
 			base.OnInit();
-			Debug.Log("Adding " + Data.MoneyAmount);
 			MoneyPerSecond.Add(Data.MoneyAmount);
 			State = new PlantState {
 				Moisture = Random.Range(0, 100),
@@ -21,7 +20,6 @@ namespace ARDR {
 
 		public override void OnRemove() {
 			if (Data.SafeIsUnityNull()) return;
-			Debug.Log("Destroy");
 			MoneyPerSecond.Subtract(Data.MoneyAmount);
 		}
 
@@ -30,7 +28,6 @@ namespace ARDR {
 		}
 
 		public void OnLongTouch() {
-			Debug.Log("longtouch");
 			GridEditSystem.Instance.SetExistObjectEditMode(this);
 		}
 

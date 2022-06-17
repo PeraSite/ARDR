@@ -21,7 +21,7 @@ namespace ARDR {
 
 		public static Direction GetDirection(float rotation) {
 
-			return (Mathf.Repeat(rotation-45, 360)) switch {
+			return (Mathf.Repeat(rotation, 360)) switch {
 				>= 0 and < 90 => Direction.Left,
 				>= 90 and < 180 => Direction.Down,
 				>= 180 and < 270 => Direction.Right,

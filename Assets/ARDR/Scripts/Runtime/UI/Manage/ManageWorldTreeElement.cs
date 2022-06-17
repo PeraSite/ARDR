@@ -47,7 +47,7 @@ namespace ARDR {
 
 		private void OnBuy() {
 			if (Money.Value < NextUpgrade.LevelupPrice) {
-				Debug.Log("돈이 부족합니다!");
+				Toast.Show("돈이 부족합니다!");
 				return;
 			}
 			Money.Subtract(NextUpgrade.LevelupPrice);

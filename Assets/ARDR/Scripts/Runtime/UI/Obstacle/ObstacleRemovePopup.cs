@@ -18,10 +18,12 @@ namespace ARDR {
 
 		[Header("변수")]
 		public LongVariable Money;
+
 		public IntVariable WorldTreeUpgradeLevel;
 
 		[Header("패널")]
 		public UIPanel HUD;
+
 		public UIPanel Root;
 
 		[Header("설정")]
@@ -43,6 +45,7 @@ namespace ARDR {
 		}
 
 		public void Close() {
+			_obstacle = null;
 			HUD.Open();
 			Root.Close();
 		}
@@ -50,11 +53,12 @@ namespace ARDR {
 		public void Buy() {
 			var price = CalculateObstaclePrice();
 			if (Money.Value < price) {
-				Debug.Log("돈이 부족합니다!");
+				Toast.Show("돈이 부족합니다!");
 				return;
 			}
 			Money.Subtract(price);
 			Destroy(_obstacle.gameObject);
+			_obstacle.Chunk.RemovePlacedObject(_obstacle);
 			Close();
 		}
 
