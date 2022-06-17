@@ -60,7 +60,7 @@ public class SaveUtility : OdinEditorWindow {
 	public SerializedSavedGameData Current {
 		get => SaveSystem.hasInstance ? MakeSerialized(SaveSystem.currentSavedGameData) : null;
 		set {
-			if (SaveSystem.hasInstance && value != null) {
+			if (SaveSystem.hasInstance && value.original != null) {
 				SaveSystem.currentSavedGameData = value.original;
 			}
 		}

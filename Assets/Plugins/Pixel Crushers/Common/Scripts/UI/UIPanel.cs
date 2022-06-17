@@ -51,10 +51,10 @@ namespace PixelCrushers
         [ShowIf("@AlphaCanvasGroup != null")]
         public float FadeAnimationTime = .3f;
 
-        public UnityEvent onOpen = new UnityEvent();
-        public UnityEvent onClose = new UnityEvent(); // Called when close starts.
-        public UnityEvent onClosed = new UnityEvent(); // Called when close ends.
-        public UnityEvent onBackButtonDown = new UnityEvent();
+        [FoldoutGroup("Events")] public UnityEvent onOpen = new UnityEvent();
+        [FoldoutGroup("Events")] public UnityEvent onClose = new UnityEvent(); // Called when close starts.
+        [FoldoutGroup("Events")] public UnityEvent onClosed = new UnityEvent(); // Called when close ends.
+        [FoldoutGroup("Events")] public UnityEvent onBackButtonDown = new UnityEvent();
 
         protected GameObject m_previousSelected = null;
         protected GameObject m_lastSelected = null;
@@ -96,16 +96,6 @@ namespace PixelCrushers
         public bool isOpen
         {
             get { return panelState == PanelState.Opening || panelState == PanelState.Open || (panelState == PanelState.Uninitialized && gameObject.activeInHierarchy); }
-        }
-
-        private void OnValidate() {
-            if(AlphaCanvasGroup.SafeIsUnityNull()) {
-                if(TryGetComponent<CanvasGroup>(out var canvasGroup)) {
-                    AlphaCanvasGroup = canvasGroup;
-                } else {
-                    AlphaCanvasGroup =gameObject.AddComponent<CanvasGroup>();
-                }
-            }
         }
 
         protected virtual void Start()
@@ -200,6 +190,7 @@ namespace PixelCrushers
             PopFromPanelStack();
         }
 
+        [ButtonGroup]
         public virtual void Open()
         {
             if (panelState is PanelState.Open or PanelState.Opening) return;
@@ -221,6 +212,7 @@ namespace PixelCrushers
             PushToPanelStack();
         }
 
+        [ButtonGroup]
         public virtual void Close()
         {
             PopFromPanelStack();

@@ -1,21 +1,28 @@
 ﻿using DG.Tweening;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ARDR {
 	public class CategoryHeader : MonoBehaviour {
 		[Header("애니메이션 설정")]
-		public float ShowHeight = 180f;
-		public float HideHeight = 90f;
+		public Vector2 ShowPosition;
 
-		public Color HeaderShowColor = Color.white;
-		public Color HeaderHideColor = new(0f, 0f, 0f, 0.78f);
+		public Vector2 HidePosition;
 
-		public Color TextShowColor =  Color.black;
-		public Color TextHideColor =  Color.white;
+		public bool2 LockPosition;
 
 		public float AnimationTime = 0.5f;
+
+		[Header("색")]
+		public Color HeaderShowColor = Color.white;
+
+		public Color HeaderHideColor = new(0f, 0f, 0f, 0.78f);
+
+		public Color TextShowColor = Color.black;
+		public Color TextHideColor = Color.white;
+
 
 		public Button Button { get; private set; }
 		private RectTransform _rect;
@@ -34,7 +41,15 @@ namespace ARDR {
 		}
 
 		public void ToggleHeader(bool visibility, bool animate = true) {
-			var targetSizeDelta = new Vector2(_rect.sizeDelta.x, visibility ? ShowHeight : HideHeight);
+			var currentSizeDelta = _rect.sizeDelta;
+			var targetSizeDelta = visibility ? ShowPosition : HidePosition;
+
+			if (LockPosition.x)
+				targetSizeDelta.x = currentSizeDelta.x;
+
+			if (LockPosition.y)
+				targetSizeDelta.y = currentSizeDelta.y;
+
 			var targetHeaderColor = visibility ? HeaderShowColor : HeaderHideColor;
 			var targetTextColor = visibility ? TextShowColor : TextHideColor;
 
