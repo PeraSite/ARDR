@@ -2,11 +2,18 @@
 using PeraCore.Runtime;
 using PixelCrushers;
 using Sirenix.Serialization;
+using Sirenix.Utilities;
 using UnityEngine;
 
 public class OdinDataSerializer : DataSerializer {
 	public ScriptableObjectCache Cache;
 	public DataFormat Format;
+
+	private void Awake() {
+		Cache.Objects.ForEach(o => {
+			Debug.Log($"{o.Key} : {o.Value}");
+		});
+	}
 
 	public override string Serialize(object data) {
 		var context = new SerializationContext {
@@ -39,7 +46,7 @@ public class RuntimeScriptableObjectStringReferenceResolver : IExternalStringRef
 	}
 
 	public bool TryResolveReference(string id, out object value) {
-		value = Cache.Objects.Find(so => so.name == id);
+		value = Cache.Objects[id];
 		return value != null;
 	}
 }

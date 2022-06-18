@@ -27,8 +27,6 @@ namespace ARDR {
 		}
 
 		public void SetExistObjectEditMode(IPlacedObject placedObject) {
-			placedObject.OnEditStart();
-			placedObject.IsEditing = true;
 			IsEditing.Value = true;
 
 			_editingObject = placedObject;
@@ -90,12 +88,12 @@ namespace ARDR {
 			var placedObject = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value);
 
 			if (!isEditingObject) { //If first place
-				placedObject.OnInit();
+				placedObject.OnFirstPlaced();
 			} else {
 				placedObject.ApplyData(_editingObjectState);
-				placedObject.OnEditEnd();
-				placedObject.IsEditing = false;
 			}
+			placedObject.OnEditEnd();
+			placedObject.IsEditing = false;
 			OnPlaced?.Invoke(placedObject);
 
 			BuildingGhost.Instance.DestroyVisual();

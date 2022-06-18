@@ -8,11 +8,11 @@ using UnityEditor;
 
 namespace PeraCore.Runtime {
 	public class ScriptableObjectCache : SingletonScriptableObject<ScriptableObjectCache> {
-		public List<ScriptableObject> Objects = new();
+		public Dictionary<string, ScriptableObject> Objects = new();
 		public string[] ScanPath = { };
 
 		public IEnumerable<T> Find<T>() {
-			return Objects.OfType<T>();
+			return Objects.Values.OfType<T>();
 		}
 
 #if UNITY_EDITOR
@@ -39,8 +39,9 @@ namespace PeraCore.Runtime {
 			Objects.Clear();
 			foreach (var guid in guids) {
 				var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+				if(assetPath.Contains("Editor")) continue;
 				var asset = AssetDatabase.LoadAssetAtPath<ScriptableObject>(assetPath);
-				Objects.Add(asset);
+				Objects[asset.name] = asset;
 			}
 		}
 #endif

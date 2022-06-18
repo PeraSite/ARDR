@@ -5,12 +5,21 @@ using UnityEngine;
 
 namespace ARDR {
 	public class Plant : PlacedObject<PlantData>, ITouchListener {
+		[Header("설정")]
 		public IntVariable MoneyPerSecond;
 
 		public PlantState State;
 
-		public override void OnInit() {
-			base.OnInit();
+		public GameObject BuildingVisual;
+
+		private BoxCollider _collider;
+
+		private void Awake() {
+			_collider = GetComponent<BoxCollider>();
+		}
+
+		public override void OnFirstPlaced() {
+			base.OnFirstPlaced();
 			MoneyPerSecond.Add(Data.MoneyAmount);
 			State = new PlantState {
 				Moisture = Random.Range(0, 100),
@@ -18,9 +27,34 @@ namespace ARDR {
 			};
 		}
 
+		public override void OnInstantiated(PlaceableObjectData data) {
+			var plantData = (PlantData) data;
+			var center = Vector3.one * Chunk.cellSize / 2 * data.gridSize.x;
+			center.y -= 1;
+			_collider.center = center;
+			var size = Vector3.one * Chunk.cellSize * data.gridSize.x;
+			size.y -= 1f;
+			size *= 0.7f;
+			_collider.size = size;
+
+			var plant = Instantiate(plantData.PlantModel, transform);
+			var position = Vector3.one * Chunk.cellSize / 2 * data.gridSize.x;
+			position.y = 0f;
+			BuildingVisual.transform.localScale = new Vector3(data.gridSize.x, 1, data.gridSize.y);
+			plant.transform.localPosition = position;
+		}
+
 		public override void OnRemove() {
 			if (Data.SafeIsUnityNull()) return;
 			MoneyPerSecond.Subtract(Data.MoneyAmount);
+		}
+
+		public override void OnEditStart() {
+			BuildingVisual.SetActive(true);
+		}
+
+		public override void OnEditEnd() {
+			BuildingVisual.SetActive(false);
 		}
 
 		public void OnTouch() {

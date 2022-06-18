@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace ARDR {
 	public class PlantData : PlaceableObjectData {
@@ -35,6 +36,10 @@ namespace ARDR {
 		[BoxGroup("Plant Setting")]
 		[LabelText("5분당 수분 소모량")]
 		public int MoistureUsage;
+
+		[BoxGroup("Plant Setting")]
+		[LabelText("나무 모델링 파일")]
+		public GameObject PlantModel;
 	}
 
 	[Flags]

@@ -128,3 +128,5 @@ MonoBehaviour:
   RequireLevel: 12
   NutritionUsage: 2
   MoistureUsage: 2
+  PlantModel: {fileID: 919132149155446097, guid: 2c05dfb38a1235e469add53bb9e83b3f,
+    type: 3}

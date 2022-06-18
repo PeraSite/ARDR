@@ -9,7 +9,7 @@ namespace ARDR {
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void Bootstrap() {
-			var app = Object.Instantiate(Resources.Load("App"));
+			var app = Object.Instantiate(Resources.Load<GameObject>("App"));
 			app.name = "App";
 			if (app.SafeIsUnityNull()) {
 				throw new ApplicationException("Can't find main bootstrap App");

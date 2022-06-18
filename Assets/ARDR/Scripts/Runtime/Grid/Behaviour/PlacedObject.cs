@@ -29,7 +29,7 @@ namespace ARDR {
 		public bool IsInitialized => Chunk != null;
 		public bool IsEditing { get; set; }
 
-		public void Setup(Chunk chunk, PlaceableObjectData placeableObjectData, Vector2Int _origin,
+		public virtual void Setup(Chunk chunk, PlaceableObjectData placeableObjectData, Vector2Int _origin,
 			Direction _direction) {
 			Chunk = chunk;
 			BaseData = placeableObjectData;
@@ -37,7 +37,9 @@ namespace ARDR {
 			Direction = _direction;
 		}
 
-		public virtual void OnInit() { }
+		public virtual void OnInstantiated(PlaceableObjectData objectData) { }
+
+		public virtual void OnFirstPlaced() { }
 		public virtual void OnRemove() {}
 
 		public void DestroySelf() => Destroy(gameObject);

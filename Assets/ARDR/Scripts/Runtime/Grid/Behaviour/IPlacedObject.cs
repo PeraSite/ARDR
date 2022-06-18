@@ -4,7 +4,8 @@ namespace ARDR {
 	public interface IPlacedObject : IGridObject {
 		public bool IsEditing { get; set; }
 
-		public void OnInit();
+		public void OnInstantiated(PlaceableObjectData objectData);
+		public void OnFirstPlaced();
 
 		public void OnEditStart();
 		public void OnEditEnd();

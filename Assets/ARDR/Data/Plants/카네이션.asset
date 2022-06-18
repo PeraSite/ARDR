@@ -129,3 +129,4 @@ MonoBehaviour:
   RequireLevel: 10
   NutritionUsage: 3
   MoistureUsage: 3
+  PlantModel: {fileID: 0}

@@ -77,6 +77,12 @@ namespace ARDR {
 			}
 			parent.gameObject.SetActive(true);
 			_ghostObject = Instantiate(data.model, Vector3.zero, Quaternion.identity);
+			var placedObject = _ghostObject.GetComponent<IPlacedObject>();
+			placedObject.OnInstantiated(data);
+			placedObject.OnEditStart();
+			placedObject.IsEditing = true;
+
+
 			var objectTransform = _ghostObject.transform;
 			objectTransform.parent = parent;
 			objectTransform.localPosition = Vector3.zero;

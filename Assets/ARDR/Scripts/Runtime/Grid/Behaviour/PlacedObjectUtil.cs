@@ -12,7 +12,9 @@ namespace ARDR {
 			placedObjectTransform.SetTagRecursive("Placeable");
 
 			if (placedObjectTransform.TryGetComponent<IPlacedObject>(out var placedObject)) {
+				placedObjectTransform.name = placeableObjectData.Name;
 				placedObject.Setup(chunk, placeableObjectData, origin, direction);
+				placedObject.OnInstantiated(placeableObjectData);
 				return placedObject;
 			}
 			throw new Exception(placeableObjectData.model.name + " doesn't have IPlacedObject!");

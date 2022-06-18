@@ -9,6 +9,7 @@ using UnityEngine;
 public class PlantDataSerializer : SheetSerializer<PlantData> {
 	public ScriptableObjectCache SOCache;
 	public List<Sprite> Icons = new();
+	public List<GameObject> PlantModels = new();
 
 	public override string GetName(List<string> row) => row[1];
 
@@ -54,6 +55,8 @@ public class PlantDataSerializer : SheetSerializer<PlantData> {
 		}
 
 		plant.Description = row[15];
+
+		plant.PlantModel = PlantModels.Find(go => go.name == plant.name);
 
 	}
 }
