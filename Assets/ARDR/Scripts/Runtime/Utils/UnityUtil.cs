@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ARDR {
 	public static class UnityUtil {
@@ -14,6 +15,20 @@ namespace ARDR {
 			foreach (Transform child in gameObject.transform) {
 				SetTagRecursive(child.gameObject, tag);
 			}
+		}
+
+		public static T[] GetComponentsOnlyInChildren<T>(this MonoBehaviour script) where T : class {
+			var group = new List<T>();
+
+			if (typeof(T).IsInterface
+			    || typeof(T).IsSubclassOf(typeof(Component))
+			    || typeof(T) == typeof(Component)) {
+				foreach (Transform child in script.transform) {
+					group.AddRange(child.GetComponentsInChildren<T>());
+				}
+			}
+
+			return group.ToArray();
 		}
 
 		public static Vector2 WorldToCanvasPosition(RectTransform canvas, Camera camera, Vector3 position) {

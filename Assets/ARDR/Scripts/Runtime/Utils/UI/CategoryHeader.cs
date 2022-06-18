@@ -1,7 +1,9 @@
-﻿using DG.Tweening;
+﻿using System.Linq;
+using DG.Tweening;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace ARDR {
@@ -20,20 +22,29 @@ namespace ARDR {
 
 		public Color HeaderHideColor = new(0f, 0f, 0f, 0.78f);
 
-		public Color TextShowColor = Color.black;
-		public Color TextHideColor = Color.white;
+		public bool UseTextContent;
 
+		[FormerlySerializedAs("TextShowColor")]
+		public Color ContentShowColor = Color.black;
+
+		[FormerlySerializedAs("ColorHideColor")]
+		[FormerlySerializedAs("TextHideColor")]
+		public Color ContentHideColor = Color.white;
 
 		public Button Button { get; private set; }
 		private RectTransform _rect;
 		private Image _image;
 		private TextMeshProUGUI _text;
+		private Image _icon;
 
 		private void Awake() {
 			_rect = GetComponent<RectTransform>();
 			Button = GetComponent<Button>();
 			_image = GetComponent<Image>();
-			_text = GetComponentInChildren<TextMeshProUGUI>();
+			if (UseTextContent)
+				_text = GetComponentInChildren<TextMeshProUGUI>();
+			else
+				_icon = this.GetComponentsOnlyInChildren<Image>().First();
 		}
 
 		private void OnDisable() {
@@ -51,10 +62,13 @@ namespace ARDR {
 				targetSizeDelta.y = currentSizeDelta.y;
 
 			var targetHeaderColor = visibility ? HeaderShowColor : HeaderHideColor;
-			var targetTextColor = visibility ? TextShowColor : TextHideColor;
+			var targetContentColor = visibility ? ContentShowColor : ContentHideColor;
 
 			_image.color = targetHeaderColor;
-			_text.color = targetTextColor;
+			if (UseTextContent)
+				_text.color = targetContentColor;
+			else
+				_icon.color = targetContentColor;
 
 			if (animate) {
 				_rect.DOSizeDelta(targetSizeDelta, AnimationTime);
