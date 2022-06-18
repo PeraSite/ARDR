@@ -30,7 +30,7 @@ MonoBehaviour:
       Data: 0
     - Name: Description
       Entry: 1
-      Data: "\uC7A5\uC560\uBB3C\uC774\uB2F9\n"
+      Data: "\uB2E8\uB2E8\uD55C \uB3CC"
   model: {fileID: 0}
   gridSize: {x: 1, y: 1}
   TypeIcon: {fileID: 21300000, guid: cce22e0df62d24425b1b4564759e400a, type: 3}

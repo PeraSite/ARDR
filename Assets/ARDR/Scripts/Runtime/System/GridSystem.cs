@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace ARDR {
 	public class GridSystem : MonoSingleton<GridSystem> {
-		[OdinSerialize]
-		private GridData GridData;
+		public GridData GridData;
 
 		[OdinSerialize]
 		private Vector3 OriginPosition;
@@ -67,7 +66,7 @@ namespace ARDR {
 
 
 		[Button]
-		private void FindSceneGridObject() {
+		private void FindSceneGridObject(bool shouldDisableObject = true) {
 			var gridObjectList = FindObjectsOfType<GridObjectBase>();
 			foreach (var gridObject in gridObjectList) {
 				var originCellPos = GridData.GetCellPos(gridObject.transform.position);
@@ -82,8 +81,10 @@ namespace ARDR {
 				foreach (var subCellPos in gridPositionList) {
 					var chunk = GridData.GetChunk(subCellPos);
 					if (!chunk.IsEnabled) {
-						gridObject.gameObject.SetActive(false);
-						chunk.HiddenObjects.Add(gridObject);
+						if (shouldDisableObject) {
+							gridObject.gameObject.SetActive(false);
+							chunk.HiddenObjects.Add(gridObject);
+						}
 						break;
 					}
 					var localChunkPos = GridData.GetLocalChunkPos(subCellPos);
@@ -95,6 +96,14 @@ namespace ARDR {
 		[Button]
 		public void UnlockChunk(Vector2Int position) {
 			GridData.SetEnableChunk(position, true);
+			FindSceneGridObject();
+		}
+
+		[Button]
+		public void UnlockAllChunk() {
+			foreach (var chunk in GridData.chunkGrid.GridArray) {
+				chunk.SetEnabled(true);
+			}
 			FindSceneGridObject();
 		}
 

@@ -1,4 +1,6 @@
-﻿using PixelCrushers;
+﻿using System.Collections.Generic;
+using PixelCrushers;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -68,6 +70,24 @@ namespace ARDR {
 		public void OnStateTick() {
 			State.Moisture = Mathf.Clamp(State.Moisture - Data.MoistureUsage, 0, 100);
 			State.Nutrition = Mathf.Clamp(State.Nutrition - Data.NutritionUsage, 0, 100);
+		}
+
+		private List<Vector3> WorldPositions = new();
+
+		[Button]
+		private void TestPosition() {
+			WorldPositions.Clear();
+			var originCellPos = GridSystem.Instance.GridData.GetCellPos(transform.position);
+			var list = Data.GetGridPositionList(originCellPos, Direction);
+			list.ForEach(cellPos => {
+				var worldPosition = GridSystem.Instance.GridData.GetWorldPosition(cellPos).GetValueOrDefault();
+				Debug.Log($"Cellpos : {cellPos}, world position: {worldPosition}");
+				WorldPositions.Add(worldPosition);
+			});
+		}
+
+		private void OnDrawGizmos() {
+			WorldPositions.ForEach(wp => Gizmos.DrawSphere(wp, 1f));
 		}
 
 #region Serialziation

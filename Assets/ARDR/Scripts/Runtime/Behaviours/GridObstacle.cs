@@ -13,6 +13,10 @@ namespace ARDR {
 			ObstacleRemovePopup.Instance.Open(this);
 		}
 
+		public override string ToString() {
+			return "dd";
+		}
+
 #if UNITY_EDITOR
 		[Button]
 		private void MatchRotation() {
