@@ -49,6 +49,24 @@ namespace ARDR {
 		}
 
 		[Button]
+		private void GenerateAllEnabledGrid() {
+			GridData.chunkGrid = new Grid<Chunk>(
+				gridSize.x,
+				gridSize.y,
+				Chunk.cellPerChunk * Chunk.cellSize,
+				OriginPosition,
+				(grid, chunkX, chunkZ) => new Chunk(GridData,
+					chunkX,
+					chunkZ,
+					true,
+					(cellX, cellZ) => true),
+				Color.blue);
+			GridData.chunkGrid.Init();
+			GridData.OriginPosition = OriginPosition;
+		}
+
+
+		[Button]
 		private void FindSceneGridObject() {
 			var gridObjectList = FindObjectsOfType<GridObjectBase>();
 			foreach (var gridObject in gridObjectList) {
@@ -64,7 +82,6 @@ namespace ARDR {
 				foreach (var subCellPos in gridPositionList) {
 					var chunk = GridData.GetChunk(subCellPos);
 					if (!chunk.IsEnabled) {
-						Debug.Log(gridObject.name +  "is not enabled chunk");
 						gridObject.gameObject.SetActive(false);
 						chunk.HiddenObjects.Add(gridObject);
 						break;
@@ -81,8 +98,8 @@ namespace ARDR {
 			FindSceneGridObject();
 		}
 
-		private Chunk CreateGridObject(Grid<Chunk> g, int chunkX, int chunkZ) {
-			return new Chunk(GridData,
+		private Chunk CreateGridObject(Grid<Chunk> g, int chunkX, int chunkZ) =>
+			new Chunk(GridData,
 				chunkX,
 				chunkZ,
 				defaultEnableChunk.Contains(new Vector2Int(chunkX, chunkZ)),
@@ -94,7 +111,6 @@ namespace ARDR {
 					}
 					return true;
 				});
-		}
 
 #if UNITY_EDITOR
 		private void OnDrawGizmos() {
