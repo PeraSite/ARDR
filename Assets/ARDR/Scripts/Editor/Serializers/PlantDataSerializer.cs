@@ -53,5 +53,7 @@ public class PlantDataSerializer : SheetSerializer<PlantData> {
 			plant.Theme = themeType;
 		}
 
+		plant.Description = row[15];
+
 	}
 }

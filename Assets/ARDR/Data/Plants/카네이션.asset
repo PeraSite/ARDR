@@ -29,8 +29,11 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: Description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uD589\uC131\uC5D0 \uC0B4\uC558\uB358 \uC778\uAC04\uB4E4\uC740 \uD2B9\uC815
+        \uB0A0\uC5D0 \uBD80\uBAA8\uC5D0\uAC8C \uCE74\uB124\uC774\uC158\uC744 \uC8FC\uBA70
+        \uC790\uC2E0\uC744 \uD0A4\uC6CC\uC900 \uBD80\uBAA8\uB97C \uAE30\uB150\uD588\uB2E4\uACE0
+        \uD55C\uB2E4. "
     - Name: correctionValue
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[ARDR.ThemeType, Assembly-CSharp],[System.Double,
@@ -119,7 +122,7 @@ MonoBehaviour:
       Data: 
   model: {fileID: 1133774476641589138, guid: f9e23eb959e3ae244a6b4715e6380272, type: 3}
   gridSize: {x: 1, y: 1}
-  Price: 500000
+  Price: 35000
   MoneyAmount: 4500
   Type: {fileID: 11400000, guid: bfb482df310ae964aae68fd462d91dbd, type: 2}
   Theme: 31

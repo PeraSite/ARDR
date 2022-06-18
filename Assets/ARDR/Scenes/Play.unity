@@ -1576,7 +1576,7 @@ MonoBehaviour:
   Money: {fileID: 11400000, guid: 284cd42ac6e080146834ffc5f6dd3192, type: 2}
   MoneyPerSecond: {fileID: 11400000, guid: ea72791d648374c408adfd4e88aaced1, type: 2}
   MoneyTickCycle: 1
-  StateTickCycle: 5
+  StateTickCycle: 300
   GridData: {fileID: 11400000, guid: 211f6210a6ea0d14c8432ff345784443, type: 2}
 --- !u!4 &66764278
 Transform:
@@ -5084,7 +5084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1280, y: -213.67276}
+  m_AnchoredPosition: {x: 1280, y: -326.21396}
   m_SizeDelta: {x: 2560, y: 181.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &324351670
@@ -5591,6 +5591,7 @@ GameObject:
   - component: {fileID: 415808823}
   - component: {fileID: 415808827}
   - component: {fileID: 415808828}
+  - component: {fileID: 415808829}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5711,6 +5712,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDraggingObject: {fileID: 11400000, guid: 88fa815e7e15d5349a985c9951afa9bc, type: 2}
   lerpSpeed: 20
+--- !u!114 &415808829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415808822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72c9c7e835e4f8a8842c5addc3e3440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: Camera
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_usePlayerSpawnpoint: 0
+  m_multiscene: 0
 --- !u!1 &424465003
 GameObject:
   m_ObjectHideFlags: 0
@@ -6050,7 +6069,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD68C\uBCF5\uB418\uB294 \uC218\uBD84"
+  m_text: "\uD68C\uBCF5\uB418\uB294 \uC591\uBD84"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 905b4fd5beb7e0548ab837a601732f62, type: 2}
   m_sharedMaterial: {fileID: -817041727999823645, guid: 905b4fd5beb7e0548ab837a601732f62,
@@ -18620,6 +18639,7 @@ GameObject:
   - component: {fileID: 1427716508}
   - component: {fileID: 1427716507}
   - component: {fileID: 1427716506}
+  - component: {fileID: 1427716511}
   m_Layer: 5
   m_Name: "\uBB3C\uBFCC\uB9AC\uAC1C"
   m_TagString: Untagged
@@ -18761,6 +18781,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427716504}
   m_CullTransparentMesh: 1
+--- !u!114 &1427716511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427716504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb6d21fef3a46bb83a03a207ed6ef61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextTag: {fileID: 970223003}
+  NextLevel: {fileID: 182923087}
+  GridSize: {fileID: 1760272940}
+  AddAmount: {fileID: 1309954248}
+  BuyButton: {fileID: 321916875}
+  Price: {fileID: 2070045914}
+  AddAmountPrefix: "<sprite name=\uC218\uBD84> "
+  ItemLevel: {fileID: 11400000, guid: 879ee3d8b9298d04498f74a1b85557f6, type: 2}
+  SOCache: {fileID: 11400000, guid: 75fbaee97dee67446abe2161ca96b85f, type: 2}
+  Money: {fileID: 11400000, guid: 284cd42ac6e080146834ffc5f6dd3192, type: 2}
 --- !u!1 &1428974119
 GameObject:
   m_ObjectHideFlags: 0
@@ -23861,6 +23903,7 @@ GameObject:
   - component: {fileID: 1865448290}
   - component: {fileID: 1865448289}
   - component: {fileID: 1865448288}
+  - component: {fileID: 1865448293}
   m_Layer: 5
   m_Name: "\uBE44\uB8CC"
   m_TagString: Untagged
@@ -24002,6 +24045,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865448286}
   m_CullTransparentMesh: 1
+--- !u!114 &1865448293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865448286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb6d21fef3a46bb83a03a207ed6ef61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextTag: {fileID: 1490051848}
+  NextLevel: {fileID: 714244460}
+  GridSize: {fileID: 824393066}
+  AddAmount: {fileID: 1810597296}
+  BuyButton: {fileID: 954525107}
+  Price: {fileID: 522045153}
+  AddAmountPrefix: "<sprite name=\uC591\uBD84> "
+  ItemLevel: {fileID: 11400000, guid: 737a75a1e0b662545b8d637fd97eb8b2, type: 2}
+  SOCache: {fileID: 11400000, guid: 75fbaee97dee67446abe2161ca96b85f, type: 2}
+  Money: {fileID: 11400000, guid: 284cd42ac6e080146834ffc5f6dd3192, type: 2}
 --- !u!1 &1868672634
 GameObject:
   m_ObjectHideFlags: 0
@@ -27036,7 +27101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1280, y: -810.96497}
+  m_AnchoredPosition: {x: 1280, y: -923.5062}
   m_SizeDelta: {x: 2560, y: 1012.6545}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2079165501
@@ -28221,6 +28286,7 @@ GameObject:
   - component: {fileID: 2128961341}
   - component: {fileID: 2128961340}
   - component: {fileID: 2128961343}
+  - component: {fileID: 2128961344}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -28338,6 +28404,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OrbitSpeed: 1
+  Rotation: {x: 0, y: 0, z: 0}
+--- !u!114 &2128961344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128961339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72c9c7e835e4f8a8842c5addc3e3440, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_usePlayerSpawnpoint: 0
+  m_multiscene: 0
 --- !u!1 &2133954225
 GameObject:
   m_ObjectHideFlags: 0

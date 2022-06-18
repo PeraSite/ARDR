@@ -29,8 +29,9 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: Description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uB530\uAC00\uC6B8 \uAC83\uAC19\uC740 \uC120\uC778\uC7A5\uC740 \uADF8
+        \uBFB0\uC871\uD55C \uBB34\uC5B8\uAC00\uAC00 \uBB34\uB824 \uC78E\uC774\uB2E4."
     - Name: correctionValue
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[ARDR.ThemeType, Assembly-CSharp],[System.Double,

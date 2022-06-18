@@ -29,8 +29,10 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: Description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uD759\uD0D5\uBB3C\uC5D0\uC11C\uC11C\uB3C4 \uD53C\uC5B4\uB098\uB294
+        \uC544\uB984\uB2E4\uC6B4 \uAF43\uC740  \uD759\uD0D5\uBB3C\uB85C \uB354\uB7EC\uC6CC\uC9C0\uC9C0
+        \uC54A\uB294\uB2E4. "
     - Name: correctionValue
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[ARDR.ThemeType, Assembly-CSharp],[System.Double,

@@ -5,15 +5,15 @@ namespace ARDR {
 		public float OrbitSpeed;
 
 		private Transform _transform;
-		private Vector3 Rotation;
+		public Vector3 Rotation;
 
-		private void Awake() {
+		private void Start() {
 			_transform = GetComponent<Transform>();
 			Rotation = transform.eulerAngles;
 		}
 
 		private void Update() {
-			Rotation.x += OrbitSpeed * Time.deltaTime;
+			Rotation.x = Mathf.Repeat(Rotation.x + OrbitSpeed * Time.deltaTime, 360);
 			_transform.eulerAngles = Rotation;
 		}
 	}

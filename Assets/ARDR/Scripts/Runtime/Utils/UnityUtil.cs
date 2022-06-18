@@ -29,6 +29,13 @@ namespace ARDR {
 			return viewport;
 		}
 
+		public static Vector3 GetScreenCenterWorldPosition(Camera camera) {
+			var ray = camera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
+			return Physics.Raycast(ray, out var raycastHit, 999f)
+				? raycastHit.point
+				: Vector3.zero;
+		}
+
 		public static Vector3 GetMouseWorldPosition(Camera camera) {
 			var ray = camera.ScreenPointToRay(Input.mousePosition);
 			return Physics.Raycast(ray, out var raycastHit, 999f)

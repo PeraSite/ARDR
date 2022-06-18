@@ -29,8 +29,10 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: Description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uBAA8\uC591\uC774 \uAC15\uC544\uC9C0 \uAF2C\uB9AC\uB97C \uB2EE\uC544
+        \uAC15\uC544\uC9C0\uD480\uC774\uB77C\uACE0 \uBD88\uB838\uACE0 \uC601\uC5B4\uB85C\uB294
+        Green Fox Tail\uC774\uB77C\uACE0\uB3C4 \uBD88\uB838\uB2E4."
     - Name: correctionValue
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[ARDR.ThemeType, Assembly-CSharp],[System.Double,

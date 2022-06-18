@@ -29,8 +29,11 @@ MonoBehaviour:
       Entry: 10
       Data: 0
     - Name: Description
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: "\uC5F4\uB300\uC9C0\uC5ED\uBD80\uD130 \uCD94\uC6B4 \uC0B0\uC545\uC9C0\uBC29\uAE4C\uC9C0
+        \uB2E4\uC591\uD55C \uC9C0\uC5ED\uC5D0 \uC11C\uC2DD\uD558\uB294 \uC774 \uC2DD\uBB3C\uC740
+        \uD1A0\uC591\uACFC \uAE30\uD6C4\uC5D0 \uB530\uB77C \uD558\uB8E8\uC5D0 \uCD5C\uB300
+        60cm\uAE4C\uC9C0 \uC790\uB784 \uC218 \uC788\uB2E4."
     - Name: correctionValue
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[ARDR.ThemeType, Assembly-CSharp],[System.Double,
@@ -120,7 +123,7 @@ MonoBehaviour:
   model: {fileID: 1133774476641589138, guid: f9e23eb959e3ae244a6b4715e6380272, type: 3}
   gridSize: {x: 1, y: 1}
   Price: 200000
-  MoneyAmount: 2000
+  MoneyAmount: 20000
   Type: {fileID: 11400000, guid: 650e64ea30f9971488d15eb319f8b9ec, type: 2}
   Theme: 31
   RequireLevel: 10

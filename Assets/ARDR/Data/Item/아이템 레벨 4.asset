@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510c61cdec524e86b647525bb5947f82, type: 3}
-  m_Name: Blur Config
+  m_Script: {fileID: 11500000, guid: 65f898a7059147b8944a68c2c5199ad7, type: 3}
+  m_Name: "\uC544\uC774\uD15C \uB808\uBCA8 4"
   m_EditorClassIdentifier: 
-  radius: 4
-  iteration: 4
-  maxDepth: 6
-  strength: 64
+  Level: 4
+  AddAmount: 160
+  Range: {x: 5, y: 5}
+  UpgradePrice: 500000

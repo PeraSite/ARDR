@@ -64,13 +64,12 @@ namespace ARDR {
 			return pos;
 		}
 
-		public IPlacedObject InitGhost(PlaceableObjectData data, Vector2Int cellPos = default) {
-			if (cellPos != default) {
-				if (GridData.GetWorldPosition(cellPos).GetValue(out var worldPos)) {
-					lastCellPos = cellPos;
-					transform.position = worldPos;
-				}
+		public void InitGhost(PlaceableObjectData data, Vector2Int cellPos) {
+			if (GridData.GetWorldPosition(cellPos).GetValue(out var worldPos)) {
+				lastCellPos = cellPos;
+				transform.position = worldPos;
 			}
+
 			_currentData = data;
 
 			if (!_ghostObject.SafeIsUnityNull()) { //If already there is visual, destroy old ghost
@@ -93,7 +92,6 @@ namespace ARDR {
 			});
 			canvas.gameObject.SetActive(true);
 			RotateObject(CurrentDirection.Value);
-			return _ghostObject.GetComponent<IPlacedObject>();
 		}
 
 		public void RotateObject(Direction direction) {

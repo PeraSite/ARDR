@@ -19,6 +19,12 @@ namespace ARDR {
 
 		private Action<IPlacedObject> OnPlaced;
 		private Action OnCancelled;
+		private Camera _cam;
+
+		protected override void Awake() {
+			base.Awake();
+			_cam = Camera.main;
+		}
 
 		public void SetExistObjectEditMode(IPlacedObject placedObject) {
 			placedObject.OnEditStart();
@@ -38,13 +44,20 @@ namespace ARDR {
 		}
 
 		public void SetEditMode(PlaceableObjectData data, Action<IPlacedObject> onPlaced, Action onCancelled) {
+			var worldPosition = UnityUtil.GetScreenCenterWorldPosition(_cam);
+			var targetCellPos = GridData.GetCellPos(worldPosition);
+			if (!GridData.GetChunk(targetCellPos).IsEnabled) {
+				Toast.Show("이 곳엔 놓을 수 없습니다!");
+				return;
+			}
+
 			IsEditing.Value = true;
 			_currentData = data;
 			CurrentDirection.Value = Direction.Down;
 			OnPlaced = onPlaced;
 			OnCancelled = onCancelled;
 			GridVisualization.Instance.Show();
-			BuildingGhost.Instance.InitGhost(_currentData);
+			BuildingGhost.Instance.InitGhost(_currentData, targetCellPos);
 		}
 
 		[Button]
