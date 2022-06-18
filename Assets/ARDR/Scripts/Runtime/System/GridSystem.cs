@@ -31,7 +31,7 @@ namespace ARDR {
 
 		protected override void OnDestroy() {
 			base.OnDestroy();
-			GridData.chunkGrid = null;
+			// GridData.chunkGrid = null;
 		}
 
 		[Button]
@@ -80,6 +80,10 @@ namespace ARDR {
 
 				foreach (var subCellPos in gridPositionList) {
 					var chunk = GridData.GetChunk(subCellPos);
+					if (chunk == default) {
+						Debug.Log("Can't find chunk", gridObject);
+						break;
+					}
 					if (!chunk.IsEnabled) {
 						if (shouldDisableObject) {
 							gridObject.gameObject.SetActive(false);
@@ -122,9 +126,12 @@ namespace ARDR {
 				});
 
 #if UNITY_EDITOR
+
+		public bool OnlyDrawChunkGizmo;
 		private void OnDrawGizmos() {
 			if (GridData.chunkGrid == null) return;
 			GridData.chunkGrid.DrawGizmo(Color.red);
+			if (OnlyDrawChunkGizmo) return;
 			foreach (var chunk in GridData.chunkGrid.GridArray) {
 				chunk.cellGrid?.DrawGizmo(Color.blue);
 			}
