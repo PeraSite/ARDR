@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using UnityAtoms.BaseAtoms;
@@ -84,7 +85,8 @@ namespace ARDR {
 					{
 						var quadSize = new Vector3(1, 0, 1) * (grid.cellSize + 0.1f);
 
-						var tilemapSprite = chunk.IsEnabled ? TilemapSprite.None : TilemapSprite.NotEnabled;
+						var nearEnabled = Grid.GetNeighbourChunks(chunk.Position).Any(c => c.IsEnabled);
+						var tilemapSprite = chunk.IsEnabled ? TilemapSprite.None : (nearEnabled ? TilemapSprite.NotEnabled : TilemapSprite.None);
 
 						Vector2 gridUV00, gridUV11;
 						if (tilemapSprite == TilemapSprite.None) {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -105,9 +106,20 @@ namespace ARDR {
 			return chunk.GetWorldPosition(localChunkPos);
 		}
 
-
 		public Vector3? GetWorldPosition(int cellX, int cellZ) {
 			return GetWorldPosition(new Vector2Int(cellX, cellZ));
+		}
+
+		public List<Chunk> GetNeighbourChunks(Vector2Int chunkPos) {
+			var grid = chunkGrid.GridArray;
+			var neighbourChunk = new List<Chunk>();
+
+			if (chunkPos.x - 1 >= 0) neighbourChunk.Add(grid[chunkPos.x - 1, chunkPos.y]);
+			if (chunkPos.x + 1 < chunkGrid.width) neighbourChunk.Add(grid[chunkPos.x + 1, chunkPos.y]);
+			if (chunkPos.y - 1 >= 0) neighbourChunk.Add(grid[chunkPos.x, chunkPos.y - 1]);
+			if (chunkPos.y + 1 < chunkGrid.height) neighbourChunk.Add(grid[chunkPos.x, chunkPos.y + 1]);
+
+			return neighbourChunk;
 		}
 	}
 }
