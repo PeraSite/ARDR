@@ -12,7 +12,7 @@ namespace ARDR {
 		public override Direction Direction { get; set; }
 
 		[Header("변수")]
-		public IntVariable Variable;
+		public FloatVariable Multiplier;
 
 		[Header("상태")]
 		public TotemState State;
@@ -52,14 +52,13 @@ namespace ARDR {
 
 		private void ActivateEffect() {
 			State.IsActive = true;
-			State.variableAddAmount = Variable.Value;
-			Variable.Add(State.variableAddAmount);
+			Multiplier.Value = 2f;
 			Toast.Show($"{name}을 사용했습니다!");
 		}
 
 		private void DeactivateEffect() {
 			State.IsActive = false;
-			Variable.Subtract(State.variableAddAmount);
+			Multiplier.Value = 1f;
 		}
 
 		public override void OnDiscovered() {
@@ -72,6 +71,5 @@ namespace ARDR {
 		public long lastUsed;
 		public bool IsActive;
 		public long effectEnd;
-		public int variableAddAmount;
 	}
 }

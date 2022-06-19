@@ -8,20 +8,28 @@ namespace ARDR {
 		public TextMeshProUGUI Text;
 		public IntVariable Variable;
 
+		public FloatVariable Multiplier;
+
 		private void OnValidate() {
 			if (Text.SafeIsUnityNull()) Text = GetComponent<TextMeshProUGUI>();
 		}
 
 		private void OnEnable() {
-			Variable.Changed.Register(OnChanged);
-			OnChanged(Variable.Value);
+			Variable.Changed.Register(UpdateUI);
+			Multiplier.Changed.Register(UpdateUI);
+			UpdateUI();
 		}
 
 		private void OnDisable() {
-			Variable.Changed.Unregister(OnChanged);
+			Variable.Changed.Unregister(UpdateUI);
+			Multiplier.Changed.Unregister(UpdateUI);
 		}
 
-		private void OnChanged(int value) {
+		private void UpdateUI() {
+			var value = Variable.Value;
+			if (!Multiplier.SafeIsUnityNull()) {
+				value = (int) (value * Multiplier.Value);
+			}
 			Text.text = value.ToString();
 		}
 	}

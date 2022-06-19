@@ -20,17 +20,19 @@ namespace ARDR {
 		public Vector2Int Position;
 		public readonly List<PlacedObjectInfo> Objects;
 		public readonly List<GridObjectBase> HiddenObjects;
+		public readonly ThemeType Theme;
 
 		private bool _isEnabled;
 		private readonly Func<int, int, bool> _cellInitializer;
 
-		public Chunk(GridData parent, int x, int y, bool isEnabled = true,
+		public Chunk(GridData parent, int x, int y, ThemeType theme, bool isEnabled = true,
 			Func<int, int, bool> cellInitializer = null) {
 			gridData = parent;
 			Position = new Vector2Int(x, y);
 			_cellInitializer = cellInitializer ?? ((_, _) => true);
 			Objects = new List<PlacedObjectInfo>();
 			HiddenObjects = new List<GridObjectBase>();
+			Theme = theme;
 			SetEnabled(isEnabled);
 		}
 

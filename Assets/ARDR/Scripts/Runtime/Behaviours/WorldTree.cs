@@ -12,6 +12,9 @@ namespace ARDR {
 
 		public IntVariable MoneyPerTouch;
 
+		public FloatVariable MoneyPerTouchMultiplier;
+
+
 		public IntVariable UpgradeLevel;
 
 		public Transform ParentVFX;
@@ -40,7 +43,7 @@ namespace ARDR {
 		}
 
 		public void OnTouch() {
-			Money.Add(MoneyPerTouch);
+			Money.Add((long) (MoneyPerTouch.Value * MoneyPerTouchMultiplier.Value));
 		}
 	}
 }

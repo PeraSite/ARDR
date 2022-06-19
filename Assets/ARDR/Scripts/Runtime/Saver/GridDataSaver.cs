@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PixelCrushers;
-using UnityEngine;
 
 namespace ARDR {
 	public class GridDataSaver : Saver {
@@ -19,8 +18,8 @@ namespace ARDR {
 			if (s == null) return;
 			var chunks = SaveSystem.Deserialize<List<Chunk.ChunkState>>(s);
 			foreach (var chunkState in chunks) {
-				var chunk = new Chunk(Data, chunkState.x, chunkState.y); //Only enabled chunk are saved!
-				Data.chunkGrid.SetGridObject(new Vector2Int(chunkState.x, chunkState.y), chunk);
+				var chunk = Data.chunkGrid.GetGridObject(chunkState.x, chunkState.y);
+				chunk.SetEnabled(true);
 				chunk.ApplyData(chunkState);
 			}
 		}

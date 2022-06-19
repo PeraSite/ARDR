@@ -20,6 +20,9 @@ namespace ARDR {
 		[OdinSerialize]
 		private Dictionary<Vector2Int, List<Vector2Int>> DefaultDisabledCell = new();
 
+		[OdinSerialize]
+		private Dictionary<Vector2Int, ThemeType> ThemeData = new();
+
 		protected override void Awake() {
 			base.Awake();
 			GenerateGrid();
@@ -57,6 +60,7 @@ namespace ARDR {
 				(grid, chunkX, chunkZ) => new Chunk(GridData,
 					chunkX,
 					chunkZ,
+					ThemeData.GetOrDefault(new Vector2Int(chunkX, chunkZ)),
 					true,
 					(cellX, cellZ) => true),
 				Color.blue);
@@ -115,6 +119,7 @@ namespace ARDR {
 			new Chunk(GridData,
 				chunkX,
 				chunkZ,
+				ThemeData.GetOrDefault(new Vector2Int(chunkX, chunkZ)),
 				defaultEnableChunk.Contains(new Vector2Int(chunkX, chunkZ)),
 				(cellX, cellZ) => {
 					if (DefaultDisabledCell.TryGetValue(new Vector2Int(chunkX, chunkZ), out var disabledCells)) {

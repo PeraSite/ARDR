@@ -11,6 +11,7 @@ namespace ARDR {
 		public LongVariable Money;
 
 		public IntVariable MoneyPerSecond;
+		public FloatVariable MoneyPerSecondMultiplier;
 
 		[Header("설정")]
 		public float MoneyTickCycle = 1f;
@@ -21,6 +22,16 @@ namespace ARDR {
 
 		private float _moneyTimer;
 		private float _stateTimer;
+
+		private void Start() {
+			GridData.onAnyGridUpdate -= CalculateMoneyPerSecond;
+			GridData.onAnyGridUpdate += CalculateMoneyPerSecond;
+			CalculateMoneyPerSecond();
+		}
+
+		private void OnDisable() {
+			GridData.onAnyGridUpdate -= CalculateMoneyPerSecond;
+		}
 
 		private void Update() {
 			UpdateMoneyCycle();
@@ -53,7 +64,13 @@ namespace ARDR {
 		}
 
 		private void OnMoneyTick() {
-			Money.Add(MoneyPerSecond.Value);
+			Money.Add((long) (MoneyPerSecond.Value * MoneyPerSecondMultiplier.Value));
+		}
+
+		private void CalculateMoneyPerSecond() {
+			MoneyPerSecond.Value = (int) FindObjectsOfType<Plant>()
+				.Where(plant => !plant.IsEditing)
+				.Sum(plant => plant.Data.MoneyAmount * plant.Data.correctionValue[plant.Chunk.Theme]);
 		}
 	}
 }

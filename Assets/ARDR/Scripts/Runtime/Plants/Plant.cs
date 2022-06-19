@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using PixelCrushers;
-using Sirenix.OdinInspector;
+﻿using PixelCrushers;
 using Sirenix.Utilities;
-using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
 	public class Plant : PlacedObject<PlantData>, ITouchListener {
 		[Header("설정")]
-		public IntVariable MoneyPerSecond;
-
 		public PlantState State;
 
 		public GameObject BuildingVisual;
@@ -22,7 +17,6 @@ namespace ARDR {
 
 		public override void OnFirstPlaced() {
 			base.OnFirstPlaced();
-			MoneyPerSecond.Add(Data.MoneyAmount);
 			State = new PlantState {
 				Moisture = Random.Range(0, 100),
 				Nutrition = Random.Range(0, 100),
@@ -48,7 +42,6 @@ namespace ARDR {
 
 		public override void OnRemove() {
 			if (Data.SafeIsUnityNull()) return;
-			MoneyPerSecond.Subtract(Data.MoneyAmount);
 		}
 
 		public override void OnEditStart() {
@@ -70,24 +63,6 @@ namespace ARDR {
 		public void OnStateTick() {
 			State.Moisture = Mathf.Clamp(State.Moisture - Data.MoistureUsage, 0, 100);
 			State.Nutrition = Mathf.Clamp(State.Nutrition - Data.NutritionUsage, 0, 100);
-		}
-
-		private List<Vector3> WorldPositions = new();
-
-		[Button]
-		private void TestPosition() {
-			WorldPositions.Clear();
-			var originCellPos = GridSystem.Instance.GridData.GetCellPos(transform.position);
-			var list = Data.GetGridPositionList(originCellPos, Direction);
-			list.ForEach(cellPos => {
-				var worldPosition = GridSystem.Instance.GridData.GetWorldPosition(cellPos).GetValueOrDefault();
-				Debug.Log($"Cellpos : {cellPos}, world position: {worldPosition}");
-				WorldPositions.Add(worldPosition);
-			});
-		}
-
-		private void OnDrawGizmos() {
-			WorldPositions.ForEach(wp => Gizmos.DrawSphere(wp, 1f));
 		}
 
 #region Serialziation

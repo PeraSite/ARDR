@@ -33,7 +33,6 @@ namespace ARDR {
 			RequireLevel.text = $"세계수 레벨 {data.RequireLevel} 필요";
 			Type.sprite = data.Type.Display;
 			ThemeText.text = data.Theme.ToString();
-			MoneyAmount.text = $"{TMPIcons.Money} {data.MoneyAmount.ToString()}";
 
 			NutritionUsage.text = $"{TMPIcons.Nutrition} {data.NutritionUsage}";
 			MoistureUsage.text = $"{TMPIcons.Moisture} {data.MoistureUsage}";
@@ -49,6 +48,9 @@ namespace ARDR {
 		private void UpdateStateUI() {
 			CurrentNutrition.text = $"{TMPIcons.Nutrition} {_plant.State.Nutrition}";
 			CurrentMoisture.text = $"{TMPIcons.Moisture} {_plant.State.Moisture}";
+			MoneyAmount.text = $"{TMPIcons.Money} {CalculateMoneyAmount().ToString()}";
 		}
+
+		private int CalculateMoneyAmount() => (int) (_plant.Data.MoneyAmount * _plant.Data.correctionValue[_plant.Chunk.Theme]);
 	}
 }
