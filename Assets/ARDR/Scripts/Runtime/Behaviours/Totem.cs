@@ -21,7 +21,7 @@ namespace ARDR {
 
 		private Buff _buff;
 
-		private void Awake() {
+		private void OnEnable() {
 			_buff = GetComponent<Buff>();
 			_buff.OnEffectActivate += OnActivateEffect;
 			_buff.OnEffectDeactivate += OnDeactivateEffect;

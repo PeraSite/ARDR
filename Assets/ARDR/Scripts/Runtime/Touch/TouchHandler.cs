@@ -5,6 +5,7 @@ using UnityEngine;
 namespace ARDR {
 	public class TouchHandler : MonoBehaviour {
 		public LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
+		public float ScreenTouchMoveTolerance = 85f;
 
 		private void OnEnable() {
 			LeanTouch.OnFingerTap += OnFingerTap;
@@ -28,6 +29,8 @@ namespace ARDR {
 
 		private ITouchListener GetTouchListener(LeanFinger finger) {
 			if (finger.StartedOverGui) return default;
+			var movedAmount = (finger.StartScreenPosition - finger.LastScreenPosition).magnitude;
+			if (movedAmount > ScreenTouchMoveTolerance) return default;
 			var result = ScreenQuery.Query<ITouchListener>(gameObject, finger.ScreenPosition);
 			return result;
 		}
