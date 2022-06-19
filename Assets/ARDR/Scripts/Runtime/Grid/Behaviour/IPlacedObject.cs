@@ -6,6 +6,7 @@ namespace ARDR {
 
 		public void OnInstantiated(PlaceableObjectData objectData);
 		public void OnFirstPlaced();
+		public void OnRemove() {}
 
 		public void OnEditStart();
 		public void OnEditEnd();

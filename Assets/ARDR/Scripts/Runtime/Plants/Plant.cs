@@ -65,10 +65,6 @@ namespace ARDR {
 			plant.transform.localPosition = position;
 		}
 
-		public override void OnRemove() {
-			if (Data.SafeIsUnityNull()) return;
-		}
-
 		public override void OnEditStart() {
 			BuildingVisual.SetActive(true);
 		}

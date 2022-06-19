@@ -13,6 +13,9 @@ namespace ARDR {
 		public BoolVariable IsEditing;
 		public DirectionVariable CurrentDirection;
 
+		[Header("오브젝트")]
+		public GameObject DeleteButton;
+
 		private PlaceableObjectData _currentData;
 		private IPlacedObject _editingObject;
 		private string _editingObjectState;
@@ -34,6 +37,7 @@ namespace ARDR {
 			var cellPos = GridData.GetCellPos(placedObject.Transform.position);
 			placedObject.Transform.gameObject.SetActive(false);
 			SetEditMode(placedObject.BaseData, cellPos);
+			DeleteButton.SetActive(true);
 		}
 
 		[Button]
@@ -95,20 +99,10 @@ namespace ARDR {
 			placedObject.OnEditEnd();
 			placedObject.IsEditing = false;
 			OnPlaced?.Invoke(placedObject);
-
-			BuildingGhost.Instance.DestroyVisual();
-			IsEditing.Value = false;
-			_editingObject = null;
-			_editingObjectState = "";
-			_currentData = null;
-			OnPlaced = null;
-			OnCancelled = null;
-
-			GridVisualization.Instance.Hide();
+			ResetState();
 		}
 
-		public void CancelEdit() {
-			OnCancelled?.Invoke();
+		public void ResetState() {
 			IsEditing.Value = false;
 			OnPlaced = null;
 			OnCancelled = null;
@@ -117,7 +111,18 @@ namespace ARDR {
 			_editingObject = null;
 			_editingObjectState = "";
 			GridVisualization.Instance.Hide();
+			DeleteButton.SetActive(false);
+		}
 
+		public void CancelEdit() {
+			OnCancelled?.Invoke();
+			ResetState();
+		}
+
+		public void DeleteObject() {
+			_editingObject.Chunk.RemovePlacedObject(_editingObject);
+			_editingObject.OnRemove();
+			ResetState();
 		}
 	}
 }
