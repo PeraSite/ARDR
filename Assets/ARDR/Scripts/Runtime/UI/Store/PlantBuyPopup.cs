@@ -1,6 +1,7 @@
 ﻿using PixelCrushers.Wrappers;
 using TMPro;
 using UnityAtoms;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,29 +11,25 @@ namespace ARDR {
 		public Image Icon;
 
 		public TextMeshProUGUI Name;
-
 		public TextMeshProUGUI RequireLevel;
-
 		public TextMeshProUGUI Price;
-
 		public Image Type;
 
 		public TextMeshProUGUI ThemeText;
-
 		public TextMeshProUGUI MoneyAmount;
-
 		public TextMeshProUGUI NutritionUsage;
 		public TextMeshProUGUI MoistureUsage;
 		public TextMeshProUGUI GridSize;
 
 		public Button BuyButton;
-
 		public UIPanel PlantBuyPopupPanel;
 		public UIPanel StoreUIPanel;
 		public UIPanel HUD;
 
 		[Header("변수")]
 		public LongVariable Money;
+		public IntVariable WorldTreeLevel;
+		public GridData Grid;
 
 		private PlantData _data;
 
@@ -59,6 +56,16 @@ namespace ARDR {
 		private void OnBuy() {
 			if (Money.Value < _data.Price) {
 				Toast.Show("돈이 부족합니다!");
+				return;
+			}
+
+			if (WorldTreeLevel.Value < _data.RequireLevel) {
+				Toast.Show("세계수 레벨이 부족합니다!");
+				return;
+			}
+
+			if (!Grid.HasFoundTheme(_data.Theme)) {
+				Toast.Show("아직 발견하지 못한 테마의 식물입니다!");
 				return;
 			}
 

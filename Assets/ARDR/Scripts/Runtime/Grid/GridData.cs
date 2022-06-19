@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PeraCore.Runtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -121,5 +122,8 @@ namespace ARDR {
 
 			return neighbourChunk;
 		}
+
+		public bool HasFoundTheme(ThemeType Theme) =>
+			Theme == ThemeType.전체 || chunkGrid.GridArray.OfType<Chunk>().Any(c => c.IsEnabled && c.Theme == Theme);
 	}
 }
