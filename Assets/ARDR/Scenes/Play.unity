@@ -1163,6 +1163,12 @@ PrefabInstance:
       propertyPath: m_key
       value: "\uC815\uAE00\uD1A0\uD15C"
       objectReference: {fileID: 0}
+    - target: {fileID: 9019113228951446298, guid: 712214d37543c6c43b30c7d1ad765c91,
+        type: 3}
+      propertyPath: Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 1d68565038ee473ead9e91fcf1f4c3ae,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 712214d37543c6c43b30c7d1ad765c91, type: 3}
 --- !u!1 &41038126
@@ -18786,6 +18792,17 @@ PrefabInstance:
       propertyPath: m_key
       value: "\uC0AC\uB9C9\uD1A0\uD15C"
       objectReference: {fileID: 0}
+    - target: {fileID: 9019113228951446298, guid: 90a60c50535e1594085013902537e885,
+        type: 3}
+      propertyPath: Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: ea72791d648374c408adfd4e88aaced1,
+        type: 2}
+    - target: {fileID: 9019113228951446298, guid: 90a60c50535e1594085013902537e885,
+        type: 3}
+      propertyPath: ActiveTime
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90a60c50535e1594085013902537e885, type: 3}
 --- !u!1001 &821056452
@@ -23710,6 +23727,12 @@ PrefabInstance:
       propertyPath: m_key
       value: "\uD0C0\uC774\uAC00\uD1A0\uD15C"
       objectReference: {fileID: 0}
+    - target: {fileID: 9019113228951446298, guid: 516cb5624e1930145ae13af6c61adc85,
+        type: 3}
+      propertyPath: Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 1d68565038ee473ead9e91fcf1f4c3ae,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 516cb5624e1930145ae13af6c61adc85, type: 3}
 --- !u!1001 &1015678329
@@ -25512,6 +25535,12 @@ PrefabInstance:
       propertyPath: m_key
       value: "\uB2AA\uD1A0\uD15C"
       objectReference: {fileID: 0}
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: ea72791d648374c408adfd4e88aaced1,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38d912a49901f9a4ab97db6cdfc5b8b6, type: 3}
 --- !u!1 &1090342473

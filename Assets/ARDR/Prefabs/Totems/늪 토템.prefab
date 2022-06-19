@@ -51,9 +51,14 @@ MonoBehaviour:
   <BaseData>k__BackingField: {fileID: 11400000, guid: 1c6b09e58f8cfa243a03f52b55cff5e8,
     type: 2}
   <Direction>k__BackingField: 0
+  Variable: {fileID: 0}
   State:
     lastUsed: 0
+    IsActive: 0
+    effectEnd: 0
+    variableAddAmount: 0
   CooldownTime: 10
+  ActiveTime: 0
 --- !u!65 &8772694241057324542
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,6 +131,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 1x1 Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 1894838130971683970, guid: c13c4304b4cea7b4e9643cd1f580d06b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1894838130971683971, guid: c13c4304b4cea7b4e9643cd1f580d06b,
         type: 3}

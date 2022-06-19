@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
@@ -9,10 +11,22 @@ namespace ARDR {
 		[field: SerializeField]
 		public override Direction Direction { get; set; }
 
+		[Header("변수")]
+		public IntVariable Variable;
+
+		[Header("상태")]
 		public TotemState State;
 
+		[Header("설정")]
 		public int CooldownTime;
+
 		public int ActiveTime;
+
+		private void Start() {
+			if (State.IsActive) {
+				StartCoroutine(TotemUseCoroutine());
+			}
+		}
 
 		public void OnTouch() {
 			var current = DateTimeOffset.Now.ToUnixTimeSeconds();
@@ -22,7 +36,30 @@ namespace ARDR {
 				return;
 			}
 			State.lastUsed = current;
-			Toast.Show($"{name} 사용 완료!");
+			State.effectEnd = current + ActiveTime;
+			ActivateEffect();
+			StartCoroutine(TotemUseCoroutine());
+		}
+
+		private IEnumerator TotemUseCoroutine() {
+			yield return new WaitUntil(() => {
+				var current = DateTimeOffset.Now.ToUnixTimeSeconds();
+				var target = State.effectEnd;
+				return current > target;
+			});
+			DeactivateEffect();
+		}
+
+		private void ActivateEffect() {
+			State.IsActive = true;
+			State.variableAddAmount = Variable.Value;
+			Variable.Add(State.variableAddAmount);
+			Toast.Show($"{name}을 사용했습니다!");
+		}
+
+		private void DeactivateEffect() {
+			State.IsActive = false;
+			Variable.Subtract(State.variableAddAmount);
 		}
 
 		public override void OnDiscovered() {
@@ -33,8 +70,8 @@ namespace ARDR {
 	[Serializable]
 	public struct TotemState {
 		public long lastUsed;
-
 		public bool IsActive;
 		public long effectEnd;
+		public int variableAddAmount;
 	}
 }
