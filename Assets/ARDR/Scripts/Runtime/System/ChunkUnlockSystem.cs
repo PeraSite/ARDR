@@ -27,6 +27,9 @@ namespace ARDR {
 		public IntVariable WorldTreeLevel;
 		public ScriptableObjectCache SOCache;
 
+		[Header("오디오")]
+		public SoundEffectSO UnlockSFX;
+
 		private List<ChunkUnlockUI> _instantiated;
 		private Chunk _currentChunk;
 
@@ -92,7 +95,7 @@ namespace ARDR {
 			}
 			Money.Subtract(price);
 			Toast.Show("새로운 땅을 해금했습니다!");
-
+			UnlockSFX.Play();
 			GridSystem.Instance.UnlockChunk(chunkPos);
 			UnlockPanel.Close();
 		}

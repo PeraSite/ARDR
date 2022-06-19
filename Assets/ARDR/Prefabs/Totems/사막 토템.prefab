@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 269325930695057331, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
         type: 3}
       propertyPath: m_Name
-      value: "\uC0AC\uB9C9 \uD1A0\uD15C"
+      value: "\uC624\uC544\uC2DC\uC2A4"
       objectReference: {fileID: 0}
     - target: {fileID: 645991863258514697, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
         type: 3}
@@ -97,6 +97,12 @@ PrefabInstance:
       propertyPath: Multiplier
       value: 
       objectReference: {fileID: 11400000, guid: c661c569547a79d449b00d11d94aa9f8,
+        type: 2}
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: UseTotemSFX
+      value: 
+      objectReference: {fileID: 11400000, guid: db139ce3f9bce6a4ea074dca78366dd9,
         type: 2}
     - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
         type: 3}

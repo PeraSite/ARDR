@@ -56,6 +56,7 @@ MonoBehaviour:
   CooldownTime: 14400
   ActiveTime: 30
   Power: 2.5
+  UseTotemSFX: {fileID: 11400000, guid: db139ce3f9bce6a4ea074dca78366dd9, type: 2}
 --- !u!65 &8772694241057324542
 BoxCollider:
   m_ObjectHideFlags: 0

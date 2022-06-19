@@ -14,10 +14,12 @@ namespace ARDR {
 
 		[Header("설정")]
 		public ThemeType Theme;
-
 		public int CooldownTime;
 		public int ActiveTime;
 		public float Power = 2f;
+
+		[Header("오디오")]
+		public SoundEffectSO UseTotemSFX;
 
 		private Buff _buff;
 
@@ -45,6 +47,7 @@ namespace ARDR {
 		private void OnActivateEffect() {
 			Multiplier.Value = Power;
 			Toast.Show($"{name}을 사용했습니다!");
+			UseTotemSFX.Play();
 		}
 
 		private void OnDeactivateEffect() {

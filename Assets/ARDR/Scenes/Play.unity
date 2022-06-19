@@ -3461,6 +3461,8 @@ MonoBehaviour:
   IsEditing: {fileID: 11400000, guid: 84fca9f88cde2ef4793c42d8f420eff3, type: 2}
   CurrentDirection: {fileID: 11400000, guid: 2a95990b4c2505e4986a9dc085265c55, type: 2}
   DeleteButton: {fileID: 866999384}
+  PlantedSFX: {fileID: 11400000, guid: 8a9db8e551d4d40408da54f2b6033f8f, type: 2}
+  PlantDeleteSFX: {fileID: 11400000, guid: fcbee071ef581504fb7127c8283423f4, type: 2}
 --- !u!114 &114032156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32623,6 +32625,7 @@ MonoBehaviour:
   MoneyPerTouch: {fileID: 11400000, guid: 1d68565038ee473ead9e91fcf1f4c3ae, type: 2}
   WorldTreeLevel: {fileID: 11400000, guid: 71fae75aaa0fc984f9297ff02c0ef835, type: 2}
   SOCache: {fileID: 11400000, guid: 75fbaee97dee67446abe2161ca96b85f, type: 2}
+  UnlockSFX: {fileID: 11400000, guid: f80fc06cf2c70d344a4e66f7e8ad3ac5, type: 2}
 --- !u!1001 &1102742531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62514,6 +62517,7 @@ MonoBehaviour:
   CooldownTime: 3600
   ActiveTime: 30
   TouchSFX: {fileID: 11400000, guid: 1400d2b0e5e63f94f8fe17a09d5c72d7, type: 2}
+  UseTotemSFX: {fileID: 11400000, guid: db139ce3f9bce6a4ea074dca78366dd9, type: 2}
 --- !u!1 &1133774477156497263
 GameObject:
   m_ObjectHideFlags: 0

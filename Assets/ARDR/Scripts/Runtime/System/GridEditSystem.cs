@@ -16,6 +16,11 @@ namespace ARDR {
 		[Header("오브젝트")]
 		public GameObject DeleteButton;
 
+		[Header("오디오")]
+		public SoundEffectSO PlantedSFX;
+
+		public SoundEffectSO PlantDeleteSFX;
+
 		private PlaceableObjectData _currentData;
 		private IPlacedObject _editingObject;
 		private string _editingObjectState;
@@ -95,6 +100,7 @@ namespace ARDR {
 			if (!isEditingObject) { //If first place
 				placedObject.OnFirstPlaced();
 			}
+			PlantedSFX.Play();
 			placedObject.OnEditEnd();
 			placedObject.IsEditing = false;
 			OnPlaced?.Invoke(placedObject);
@@ -119,6 +125,7 @@ namespace ARDR {
 		}
 
 		public void DeleteObject() {
+			PlantDeleteSFX.Play();
 			_editingObject.Chunk.RemovePlacedObject(_editingObject);
 			_editingObject.OnRemove();
 			ResetState();

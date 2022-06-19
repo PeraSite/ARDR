@@ -9,31 +9,24 @@ namespace ARDR {
 	public class WorldTree : GridSceneObject, ITouchListener {
 		[Header("변수")]
 		public LongVariable Money;
-
 		public IntVariable MoneyPerTouch;
-
 		public FloatVariable MoneyPerTouchMultiplier;
-
-
 		public IntVariable UpgradeLevel;
-
 		public Transform ParentVFX;
 		public GameObject CurrentVFX;
 
 		[Header("업그레이드")]
 		public ScriptableObjectCache SOCache;
-
 		public WorldTreeUpgradeData CurrentUpgrade => UpgradeData.Find(data => data.Level == UpgradeLevel.Value);
-
 		public List<WorldTreeUpgradeData> UpgradeData => SOCache.Find<WorldTreeUpgradeData>().ToList();
 
 		[Header("토템 기능")]
 		public int CooldownTime;
-
 		public int ActiveTime;
 
 		[Header("오디오")]
 		public SoundEffectSO TouchSFX;
+		public SoundEffectSO UseTotemSFX;
 
 		private Buff _buff;
 
@@ -75,6 +68,7 @@ namespace ARDR {
 		private void OnActivateEffect() {
 			MoneyPerTouchMultiplier.Value = 2f;
 			Toast.Show($"세계수 토템을 사용했습니다!");
+			UseTotemSFX.Play();
 		}
 
 		private void OnDeactivateEffect() {
