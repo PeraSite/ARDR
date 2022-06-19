@@ -30,7 +30,7 @@ namespace ARDR {
 			_collider.center = center;
 			var size = Vector3.one * Chunk.cellSize * data.gridSize.x;
 			size.y -= 1f;
-			size *= 0.7f;
+			size *= 0.5f;
 			_collider.size = size;
 
 			var plant = Instantiate(plantData.PlantModel, transform);

@@ -7,15 +7,11 @@ namespace ARDR {
 		[Header("변수")]
 		public BoolVariable IsDraggingObject;
 
+		public Transform Transform;
 		public Vector3 FocusOffset = new Vector3(14.5f, 0, 14.5f);
 		public float lerpSpeed = 20f;
 
-		private Camera _cam;
 		private Vector3 _touchStart;
-
-		private void Awake() {
-			_cam = GetComponent<Camera>();
-		}
 
 		private void OnEnable() {
 			LeanTouch.OnFingerDown += OnFingerDown;
@@ -38,9 +34,9 @@ namespace ARDR {
 		private void OnFingerUpdate(LeanFinger finger) {
 			if (_touchStart == Vector3.zero) return;
 			var direction = _touchStart - GetWorldPosition(finger);
-			var targetPosition = _cam.transform.position + direction;
-			_cam.transform.position = Vector3.Lerp(
-				_cam.transform.position,
+			var targetPosition = Transform.position + direction;
+			Transform.position = Vector3.Lerp(
+				Transform.position,
 				targetPosition,
 				Time.deltaTime * lerpSpeed
 			);
@@ -60,7 +56,7 @@ namespace ARDR {
 		public void FocusTo(Transform target) {
 			var newPos = target.position - FocusOffset;
 			newPos.y = 17f;
-			transform.position = newPos;
+			Transform.position = newPos;
 		}
 	}
 }

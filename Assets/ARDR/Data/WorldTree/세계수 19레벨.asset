@@ -22,7 +22,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   Level: 19
-  Model: {fileID: 919132149155446097, guid: 231ac328a3af8674db01e5320234cce3, type: 3}
+  Model: {fileID: 919132149155446097, guid: f945526d4e53fa44392a76b380e1bb28, type: 3}
   MoneyPerTouch: 4000
   MaxChunk: 16
   LevelupPrice: 160000000
