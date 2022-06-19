@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Lean.Touch;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -57,6 +58,11 @@ namespace ARDR {
 			var newPos = target.position - FocusOffset;
 			newPos.y = 17f;
 			Transform.position = newPos;
+		}
+
+		public void Rotate(float amount = 90f) {
+			transform.DOKill(true);
+			transform.DORotate(transform.localEulerAngles + new Vector3(0, amount, 0f), 0.5f);
 		}
 	}
 }

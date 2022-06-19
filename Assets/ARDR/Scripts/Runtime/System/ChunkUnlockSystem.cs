@@ -78,6 +78,8 @@ namespace ARDR {
 				return;
 			}
 			Money.Subtract(price);
+			Toast.Show("새로운 땅을 해금했습니다!");
+
 			GridSystem.Instance.UnlockChunk(chunkPos);
 			UnlockPanel.Close();
 		}
