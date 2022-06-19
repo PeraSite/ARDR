@@ -25,7 +25,7 @@ PrefabInstance:
     - target: {fileID: 645991863258514697, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 645991863258514697, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
         type: 3}
@@ -77,5 +77,58 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: d3e9b4f8096639d438934ad5eb694f94, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: Power
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: Theme
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: ActiveTime
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: Multiplier
+      value: 
+      objectReference: {fileID: 11400000, guid: d4060bb3f31863849b41479d07cc9ed6,
+        type: 2}
+    - target: {fileID: 8715422171354422771, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+        type: 3}
+      propertyPath: CooldownTime
+      value: 14400
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1662099606, guid: 38d912a49901f9a4ab97db6cdfc5b8b6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 38d912a49901f9a4ab97db6cdfc5b8b6, type: 3}
+--- !u!1 &461024651551236442 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 269325930695057331, guid: 38d912a49901f9a4ab97db6cdfc5b8b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 421427394831302377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1832727420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461024651551236442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b4c297be1142e78f4795863e98c698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: "\uBC18\uB527\uBD88\uC774_1787504"
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  State:
+    lastUsed: 0
+    IsActive: 0
+    effectEnd: 0

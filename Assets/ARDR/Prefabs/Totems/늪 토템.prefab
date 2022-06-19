@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 645991863258514697}
   - component: {fileID: 8715422171354422771}
   - component: {fileID: 8772694241057324542}
-  - component: {fileID: 1655749914142817639}
+  - component: {fileID: 1662099606}
   m_Layer: 0
   m_Name: "\uB2AA \uD1A0\uD15C"
   m_TagString: Untagged
@@ -51,14 +51,11 @@ MonoBehaviour:
   <BaseData>k__BackingField: {fileID: 11400000, guid: 1c6b09e58f8cfa243a03f52b55cff5e8,
     type: 2}
   <Direction>k__BackingField: 0
-  Variable: {fileID: 0}
-  State:
-    lastUsed: 0
-    IsActive: 0
-    effectEnd: 0
-    variableAddAmount: 0
-  CooldownTime: 10
-  ActiveTime: 0
+  Multiplier: {fileID: 11400000, guid: f3fd779cf3b69e24395262f9a62e68e8, type: 2}
+  Theme: 2
+  CooldownTime: 14400
+  ActiveTime: 30
+  Power: 2.5
 --- !u!65 &8772694241057324542
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,7 +69,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.3367512, z: 1}
   m_Center: {x: 1.25, y: 1.09, z: 1.25}
---- !u!114 &1655749914142817639
+--- !u!114 &1662099606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,13 +78,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 269325930695057331}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30b030b8ea3943b38d56337340115beb, type: 3}
+  m_Script: {fileID: 11500000, guid: f3b4c297be1142e78f4795863e98c698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_key: 
+  m_key: "\uC2E0\uBE44\uC758\uC720\uC801_1787508"
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 1
   m_restoreStateOnStart: 0
+  State:
+    lastUsed: 0
+    IsActive: 0
+    effectEnd: 0
 --- !u!1 &2122932900529188938
 GameObject:
   m_ObjectHideFlags: 0

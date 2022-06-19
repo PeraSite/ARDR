@@ -1,13 +1,35 @@
-﻿using PixelCrushers;
+﻿using System.Linq;
+using PeraCore.Runtime;
+using PixelCrushers;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
 	public class Plant : PlacedObject<PlantData>, ITouchListener {
-		[Header("설정")]
+		[Header("상태")]
 		public PlantState State;
 
+		[Header("오브젝트")]
 		public GameObject BuildingVisual;
+
+		public Canvas StateCanvas;
+
+		public GameObject MoistureObject;
+		public GameObject NutritionObject;
+
+		[Header("설정")]
+		public float MoistureNotificationTolerance = 20f;
+
+		public float NutritionNotificationTolerance = 20f;
+
+		public ScriptableObjectCache SOCache;
+
+		[Header("변수")]
+		public IntVariable WaterCanLevel;
+
+		public IntVariable FertilizerLevel;
 
 		private BoxCollider _collider;
 
@@ -18,8 +40,8 @@ namespace ARDR {
 		public override void OnFirstPlaced() {
 			base.OnFirstPlaced();
 			State = new PlantState {
-				Moisture = Random.Range(0, 100),
-				Nutrition = Random.Range(0, 100),
+				Moisture = Random.Range(50, 100),
+				Nutrition = Random.Range(50, 100),
 			};
 		}
 
@@ -32,6 +54,9 @@ namespace ARDR {
 			size.y -= 1f;
 			size *= 0.5f;
 			_collider.size = size;
+
+			StateCanvas.transform.localPosition = center + new Vector3(0, plantData.PlantHeight, 0);
+			StateCanvas.enabled = false;
 
 			var plant = Instantiate(plantData.PlantModel, transform);
 			var position = Vector3.one * Chunk.cellSize / 2 * data.gridSize.x;
@@ -60,9 +85,48 @@ namespace ARDR {
 			GridEditSystem.Instance.SetExistObjectEditMode(this);
 		}
 
+		[Button]
 		public void OnStateTick() {
-			State.Moisture = Mathf.Clamp(State.Moisture - Data.MoistureUsage, 0, 100);
-			State.Nutrition = Mathf.Clamp(State.Nutrition - Data.NutritionUsage, 0, 100);
+			State.Moisture = Mathf.Max(State.Moisture - Data.MoistureUsage, 0);
+			State.Nutrition = Mathf.Max(State.Nutrition - Data.NutritionUsage, 0);
+			UpdateCanvas();
+		}
+
+		private void UpdateCanvas() {
+			var shouldShowMoistureNotification = State.Moisture <= MoistureNotificationTolerance;
+			var shouldShowNutritionNotification = State.Nutrition <= NutritionNotificationTolerance;
+
+			if (shouldShowMoistureNotification || shouldShowNutritionNotification) {
+				StateCanvas.enabled = true;
+				MoistureObject.SetActive(shouldShowMoistureNotification);
+				NutritionObject.SetActive(shouldShowNutritionNotification);
+			} else {
+				StateCanvas.enabled = false;
+			}
+		}
+
+		public void GiveWater() {
+			var upgradeData = SOCache.Find<ItemUpgradeData>().First(data => data.Level == WaterCanLevel.Value);
+			FindObjectsOfType<Plant>().ForEach(p => {
+				var distance =
+					Mathf.CeilToInt(Vector3.Distance(p.transform.position, transform.position) / Chunk.cellSize);
+				if (distance <= upgradeData.Range.x) {
+					p.State.Moisture += upgradeData.AddAmount;
+					p.UpdateCanvas();
+				}
+			});
+		}
+
+		public void GiveFertilizer() {
+			var upgradeData = SOCache.Find<ItemUpgradeData>().First(data => data.Level == FertilizerLevel.Value);
+			FindObjectsOfType<Plant>().ForEach(p => {
+				var distance =
+					Mathf.CeilToInt(Vector3.Distance(p.transform.position, transform.position) / Chunk.cellSize);
+				if (distance <= upgradeData.Range.x) {
+					p.State.Nutrition += upgradeData.AddAmount;
+					p.UpdateCanvas();
+				}
+			});
 		}
 
 #region Serialziation
@@ -79,6 +143,7 @@ namespace ARDR {
 		public override void ApplyData(string data) {
 			if (data.IsNullOrWhitespace()) return;
 			State = SaveSystem.Deserialize<PlantState>(data);
+			UpdateCanvas();
 		}
 
 #endregion

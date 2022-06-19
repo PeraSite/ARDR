@@ -130,3 +130,4 @@ MonoBehaviour:
   NutritionUsage: 3
   MoistureUsage: 3
   PlantModel: {fileID: 0}
+  PlantHeight: 1

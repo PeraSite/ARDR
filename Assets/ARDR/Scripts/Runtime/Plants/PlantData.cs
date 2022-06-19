@@ -38,8 +38,12 @@ namespace ARDR {
 		public int MoistureUsage;
 
 		[BoxGroup("Plant Setting")]
-		[LabelText("나무 모델링 파일")]
+		[LabelText("식물 모델링 파일")]
 		public GameObject PlantModel;
+
+		[BoxGroup("Plant Setting")]
+		[LabelText("식물 높이")]
+		public float PlantHeight;
 	}
 
 	[Flags]

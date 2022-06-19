@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Lean.Touch;
+using Sirenix.OdinInspector;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
@@ -54,9 +55,10 @@ namespace ARDR {
 			return ray.GetPoint(distance);
 		}
 
+		[Button]
 		public void FocusTo(Transform target) {
 			var newPos = target.position - FocusOffset;
-			newPos.y = 17f;
+			newPos.y = 3f;
 			Transform.position = newPos;
 		}
 

@@ -38,7 +38,6 @@ namespace ARDR {
 			Name.text = data.Name;
 			Type.sprite = data.TypeIcon;
 			Description.text = data.Description;
-			//TODO : 장애물 제거 금액 계산
 			Price.text = $"{TMPIcons.Money} {CalculateObstaclePrice()}";
 			HUD.Close();
 			Root.Open();

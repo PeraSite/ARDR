@@ -130,3 +130,4 @@ MonoBehaviour:
   MoistureUsage: 4
   PlantModel: {fileID: 919132149155446097, guid: 8631fd37667cdcd42878c46b7706f81f,
     type: 3}
+  PlantHeight: 1.5

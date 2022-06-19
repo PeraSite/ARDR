@@ -34,7 +34,7 @@ namespace ARDR {
 
 		protected override void OnDestroy() {
 			base.OnDestroy();
-			// GridData.chunkGrid = null;
+			GridData.chunkGrid = null;
 		}
 
 		[Button]
@@ -99,6 +99,7 @@ namespace ARDR {
 					chunk[localChunkPos].SetPlacedObject(gridObject);
 				}
 			}
+
 		}
 
 		[Button]
