@@ -16,13 +16,15 @@ namespace ARDR {
 
 		private void OnEnable() {
 			Variable.Changed.Register(UpdateUI);
-			Multiplier.Changed.Register(UpdateUI);
+			if (!Multiplier.SafeIsUnityNull())
+				Multiplier.Changed.Register(UpdateUI);
 			UpdateUI();
 		}
 
 		private void OnDisable() {
 			Variable.Changed.Unregister(UpdateUI);
-			Multiplier.Changed.Unregister(UpdateUI);
+			if (!Multiplier.SafeIsUnityNull())
+				Multiplier.Changed.Unregister(UpdateUI);
 		}
 
 		private void UpdateUI() {

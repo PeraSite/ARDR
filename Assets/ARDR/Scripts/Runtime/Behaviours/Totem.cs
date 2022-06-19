@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityAtoms.BaseAtoms;
+﻿using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
@@ -14,62 +12,48 @@ namespace ARDR {
 		[Header("변수")]
 		public FloatVariable Multiplier;
 
-		[Header("상태")]
-		public TotemState State;
-
 		[Header("설정")]
+		public ThemeType Theme;
+
 		public int CooldownTime;
-
 		public int ActiveTime;
+		public float Power = 2f;
 
-		private void Start() {
-			if (State.IsActive) {
-				StartCoroutine(TotemUseCoroutine());
-			}
+		private Buff _buff;
+
+		private void Awake() {
+			_buff = GetComponent<Buff>();
+			_buff.OnEffectActivate += OnActivateEffect;
+			_buff.OnEffectDeactivate += OnDeactivateEffect;
+			_buff.OnCooldown += OnCooldown;
 		}
 
-		public void OnTouch() {
-			var current = DateTimeOffset.Now.ToUnixTimeSeconds();
-			var diff = current - State.lastUsed;
-			if (diff < CooldownTime) {
-				Toast.Show("토템 재사용 대기 시간입니다.");
-				return;
-			}
-			State.lastUsed = current;
-			State.effectEnd = current + ActiveTime;
-			ActivateEffect();
-			StartCoroutine(TotemUseCoroutine());
+		private void OnDisable() {
+			_buff.OnEffectActivate -= OnActivateEffect;
+			_buff.OnEffectDeactivate -= OnDeactivateEffect;
+			_buff.OnCooldown -= OnCooldown;
 		}
 
-		private IEnumerator TotemUseCoroutine() {
-			yield return new WaitUntil(() => {
-				var current = DateTimeOffset.Now.ToUnixTimeSeconds();
-				var target = State.effectEnd;
-				return current > target;
-			});
-			DeactivateEffect();
+		public void OnLongTouch() {
+			_buff.StartBuff(CooldownTime, ActiveTime);
 		}
 
-		private void ActivateEffect() {
-			State.IsActive = true;
-			Multiplier.Value = 2f;
+		private void OnCooldown() {
+			Toast.Show("아직 재사용 대기 시간입니다.");
+		}
+
+		private void OnActivateEffect() {
+			Multiplier.Value = Power;
 			Toast.Show($"{name}을 사용했습니다!");
 		}
 
-		private void DeactivateEffect() {
-			State.IsActive = false;
+		private void OnDeactivateEffect() {
 			Multiplier.Value = 1f;
 		}
 
 		public override void OnDiscovered() {
 			Toast.Show($"{name}을 발견했습니다!");
+			Chunk.gridData.InvokeAnyGridUpdate();
 		}
-	}
-
-	[Serializable]
-	public struct TotemState {
-		public long lastUsed;
-		public bool IsActive;
-		public long effectEnd;
 	}
 }

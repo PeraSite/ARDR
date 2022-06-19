@@ -1,4 +1,3 @@
-using Lean.Common;
 using Lean.Touch;
 using UnityAtoms.BaseAtoms;
 using UnityEngine;
@@ -8,9 +7,9 @@ namespace ARDR {
 		[Header("변수")]
 		public BoolVariable IsDraggingObject;
 
+		public Vector3 FocusOffset = new Vector3(14.5f, 0, 14.5f);
 		public float lerpSpeed = 20f;
 
-		private LeanScreenQuery ScreenQuery = new(LeanScreenQuery.MethodType.Raycast);
 		private Camera _cam;
 		private Vector3 _touchStart;
 
@@ -56,6 +55,12 @@ namespace ARDR {
 			var ray = finger.GetRay();
 			ground.Raycast(ray, out var distance);
 			return ray.GetPoint(distance);
+		}
+
+		public void FocusTo(Transform target) {
+			var newPos = target.position - FocusOffset;
+			newPos.y = 17f;
+			transform.position = newPos;
 		}
 	}
 }

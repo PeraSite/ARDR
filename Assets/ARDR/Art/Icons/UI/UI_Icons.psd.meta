@@ -241,6 +241,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI_Icons_0
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b09b9aadcbe233e4bbe57d404de3167d
+      internalID: 1320863208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -257,7 +278,9 @@ TextureImporter:
       "\uC218\uBD84": -777144012
       "\uB098\uBB34": 2076851448
       "\uAF43": 1443362353
+      UI_Icons_1: 2118036293
       "\uBC8C\uB808": 1921391221
+      UI_Icons_0: 1320863208
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 1

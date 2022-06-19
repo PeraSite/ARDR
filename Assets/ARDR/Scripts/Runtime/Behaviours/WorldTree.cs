@@ -27,12 +27,26 @@ namespace ARDR {
 
 		public List<WorldTreeUpgradeData> UpgradeData => SOCache.Find<WorldTreeUpgradeData>().ToList();
 
+		[Header("토템 기능")]
+		public int CooldownTime;
+
+		public int ActiveTime;
+
+		private Buff _buff;
+
 		private void Awake() {
 			UpgradeLevel.Changed.Register(OnUpgradeLevelChanged);
+			_buff = GetComponent<Buff>();
+			_buff.OnEffectActivate += OnActivateEffect;
+			_buff.OnEffectDeactivate += OnDeactivateEffect;
+			_buff.OnCooldown += OnCooldown;
 		}
 
 		private void OnDisable() {
 			UpgradeLevel.Changed.Unregister(OnUpgradeLevelChanged);
+			_buff.OnEffectActivate -= OnActivateEffect;
+			_buff.OnEffectDeactivate -= OnDeactivateEffect;
+			_buff.OnCooldown -= OnCooldown;
 		}
 
 		private void OnUpgradeLevelChanged(int newLevel) {
@@ -44,6 +58,23 @@ namespace ARDR {
 
 		public void OnTouch() {
 			Money.Add((long) (MoneyPerTouch.Value * MoneyPerTouchMultiplier.Value));
+		}
+
+		public void OnLongTouch() {
+			_buff.StartBuff(CooldownTime, ActiveTime);
+		}
+
+		private void OnCooldown() {
+			Toast.Show("아직 재사용 대기 시간입니다.");
+		}
+
+		private void OnActivateEffect() {
+			MoneyPerTouchMultiplier.Value = 2f;
+			Toast.Show($"세계수 토템을 사용했습니다!");
+		}
+
+		private void OnDeactivateEffect() {
+			MoneyPerTouchMultiplier.Value = 1f;
 		}
 	}
 }

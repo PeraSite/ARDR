@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using PeraCore.Runtime;
 using Sirenix.Utilities;
 using UnityAtoms;
@@ -11,7 +12,7 @@ namespace ARDR {
 		public LongVariable Money;
 
 		public IntVariable MoneyPerSecond;
-		public FloatVariable MoneyPerSecondMultiplier;
+		public Dictionary<ThemeType, FloatVariable> ThemeMultiplier = new();
 
 		[Header("설정")]
 		public float MoneyTickCycle = 1f;
@@ -26,11 +27,14 @@ namespace ARDR {
 		private void Start() {
 			GridData.onAnyGridUpdate -= CalculateMoneyPerSecond;
 			GridData.onAnyGridUpdate += CalculateMoneyPerSecond;
+
+			ThemeMultiplier.ForEach(pair => pair.Value.Changed.Register(CalculateMoneyPerSecond));
 			CalculateMoneyPerSecond();
 		}
 
 		private void OnDisable() {
 			GridData.onAnyGridUpdate -= CalculateMoneyPerSecond;
+			ThemeMultiplier.ForEach(pair => pair.Value.Changed.Unregister(CalculateMoneyPerSecond));
 		}
 
 		private void Update() {
@@ -64,13 +68,13 @@ namespace ARDR {
 		}
 
 		private void OnMoneyTick() {
-			Money.Add((long) (MoneyPerSecond.Value * MoneyPerSecondMultiplier.Value));
+			Money.Add(MoneyPerSecond.Value);
 		}
 
 		private void CalculateMoneyPerSecond() {
 			MoneyPerSecond.Value = (int) FindObjectsOfType<Plant>()
 				.Where(plant => !plant.IsEditing)
-				.Sum(plant => plant.Data.MoneyAmount * plant.Data.correctionValue[plant.Chunk.Theme]);
+				.Sum(plant => plant.Data.MoneyAmount * plant.Data.correctionValue[plant.Chunk.Theme] * ThemeMultiplier[plant.Chunk.Theme].Value);
 		}
 	}
 }

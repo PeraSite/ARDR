@@ -51,6 +51,10 @@ namespace ARDR {
 			MoneyAmount.text = $"{TMPIcons.Money} {CalculateMoneyAmount().ToString()}";
 		}
 
-		private int CalculateMoneyAmount() => (int) (_plant.Data.MoneyAmount * _plant.Data.correctionValue[_plant.Chunk.Theme]);
+		private int CalculateMoneyAmount() {
+			var theme = _plant.Chunk.Theme;
+			return (int) (_plant.Data.MoneyAmount * _plant.Data.correctionValue[theme] *
+			              PlantSystem.Instance.ThemeMultiplier[theme].Value);
+		}
 	}
 }
