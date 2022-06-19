@@ -4,6 +4,7 @@ using PeraCore.Runtime;
 using PixelCrushers;
 using TMPro;
 using UnityAtoms;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
 
 namespace ARDR {
@@ -20,6 +21,11 @@ namespace ARDR {
 
 		[Header("변수")]
 		public LongVariable Money;
+
+		public IntVariable MoneyPerTouch;
+
+		public IntVariable WorldTreeLevel;
+		public ScriptableObjectCache SOCache;
 
 		private List<ChunkUnlockUI> _instantiated;
 		private Chunk _currentChunk;
@@ -77,6 +83,13 @@ namespace ARDR {
 				Toast.Show("돈이 부족합니다!");
 				return;
 			}
+			var currentUpgrade = SOCache.Find<WorldTreeUpgradeData>().First(data => data.Level == WorldTreeLevel.Value);
+			var currentEnabledChunk = GridData.chunkGrid.GridArray.OfType<Chunk>().Count(c => c.IsEnabled);
+
+			if (currentEnabledChunk >= currentUpgrade.MaxChunk) {
+				Toast.Show("개간 가능 최대 땅 수를 넘었습니다.");
+				return;
+			}
 			Money.Subtract(price);
 			Toast.Show("새로운 땅을 해금했습니다!");
 
@@ -84,6 +97,11 @@ namespace ARDR {
 			UnlockPanel.Close();
 		}
 
-		private long CalculateChunkPrice() => 10000;
+		private long CalculateChunkPrice() {
+			var currentEnabledChunk = GridData.chunkGrid.GridArray.OfType<Chunk>().Count(c => c.IsEnabled);
+			var mpt = MoneyPerTouch.Value;
+
+			return currentEnabledChunk * mpt * 10000;
+		}
 	}
 }

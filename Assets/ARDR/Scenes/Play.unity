@@ -31724,6 +31724,9 @@ MonoBehaviour:
   UnlockPanel: {fileID: 186819286}
   Price: {fileID: 271837132}
   Money: {fileID: 11400000, guid: 284cd42ac6e080146834ffc5f6dd3192, type: 2}
+  MoneyPerTouch: {fileID: 11400000, guid: 1d68565038ee473ead9e91fcf1f4c3ae, type: 2}
+  WorldTreeLevel: {fileID: 11400000, guid: 71fae75aaa0fc984f9297ff02c0ef835, type: 2}
+  SOCache: {fileID: 11400000, guid: 75fbaee97dee67446abe2161ca96b85f, type: 2}
 --- !u!1001 &1102742531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55018,7 +55021,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1998364998
 PrefabInstance:
@@ -63018,7 +63021,7 @@ PrefabInstance:
     - target: {fileID: 4988233282918810879, guid: f672e519bc0a7ae4ca0ebf09968617ea,
         type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4988233282918810879, guid: f672e519bc0a7ae4ca0ebf09968617ea,
         type: 3}
