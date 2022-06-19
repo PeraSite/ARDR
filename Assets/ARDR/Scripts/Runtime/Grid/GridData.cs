@@ -40,7 +40,7 @@ namespace ARDR {
 
 		[Button]
 		public IPlacedObject PlaceObjectAtSafe(PlaceableObjectData objectData,
-			Vector2Int originCellPos, Direction dir) {
+			Vector2Int originCellPos, Direction dir, string state = null) {
 			if (!CanPlaceAt(objectData, originCellPos, dir))
 				throw new Exception($"Can't place at {originCellPos}");
 
@@ -52,7 +52,8 @@ namespace ARDR {
 				originChunk.GetWorldSnappedPosition(objectData, dir, originLocalChunkPos),
 				originLocalChunkPos,
 				dir,
-				objectData
+				objectData,
+				state
 			);
 
 			var gridPositionList = objectData.GetGridPositionList(originCellPos, dir);

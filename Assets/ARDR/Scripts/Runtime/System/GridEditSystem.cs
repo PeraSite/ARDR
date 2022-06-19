@@ -89,12 +89,11 @@ namespace ARDR {
 				chunk.RemovePlacedObject(_editingObject);
 			}
 
-			var placedObject = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value);
+			var placedObject = GridData.PlaceObjectAtSafe(_currentData, lastCellPos, CurrentDirection.Value,
+				isEditingObject ? _editingObjectState : null);
 
 			if (!isEditingObject) { //If first place
 				placedObject.OnFirstPlaced();
-			} else {
-				placedObject.ApplyData(_editingObjectState);
 			}
 			placedObject.OnEditEnd();
 			placedObject.IsEditing = false;

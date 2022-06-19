@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PeraCore.Runtime;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityAtoms;
 using UnityAtoms.BaseAtoms;
@@ -65,16 +66,24 @@ namespace ARDR {
 					.OfType<Plant>()
 					.ForEach(plant => plant.OnStateTick());
 			}
+			CalculateMoneyPerSecond();
 		}
 
 		private void OnMoneyTick() {
 			Money.Add(MoneyPerSecond.Value);
 		}
 
+		[Button]
 		private void CalculateMoneyPerSecond() {
 			MoneyPerSecond.Value = (int) FindObjectsOfType<Plant>()
 				.Where(plant => !plant.IsEditing)
-				.Sum(plant => plant.Data.MoneyAmount * plant.Data.correctionValue[plant.Chunk.Theme] * ThemeMultiplier[plant.Chunk.Theme].Value);
+				.Sum(plant => {
+					Debug.Log($"{plant.name}:{plant.State.Nutrition},{plant.State.Moisture} == {plant.IsSaturated()}");
+					return plant.IsSaturated()
+						? plant.Data.MoneyAmount * plant.Data.correctionValue[plant.Chunk.Theme] *
+						  ThemeMultiplier[plant.Chunk.Theme].Value
+						: 0;
+				});
 		}
 	}
 }

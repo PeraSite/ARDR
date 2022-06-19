@@ -32,6 +32,9 @@ namespace ARDR {
 
 		public int ActiveTime;
 
+		[Header("오디오")]
+		public SoundEffectSO TouchSFX;
+
 		private Buff _buff;
 
 		private void Awake() {
@@ -57,6 +60,7 @@ namespace ARDR {
 		}
 
 		public void OnTouch() {
+			TouchSFX.Play();
 			Money.Add((long) (MoneyPerTouch.Value * MoneyPerTouchMultiplier.Value));
 		}
 

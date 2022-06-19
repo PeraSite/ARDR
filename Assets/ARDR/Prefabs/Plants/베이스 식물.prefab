@@ -99,6 +99,8 @@ MonoBehaviour:
   SOCache: {fileID: 11400000, guid: 75fbaee97dee67446abe2161ca96b85f, type: 2}
   WaterCanLevel: {fileID: 11400000, guid: 879ee3d8b9298d04498f74a1b85557f6, type: 2}
   FertilizerLevel: {fileID: 11400000, guid: 737a75a1e0b662545b8d637fd97eb8b2, type: 2}
+  WaterCanSFX: {fileID: 11400000, guid: 21ee32733057f4c449c069ace5903a72, type: 2}
+  FertilizerSFX: {fileID: 11400000, guid: 0fcd5fbf0e0d1ac46ad9f8fff88d219f, type: 2}
 --- !u!1 &1792491962403193132
 GameObject:
   m_ObjectHideFlags: 0

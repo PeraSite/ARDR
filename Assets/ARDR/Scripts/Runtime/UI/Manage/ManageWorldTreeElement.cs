@@ -29,6 +29,9 @@ namespace ARDR {
 		public ScriptableObjectCache SOCache;
 		public LongVariable Money;
 
+		[Header("오디오")]
+		public SoundEffectSO UpgradeSound;
+
 		public WorldTreeUpgradeData CurrentUpgrade =>
 			UpgradeData.Find(data => data.Level == WorldTreeUpgradeLevel.Value);
 
@@ -52,6 +55,7 @@ namespace ARDR {
 			}
 			Money.Subtract(NextUpgrade.LevelupPrice);
 			WorldTreeUpgradeLevel.Add(1);
+			UpgradeSound.Play();
 		}
 
 		private void UpdateUI() {

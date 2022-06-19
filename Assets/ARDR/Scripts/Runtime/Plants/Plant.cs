@@ -31,14 +31,14 @@ namespace ARDR {
 
 		public IntVariable FertilizerLevel;
 
+		[Header("오디오")]
+		public SoundEffectSO WaterCanSFX;
+		public SoundEffectSO FertilizerSFX;
+
 		private BoxCollider _collider;
 
 		private void Awake() {
 			_collider = GetComponent<BoxCollider>();
-		}
-
-		public override void OnFirstPlaced() {
-			base.OnFirstPlaced();
 			State = new PlantState {
 				Moisture = Random.Range(50, 100),
 				Nutrition = Random.Range(50, 100),
@@ -111,6 +111,7 @@ namespace ARDR {
 					p.UpdateCanvas();
 				}
 			});
+			WaterCanSFX.Play();
 		}
 
 		public void GiveFertilizer() {
@@ -123,7 +124,11 @@ namespace ARDR {
 					p.UpdateCanvas();
 				}
 			});
+			FertilizerSFX.Play();
 		}
+
+		public bool IsSaturated() =>
+			State.Moisture > MoistureNotificationTolerance && State.Nutrition > NutritionNotificationTolerance;
 
 #region Serialziation
 

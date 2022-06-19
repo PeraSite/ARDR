@@ -51,6 +51,10 @@ namespace PixelCrushers
         [ShowIf("@AlphaCanvasGroup != null")]
         public float FadeAnimationTime = .3f;
 
+        [Header("Audio")]
+        public SoundEffectSO OpenSound;
+        public SoundEffectSO CloseSound;
+
         [FoldoutGroup("Events")] public UnityEvent onOpen = new UnityEvent();
         [FoldoutGroup("Events")] public UnityEvent onClose = new UnityEvent(); // Called when close starts.
         [FoldoutGroup("Events")] public UnityEvent onClosed = new UnityEvent(); // Called when close ends.
@@ -197,6 +201,7 @@ namespace PixelCrushers
             panelState = PanelState.Opening;
             gameObject.SetActive(true);
             onOpen.Invoke();
+            if (!OpenSound.SafeIsUnityNull()) OpenSound.Play();
             // animatorMonitor.SetTrigger(showAnimationTrigger, OnVisible, waitForShowAnimation);
 
             if (!AlphaCanvasGroup.SafeIsUnityNull()) {
@@ -220,6 +225,7 @@ namespace PixelCrushers
             if (panelState is PanelState.Closed or PanelState.Closing) return;
             panelState = PanelState.Closing;
             onClose.Invoke();
+            if (!CloseSound.SafeIsUnityNull()) CloseSound.Play();
             // animatorMonitor.SetTrigger(hideAnimationTrigger, OnHidden, true);
 
             if (!AlphaCanvasGroup.SafeIsUnityNull()) {
