@@ -24,7 +24,7 @@ namespace ARDR {
 
 			if (SaveSystem.storer.HasDataInSlot(activeSlotID)) {
 				var data = SaveSystem.storer.RetrieveSavedGameData(activeSlotID);
-				yield return SceneManager.LoadSceneAsync(data.sceneName);
+				yield return SceneManager.LoadSceneAsync(startScene);
 				SaveSystem.ApplySavedGameData(data);
 			} else {
 				yield return SceneManager.LoadSceneAsync(startScene);
